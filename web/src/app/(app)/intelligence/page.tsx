@@ -14,6 +14,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@clerk/nextjs';
 import { apiFetch, apiPost } from '@/lib/api';
+import { useMineSelector } from '@/lib/useMineId';
 
 interface PillarHealth {
   score: number;
@@ -70,6 +71,7 @@ interface FlowStage {
 
 export default function IntelligencePage() {
   const { getToken } = useAuth();
+  const { mines, selectedMine, setSelectedMine } = useMineSelector();
   const [pulse, setPulse] = useState<MinePulseData | null>(null);
   const [issues, setIssues] = useState<TopIssue[]>([]);
   const [queryInput, setQueryInput] = useState('');
@@ -98,9 +100,10 @@ export default function IntelligencePage() {
     let alive = true;
     (async () => {
       const token = await getToken();
+      const mq = `?mine_id=${encodeURIComponent(selectedMine)}`;
       // 1. Fetch Pulse
       try {
-        const pulseRes = await apiFetch<MinePulseData>('/intelligence/pulse', {}, token);
+        const pulseRes = await apiFetch<MinePulseData>(`/intelligence/pulse${mq}`, {}, token);
         if (alive && pulseRes) setPulse(pulseRes);
       } catch (e) {
         console.error('Pulse fetch error:', e);
@@ -108,7 +111,7 @@ export default function IntelligencePage() {
 
       // 2. Fetch Top Issues
       try {
-        const issuesRes = await apiFetch<any>('/intelligence/top-issues', {}, token);
+        const issuesRes = await apiFetch<any>(`/intelligence/top-issues${mq}`, {}, token);
         if (alive && issuesRes?.issues) setIssues(issuesRes.issues);
       } catch (e) {
         console.error('Issues fetch error:', e);
@@ -116,7 +119,7 @@ export default function IntelligencePage() {
 
       // 3. Fetch Root Cause
       try {
-        const rcRes = await apiFetch<any>(`/intelligence/root-cause/${rcDomain}/${rcEntity}`, {}, token);
+        const rcRes = await apiFetch<any>(`/intelligence/root-cause/${rcDomain}/${rcEntity}${mq}`, {}, token);
         if (alive && rcRes) setRcData(rcRes);
       } catch (e) {
         console.error('Root cause error:', e);
@@ -124,7 +127,7 @@ export default function IntelligencePage() {
 
       // 4. Fetch Replay
       try {
-        const replayRes = await apiFetch<any>('/intelligence/replay', {}, token);
+        const replayRes = await apiFetch<any>(`/intelligence/replay${mq}`, {}, token);
         if (alive && replayRes?.timeline) setTimeline(replayRes.timeline);
       } catch (e) {
         console.error('Replay error:', e);
@@ -132,7 +135,7 @@ export default function IntelligencePage() {
 
       // 5. Fetch Material Flow
       try {
-        const flowRes = await apiFetch<any>('/intelligence/material-flow', {}, token);
+        const flowRes = await apiFetch<any>(`/intelligence/material-flow${mq}`, {}, token);
         if (alive && flowRes) {
           setFlowStages(flowRes.stages || []);
           setFlowBottleneck(flowRes.primary_bottleneck || '');
@@ -148,7 +151,7 @@ export default function IntelligencePage() {
     return () => {
       alive = false;
     };
-  }, [rcDomain, rcEntity, getToken]);
+  }, [rcDomain, rcEntity, getToken, selectedMine]);
 
   const handleQuery = async (promptText?: string) => {
     const text = promptText || queryInput;
@@ -156,7 +159,11 @@ export default function IntelligencePage() {
     setQueryLoading(true);
     try {
       const token = await getToken();
-      const res = await apiPost<NLQueryResult>('/intelligence/query', { query: text }, token);
+      const res = await apiPost<NLQueryResult>(
+        '/intelligence/query',
+        { query: text, mine_id: selectedMine },
+        token
+      );
       setQueryResult(res);
     } catch (e: any) {
       alert(e.message || 'Failed to process query');
@@ -212,6 +219,29 @@ export default function IntelligencePage() {
           <p className="text-sm text-ink2 mt-1 max-w-2xl">
             Unified reasoning workspace connecting production variances, fleet health, exploration targets, and throughput flow.
           </p>
+          {/* Mine Selector */}
+          <div className="mt-3 flex items-center gap-2">
+            <span className="material-symbols-outlined text-accentt text-[18px]">location_on</span>
+            <label className="text-[11px] font-bold text-ink3 uppercase tracking-wider">Active Mine</label>
+            <select
+              id="mine-selector"
+              value={selectedMine}
+              onChange={(e) => setSelectedMine(e.target.value)}
+              className="ml-1 bg-deep2 border border-accentt/40 rounded-lg px-3 py-1.5 text-xs font-semibold text-ink focus:outline-none focus:border-accentt transition-all cursor-pointer"
+            >
+              {mines.length > 0
+                ? mines.map((m) => (
+                    <option key={m.mine_id} value={m.mine_id}>
+                      {m.mine_id}{m.mine_name ? ` — ${m.mine_name}` : ''}{m.state ? ` (${m.state})` : ''}
+                    </option>
+                  ))
+                : [
+                    'KA-TUMKUR-01', 'MH-BHANDARA-01', 'MII-NAGPUR-01',
+                    'MP-BALAGHAT-01', 'OD-KFONIHAR-01',
+                  ].map((id) => <option key={id} value={id}>{id}</option>)
+              }
+            </select>
+          </div>
         </div>
 
         {pulse && (

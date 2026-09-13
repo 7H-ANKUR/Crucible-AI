@@ -10,7 +10,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@clerk/nextjs';
-import { useMineId } from '@/lib/useMineId';
+import { useMineSelector } from '@/lib/useMineId';
 import { EvidenceModal, ShortfallModal, PredictionBrainstormModal } from '@/components/crucible/Modals';
 import { InsightCard } from '@/components/crucible/insight';
 import { useFleetInsights } from '@/lib/hooks';
@@ -48,7 +48,7 @@ const RANGE_OPTIONS: [TimelineRange, string][] = [
 
 export default function ProductionPage() {
   const { getToken } = useAuth();
-  const mineId = useMineId();
+  const { mines, selectedMine: mineId, setSelectedMine } = useMineSelector();
   const router = useRouter();
 
   // Nothing starts with a number. These previously initialised to a fabricated
@@ -233,6 +233,29 @@ export default function ProductionPage() {
           <p className="text-sm text-ink2 mt-1 max-w-2xl">
             Real-time predictive models analyzing haulage, processing, and environmental variables across {mineId} operations.
           </p>
+          {/* Mine Selector */}
+          <div className="mt-3 flex items-center gap-2">
+            <span className="material-symbols-outlined text-accentt text-[18px]">location_on</span>
+            <label className="text-[11px] font-bold text-ink3 uppercase tracking-wider">Active Mine</label>
+            <select
+              id="mine-selector"
+              value={mineId}
+              onChange={(e) => setSelectedMine(e.target.value)}
+              className="ml-1 bg-deep2 border border-accentt/40 rounded-lg px-3 py-1.5 text-xs font-semibold text-ink focus:outline-none focus:border-accentt transition-all cursor-pointer"
+            >
+              {mines.length > 0
+                ? mines.map((m) => (
+                    <option key={m.mine_id} value={m.mine_id}>
+                      {m.mine_id}{m.mine_name ? ` — ${m.mine_name}` : ''}{m.state ? ` (${m.state})` : ''}
+                    </option>
+                  ))
+                : [
+                    'KA-TUMKUR-01', 'MH-BHANDARA-01', 'MII-NAGPUR-01',
+                    'MP-BALAGHAT-01', 'OD-KFONIHAR-01',
+                  ].map((id) => <option key={id} value={id}>{id}</option>)
+              }
+            </select>
+          </div>
         </div>
 
         <div className="flex items-center gap-3">
