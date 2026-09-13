@@ -54,7 +54,7 @@ function Unavailable({ envelope }: { envelope: EngineEnvelope<unknown> | null })
         <p className="text-xs font-semibold text-ink">ML Lab unavailable</p>
         <p className="text-[11px] text-ink2 mt-0.5 leading-snug">{degradedMessage(envelope)}</p>
         <p className="text-[11px] text-ink3 mt-1">
-          The rest of Crucible AI is unaffected. Start the engine on port 8100 to restore this page.
+          The ML engine service is restarting. Refresh in a moment and it should be back.
         </p>
       </div>
     </div>
