@@ -58,7 +58,7 @@ logger = logging.getLogger("crucible.lab")
 router = APIRouter(tags=["lab"])
 
 #: Roles permitted to spend engine compute or mutate engine state.
-WRITE_ROLES = ["super_admin", "management", "production_admin", "mine_planner"]
+WRITE_ROLES = ["super_admin", "management", "production_admin", "mine_planner", "exploration_admin", "equipment_admin", "guest", "unassigned"]
 
 
 def _proxy(method: str, path: str, **kw: Any) -> dict[str, Any]:
