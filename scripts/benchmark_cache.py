@@ -1,4 +1,4 @@
-"""scripts/benchmark_cache.py — Benchmark & Latency Profiling for MINEx Hybrid Tiered Cache.
+"""scripts/benchmark_cache.py — Benchmark & Latency Profiling for Crucible AI Hybrid Tiered Cache.
 
 Measures and reports real P50, P95, and P99 latency statistics across:
   1. Cold Requests (L1 MISS, L2 MISS -> Database/ML Producer)
@@ -21,7 +21,7 @@ import numpy as np
 root = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(root))
 
-from apps.api.core.cache import (
+from app.api.core.cache import (
     CircuitState,
     TieredCacheManager,
 )
@@ -29,7 +29,7 @@ from apps.api.core.cache import (
 
 def run_benchmarks():
     print("============================================================")
-    print("MINEx Tiered Cache Benchmark & Latency Profiling")
+    print("Crucible AI Tiered Cache Benchmark & Latency Profiling")
     print("============================================================")
 
     mgr = TieredCacheManager()

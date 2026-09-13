@@ -1,13 +1,16 @@
-FROM node:20-alpine
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY apps/web/package.json apps/web/package-lock.json ./
+COPY web/package.json web/package-lock.json ./
 RUN npm ci
 
-COPY apps/web ./
+COPY web ./
+RUN npm run build
 
-ENV NEXT_PUBLIC_API_URL=http://localhost:8000
+FROM node:20-alpine
+WORKDIR /app
+COPY --from=builder /app ./
+
 EXPOSE 3000
-
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]

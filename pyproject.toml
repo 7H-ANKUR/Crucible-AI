@@ -1,6 +1,6 @@
 [project]
-name = "minex"
+name = "crucible"
 version = "1.0.0"
 
 [tool.vercel]
-entrypoint = "apps.api.main:app"
+entrypoint = "app.api.main:app"

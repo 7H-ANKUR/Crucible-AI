@@ -11,13 +11,13 @@ from pathlib import Path
 # Add project root to Python path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from apps.api.core.db import execute, init_db, query
+from app.api.core.db import execute, init_db, query
 
 CURRENT_MIGRATION_VERSION = "2026_09_v2_deep_hardening"
 
 def run_all_migrations():
     print("=" * 65)
-    print("MINEx Database Migration Runner (Authoritative v2.0 Hardened)")
+    print("Crucible AI Database Migration Runner (Authoritative v2.0 Hardened)")
     print("=" * 65)
     
     print("1. Connecting to PostgreSQL database...")
@@ -475,7 +475,7 @@ def run_all_migrations():
     print("5. Recording migration version...")
     version_record_sql = """
     INSERT INTO gov.schema_migrations (version, description)
-    VALUES (%s, 'MINEx v2 deep hardening: partial unique champion index, FKs, DB CHECKs, stale recovery')
+    VALUES (%s, 'Crucible AI v2 deep hardening: partial unique champion index, FKs, DB CHECKs, stale recovery')
     ON CONFLICT (version) DO UPDATE SET applied_at = NOW();
     """
     execute(version_record_sql, (CURRENT_MIGRATION_VERSION,))

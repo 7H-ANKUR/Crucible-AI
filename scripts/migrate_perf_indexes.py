@@ -12,7 +12,7 @@ import sys
 root = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(root))
 
-from apps.api.core.db import execute
+from app.api.core.db import execute
 
 
 def run_migrations():

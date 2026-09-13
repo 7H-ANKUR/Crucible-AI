@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "brainstorm": {
+      "source": "buiducnhat/agent-skills",
+      "sourceType": "github",
+      "skillPath": "plugins/cobrew/skills/brainstorm/SKILL.md",
+      "computedHash": "c7efeb60a98307e25b28f8bfd85888ed1b3e27b22890de25b75b9db09390e8a2"
+    }
+  }
+}

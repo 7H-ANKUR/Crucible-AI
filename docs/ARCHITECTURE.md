@@ -1,8 +1,8 @@
-# MINEx System Architecture & Engineering Blueprint
+# Crucible AI System Architecture & Engineering Blueprint
 
 ## 1. Executive Summary
 
-MINEx (Mining Intelligence Operating Platform) is an AI-powered industrial intelligence system designed for open-cast and underground manganese mining operations, calibrated on the Sausar Belt geological deposit (Madhya Pradesh / Maharashtra, India).
+Crucible AI (Mining Intelligence Operating Platform) is an AI-powered industrial intelligence system designed for open-cast and underground manganese mining operations, calibrated on the Sausar Belt geological deposit (Madhya Pradesh / Maharashtra, India).
 
 The platform transforms disparate operational silos (pit extraction, haulage fleet telemetry, exploration geophysics, and mill beneficiation) into a coherent, real-time decision operating system with auditable machine learning, human approval gates, and immutable ledger recording.
 
@@ -47,7 +47,7 @@ The platform transforms disparate operational silos (pit extraction, haulage fle
 
 ---
 
-## 3. Backend Routers & API Surface (14 Active Routers)
+## 3. Backend Routers & API Surface (19 active routers, 130 routes)
 
 | Router | Prefix | Responsibility |
 |---|---|---|
@@ -57,7 +57,7 @@ The platform transforms disparate operational silos (pit extraction, haulage fle
 | `production` | `/api/v1/production` | P10/P50/P90 quantiles, SHAP drivers, physical volume gap vs calibrated shortfall risk |
 | `equipment` | `/api/v1/equipment` | Fleet telemetry, machine health indices, 24h failure probability |
 | `exploration`| `/api/v1/exploration`| Prospectivity grid, AI anomaly targets, mineral assay correlation |
-| `scenarios` | `/api/v1/scenarios` | Constraint-aware operational optimizer, what-if shift simulations |
+| `scenarios` | `/api/v1/scenarios` | Adapter over `core/scenario/`. Holds no evaluation logic |
 | `alerts` | `/api/v1/alerts` | Safety and operational threshold alerts with operator acknowledge |
 | `ledger` | `/api/v1/ledger` | Immutable prediction audit ledger, Data Health Center, Decision Memory |
 | `governance` | `/api/v1/governance`| Champion/challenger model registry health, dataset freshness |
@@ -65,13 +65,26 @@ The platform transforms disparate operational silos (pit extraction, haulage fle
 | `training` | `/api/v1/training` | Governed training run lifecycle, evaluation runs, background simulation |
 | `model_approval`| `/api/v1/models` | Human approval gate, champion promotion, emergency rollback |
 | `decisions` | `/api/v1/decisions` | Operational decision logging, post-shift outcome feedback loop |
-| `intelligence`| `/api/v1/intelligence`| Unified Mine Pulse, NL reasoning engine, Root Cause Explorer, Material Flow |
+| `intelligence`| `/api/v1/intelligence`| NL query (deterministic intent), root-cause explorer |
+| `routing` | `/api/v1/routing` | Risk-aware haul routing, heatmaps, haulage-constrained production |
+| `command_center` | `/api/v1/command-center` | Operational state, attention queue, recommendations, do-nothing, handover |
+| `response_plans` | `/api/v1/response-plans` | Plan lifecycle: submit, approve, reject, start, complete, outcome |
+| `playbooks` | `/api/v1/playbooks` | Site response playbooks and their trigger evaluation |
+| `playbooks` | `/api/v1/decision-package` | Approvable decision document, JSON and Markdown |
+
+> **Mine Pulse was removed.** A single 0–100 score blended production, equipment,
+> exploration, data quality and governance — scopes that cannot meaningfully be
+> averaged — and did not tell a manager whether to act. It is replaced by a
+> mine operational state and a separate platform health state; see
+> [DECISION_OPERATING_MODEL.md](DECISION_OPERATING_MODEL.md).
 
 ---
 
 ## 4. Validated Machine Learning Models
 
-Model artifacts are persisted in `apps/ml/artifacts/` and evaluated strictly on out-of-sample temporal/spatial test splits. Benchmark numbers from `apps/ml/FINAL_MODEL_VALIDATION.csv`:
+Model artifacts are persisted in `app/ml/artifacts/`, each with a SHA-256 checksum and smoke test in `ARTIFACT_MANIFEST.json`.
+
+> **Read [TECHNICAL_REPORT.md §4](TECHNICAL_REPORT.md) before quoting any of these figures.** `leakage_status: PASS` is a hardcoded literal in the training scripts, not a computed result, and prospectivity's "spatial" split is positional. Benchmark numbers from `app/ml/FINAL_MODEL_VALIDATION.csv`:
 
 | Task | Champion Model | Split | Metric | Measured Value | Baseline Reference |
 |---|---|---|---|---|---|
@@ -105,3 +118,14 @@ Model artifacts are persisted in `apps/ml/artifacts/` and evaluated strictly on 
    - `datasets` & `dataset_versions`: uploaded raw files with lineage
    - `dataset_column_mappings`: source-to-canonical column alignments
    - `dataset_validation_reports`: deterministic data health scorecards (0-100)
+
+---
+
+## Related documents
+
+| Document | Contents |
+|---|---|
+| [DECISION_OPERATING_MODEL.md](DECISION_OPERATING_MODEL.md) | The decision loop, evidence quality, constraints, lifecycle, safety boundaries |
+| [TECHNICAL_REPORT.md](TECHNICAL_REPORT.md) | Full technical report: models, evaluation, performance, limitations |
+| [AUDIT_FINDINGS.md](AUDIT_FINDINGS.md) | Defects found in the pre-rebuild codebase and the live database |
+| [REBUILD_PLAN.md](REBUILD_PLAN.md) | The plan the rebuild followed |

@@ -1,8 +1,8 @@
-# MINEx Data Hub & Dataset Ingestion Lifecycle
+# Crucible AI Data Hub & Dataset Ingestion Lifecycle
 
 ## 1. Overview
 
-The MINEx Data Hub (`/data-hub` and `/api/v1/data/*`) is the governed gateway for incorporating new operational datasets into the platform. It guarantees that raw data is never ingested directly into machine learning pipelines without canonical schema alignment, deterministic quality validation, SHA-256 integrity verification, and durable storage persistence.
+The Crucible AI Data Hub (`/data-hub` and `/api/v1/data/*`) is the governed gateway for incorporating new operational datasets into the platform. It guarantees that raw data is never ingested directly into machine learning pipelines without canonical schema alignment, deterministic quality validation, SHA-256 integrity verification, and durable storage persistence.
 
 ---
 
@@ -23,7 +23,7 @@ The user selects one of 4 canonical domains:
 
 ### Step 2: File Upload & Remote Storage
 - File (CSV or XLSX) is uploaded via `POST /api/v1/data/upload` with role-based domain access verification (`check_domain_access`).
-- Saved durably to Google Drive object storage via `StorageService` (`datasets/{domain}/{filename}`) and cached locally in `apps/api/storage_cache/`.
+- Saved durably to Google Drive object storage via `StorageService` (`datasets/{domain}/{filename}`) and cached locally in `app/api/storage_cache/`.
 - Computes and records SHA-256 integrity checksum and byte size.
 - Supports true multi-version incrementing (`v1` → `v2`) with lineage linking via `parent_version_id`.
 
@@ -59,6 +59,6 @@ A dataset version with quality score $\ge 70$ can be approved by an authorized d
 ### Step 7: Event-Driven Cache Invalidation
 When a new dataset version is uploaded or approved:
 - The Data Hub triggers `invalidate_dataset(domain)`.
-- Evicts affected domain keys (`minex:cache:v1:{domain}:*`) across all active L1 in-memory caches and L2 Upstash Redis.
+- Evicts affected domain keys (`crucible:cache:v1:{domain}:*`) across all active L1 in-memory caches and L2 Upstash Redis.
 - Guarantees that subsequent API dashboard queries and model inferences immediately reflect the new dataset without serving stale entries.
 

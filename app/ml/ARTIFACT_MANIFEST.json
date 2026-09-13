@@ -1,0 +1,185 @@
+{
+  "generated_at": "2026-09-12T06:08:19.078203+00:00",
+  "environment": {
+    "python": "3.12.10",
+    "numpy": "2.2.6",
+    "scikit_learn": "1.9.0",
+    "joblib": "1.4.2"
+  },
+  "artifacts": {
+    "prospectivity": {
+      "filename": "prospectivity_champion.joblib",
+      "sha256": "7b29c722eec302aba765fb17b9f3227bfd69f6fd7636392c1bea9ba298d8b7c3",
+      "bytes": 3377,
+      "type": "Pipeline",
+      "module": "sklearn.pipeline",
+      "sklearn_version": null,
+      "smoke_task": "prospectivity",
+      "smoke_passed": true,
+      "smoke_message": "Smoke test passed with realistic sample: output=1.0000",
+      "status": "OK"
+    },
+    "prospectivity_feats": {
+      "filename": "prospectivity_features.joblib",
+      "sha256": "c963eeaa6d60ce56cf759025efb80ab02b3722b2e3cd7e46e27e6c167ddb1bd7",
+      "bytes": 634,
+      "type": "list",
+      "module": "builtins",
+      "sklearn_version": null,
+      "status": "OK",
+      "smoke_passed": null
+    },
+    "prod_forecast": {
+      "filename": "production_forecast_champion.joblib",
+      "sha256": "5d8c30ed9385ad6d78a3584f29aef989f2323894a7bc3d2268c7a529ba87e7bf",
+      "bytes": 540199,
+      "type": "LGBMRegressor",
+      "module": "lightgbm.sklearn",
+      "sklearn_version": null,
+      "smoke_task": "production_forecast",
+      "smoke_passed": true,
+      "smoke_message": "Smoke test passed with realistic sample: output=186.2954",
+      "status": "OK"
+    },
+    "prod_p10": {
+      "filename": "production_forecast_p10.joblib",
+      "sha256": "a54f52a06e70bc136fb17d47998af4e61e797903aa5e32a55a11662a17c69611",
+      "bytes": 2250132,
+      "type": "LGBMRegressor",
+      "module": "lightgbm.sklearn",
+      "sklearn_version": null,
+      "smoke_task": "production_forecast",
+      "smoke_passed": true,
+      "smoke_message": "Smoke test passed with realistic sample: output=131.6039",
+      "status": "OK"
+    },
+    "prod_p50": {
+      "filename": "production_forecast_p50.joblib",
+      "sha256": "ac4d52e1b6ce33c9eda26ee9084beb1320e1c69d191755df987a1b1a80a1e80c",
+      "bytes": 2227730,
+      "type": "LGBMRegressor",
+      "module": "lightgbm.sklearn",
+      "sklearn_version": null,
+      "smoke_task": "production_forecast",
+      "smoke_passed": true,
+      "smoke_message": "Smoke test passed with realistic sample: output=198.8221",
+      "status": "OK"
+    },
+    "prod_p90": {
+      "filename": "production_forecast_p90.joblib",
+      "sha256": "7413415749b5ddce671d3a316ecbf21abbcf85cab1471b0bdf56cf96829a4be9",
+      "bytes": 2233551,
+      "type": "LGBMRegressor",
+      "module": "lightgbm.sklearn",
+      "sklearn_version": null,
+      "smoke_task": "production_forecast",
+      "smoke_passed": true,
+      "smoke_message": "Smoke test passed with realistic sample: output=227.0109",
+      "status": "OK"
+    },
+    "prod_feats": {
+      "filename": "production_forecast_features.joblib",
+      "sha256": "1549e4eb9c901c931e4da93998607852fb9f192b8d608d8b17db3a3e248adf1f",
+      "bytes": 1046,
+      "type": "list",
+      "module": "builtins",
+      "sklearn_version": null,
+      "status": "OK",
+      "smoke_passed": null
+    },
+    "prod_medians": {
+      "filename": "production_forecast_medians.joblib",
+      "sha256": "647169c345b150448e9b12069fd878d45f21ab68b0f75eb1150a64be8ae0d7b4",
+      "bytes": 1487,
+      "type": "dict",
+      "module": "builtins",
+      "sklearn_version": null,
+      "status": "OK",
+      "smoke_passed": null
+    },
+    "prod_explainer": {
+      "filename": "production_forecast_explainer.joblib",
+      "sha256": "f0d00f7cd1749e6de5e0158f21d1652f439d725faee7c52e62d37fd9a5d34515",
+      "bytes": 1642196,
+      "type": "TreeExplainer",
+      "module": "shap.explainers._tree",
+      "sklearn_version": null,
+      "status": "OK",
+      "smoke_passed": null
+    },
+    "shortfall": {
+      "filename": "shortfall_champion.joblib",
+      "sha256": "45db3732a558bdf48d563d563ec68f2f0122e852d59e94cf243004cc6bbd807b",
+      "bytes": 31085,
+      "type": "CalibratedClassifierCV",
+      "module": "sklearn.calibration",
+      "sklearn_version": null,
+      "smoke_task": "shortfall",
+      "smoke_passed": true,
+      "smoke_message": "Smoke test passed with realistic sample: output=0.3134",
+      "status": "OK"
+    },
+    "shortfall_feats": {
+      "filename": "shortfall_features.joblib",
+      "sha256": "1549e4eb9c901c931e4da93998607852fb9f192b8d608d8b17db3a3e248adf1f",
+      "bytes": 1046,
+      "type": "list",
+      "module": "builtins",
+      "sklearn_version": null,
+      "status": "OK",
+      "smoke_passed": null
+    },
+    "equipment": {
+      "filename": "equipment_failure_champion.joblib",
+      "sha256": "437c84ea66ead00a8ad7313f22559b269d9d190dff748f3b9f20bb19165b54bf",
+      "bytes": 3185,
+      "type": "Pipeline",
+      "module": "sklearn.pipeline",
+      "sklearn_version": null,
+      "smoke_task": "equipment_failure",
+      "smoke_passed": true,
+      "smoke_message": "Smoke test passed with realistic sample: output=0.4533",
+      "status": "OK"
+    },
+    "equipment_feats": {
+      "filename": "equipment_failure_features.joblib",
+      "sha256": "9a89d8a6244178509eb05d23d88796488c2c26abea6141c507dc91e3cf57bf53",
+      "bytes": 631,
+      "type": "list",
+      "module": "builtins",
+      "sklearn_version": null,
+      "status": "OK",
+      "smoke_passed": null
+    },
+    "equipment_catmap": {
+      "filename": "equipment_failure_catmap.joblib",
+      "sha256": "3fc3b46e81ac3403c14ce125003aab8ab356ab74daa2be8dd6a9f3317e49809c",
+      "bytes": 125,
+      "type": "dict",
+      "module": "builtins",
+      "sklearn_version": null,
+      "status": "OK",
+      "smoke_passed": null
+    },
+    "equipment_medians": {
+      "filename": "equipment_failure_medians.joblib",
+      "sha256": "3b936aabaf1c1f34d273bb2a6f83d7ca6fe30c04a14e31a4f442d49d9448d307",
+      "bytes": 910,
+      "type": "dict",
+      "module": "builtins",
+      "sklearn_version": null,
+      "status": "OK",
+      "smoke_passed": null
+    },
+    "equipment_calibrator": {
+      "filename": "equipment_failure_calibrator.joblib",
+      "sha256": "5f2a0d082df0b92289233b103db4a17f8f7104bebe7d02332e543488640adf02",
+      "bytes": 2143,
+      "type": "IsotonicRegression",
+      "module": "sklearn.isotonic",
+      "sklearn_version": null,
+      "status": "OK",
+      "smoke_passed": null
+    }
+  }
+}

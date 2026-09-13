@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """scripts/upload_models_to_drive.py
 
-Uploads all .joblib artifacts from apps/ml/artifacts/ to a Google Drive folder
+Uploads all .joblib artifacts from app/ml/artifacts/ to a Google Drive folder
 and prints the file IDs to paste into gdrive_artifacts.py.
 
 USAGE:
@@ -25,7 +25,7 @@ import argparse
 import pathlib
 import sys
 
-ARTIFACTS_DIR = pathlib.Path("apps/ml/artifacts")
+ARTIFACTS_DIR = pathlib.Path("app/ml/artifacts")
 
 JOBLIB_FILES = [
     "production_forecast_champion.joblib",
@@ -88,7 +88,7 @@ def upload_via_service_account(folder_id: str, key_file: str):
 def print_registry(file_ids: dict):
     """Print the ready-to-paste DRIVE_FILE_IDS block."""
     print("\n" + "="*70)
-    print("Paste this into apps/api/core/gdrive_artifacts.py:")
+    print("Paste this into app/api/core/gdrive_artifacts.py:")
     print("="*70)
     print("DRIVE_FILE_IDS: dict[str, str] = {")
     for fname, fid in file_ids.items():
@@ -98,7 +98,7 @@ def print_registry(file_ids: dict):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Upload MINEx ML artifacts to Google Drive")
+    parser = argparse.ArgumentParser(description="Upload Crucible AI ML artifacts to Google Drive")
     parser.add_argument("--folder-id", required=True, help="Target Google Drive folder ID")
     parser.add_argument("--key-file", default="scripts/service_account.json",
                         help="Path to service account JSON key (default: scripts/service_account.json)")

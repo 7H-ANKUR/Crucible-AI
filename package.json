@@ -1,16 +1,16 @@
 {
-  "name": "minex",
+  "name": "crucible",
   "version": "1.0.0",
   "private": true,
-  "description": "MINEx — SIH26009 mining intelligence platform (FastAPI + Next.js)",
+  "description": "Crucible AI — SIH26009 mining intelligence platform (FastAPI + Next.js)",
   "scripts": {
-    "dev:api": "python -m uvicorn apps.api.main:app --reload --port 8000",
-    "dev:web": "cd apps/web && npm run dev",
+    "dev:api": "python -m uvicorn app.api.main:app --reload --port 8000",
+    "dev:web": "cd web && npm run dev",
     "seed": "python seed_db.py all",
     "migrate": "python scripts/migrate_db.py",
     "seed:registry": "python scripts/seed_model_registry.py",
     "seed:predictions": "python scripts/seed_predictions.py",
-    "train": "python apps/ml/train_all_models.py",
+    "train": "python app/ml/train_all_models.py",
     "healthcheck": "python scripts/demo_healthcheck.py"
   }
 }

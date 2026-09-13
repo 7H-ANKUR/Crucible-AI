@@ -2,7 +2,7 @@
 """scripts/sync_drive_ids.py
 
 Queries a Google Drive folder using gdown and automatically populates
-DRIVE_FILE_IDS in apps/api/core/gdrive_artifacts.py.
+DRIVE_FILE_IDS in app/api/core/gdrive_artifacts.py.
 
 USAGE:
   python scripts/sync_drive_ids.py
@@ -14,7 +14,7 @@ import re
 import sys
 
 DEFAULT_FOLDER_ID = "1XykuJ8El-yQ_27FrdCzL7VHraoyGrBKy"
-TARGET_FILE = pathlib.Path("apps/api/core/gdrive_artifacts.py")
+TARGET_FILE = pathlib.Path("app/api/core/gdrive_artifacts.py")
 
 
 def main():
@@ -37,7 +37,7 @@ def main():
 
     if not items:
         print("\nWARNING: No files found in the Google Drive folder yet!")
-        print("Please upload your .joblib files from apps/ml/artifacts/ into:")
+        print("Please upload your .joblib files from app/ml/artifacts/ into:")
         print(f"  https://drive.google.com/drive/folders/{args.folder_id}")
         return
 

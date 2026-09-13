@@ -1,8 +1,8 @@
-# MINEx Synthetic Data Policy & Transparency Standard
+# Crucible AI Synthetic Data Policy & Transparency Standard
 
 ## 1. Purpose & Guiding Principles
 
-MINEx is developed as a high-fidelity operational prototype calibrated on real geological and mining dynamics of the Sausar Manganese Belt (Central India). To enable rigorous simulation without proprietary enterprise data leakage, the baseline dataset uses calibrated synthetic data.
+Crucible AI is developed as a high-fidelity operational prototype calibrated on real geological and mining dynamics of the Sausar Manganese Belt (Central India). To enable rigorous simulation without proprietary enterprise data leakage, the baseline dataset uses calibrated synthetic data.
 
 This policy defines the standards for transparency, data origin labeling, and the procedure for replacing synthetic benchmarks with live industrial telemetry.
 
@@ -10,7 +10,7 @@ This policy defines the standards for transparency, data origin labeling, and th
 
 ## 2. Mandatory Labeling Standard
 
-Every API response, database record, and UI panel in MINEx adheres to the following labeling requirements:
+Every API response, database record, and UI panel in Crucible AI adheres to the following labeling requirements:
 1. **API Contracts**: All JSON payloads transmitting synthetic or benchmark data include `"data_origin": "SYNTHETIC"`.
 2. **Dashboard Badges**: UI dashboards display prominent indicator chips (e.g. `Includes simulated readings` or `SYNTHETIC BENCHMARK`).
 3. **Ledger Integrity**: The immutable prediction ledger (`ml.predictions`) records `data_origin = 'SYNTHETIC'` for every inference run during demo/benchmark operations.
@@ -29,7 +29,7 @@ All synthetic data generation adheres to real physical mining constraints:
 
 ## 4. Path to Production (Replacing Synthetic with Real IoT)
 
-When deploying MINEx to an active mining concession:
+When deploying Crucible AI to an active mining concession:
 1. **Data Hub Upload**: Ingest site-specific CSV/XLSX logs via `/data-hub`.
 2. **IoT Kafka/MQTT Connector**: Configure sensor stream ingestion into `ops.equipment_telemetry` and `ops.production_records`.
 3. **Environment Gate**: Set `ENVIRONMENT=production` in backend configuration.

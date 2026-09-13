@@ -1,21 +1,66 @@
+# v3 unified Python requirements — Crucible AI gateway + Crucible AI engine, one environment.
+#
+# Target interpreter: CPython 3.12
+#   3.13+ is blocked by shap (no wheels past cp312).
+#   3.11 also works; 3.12 is chosen as the newest both stacks support.
+#
+# Resolved conflicts
+#   numpy      Crucible AI pinned ==1.26.4, Crucible AI required >=2.0.
+#              Resolved to 2.x: scikit-learn 1.9.0 declares numpy>=1.24.1 with no
+#              upper bound, so the 1.26.4 pin was stale rather than load-bearing.
+#              Arrays pickled under 1.26 still read under 2.x, so the committed
+#              Crucible AI artifacts survive the move. scripts/verify_artifacts.py is
+#              what proves that, and must pass before this pin is trusted.
+#   pandas     Crucible AI ==2.2.3 already satisfies Crucible AI's >=2.0. 2.2.3 is the
+#              release that added numpy 2 support, so it is kept exactly.
+#
+# Every version here is exact. A range would let a rebuild pick up a version the
+# committed model artifacts were never validated against, which is precisely the
+# failure this file exists to prevent.
+
+# ── Web framework ────────────────────────────────────────────────────────────
 fastapi==0.115.0
 uvicorn[standard]==0.30.6
-python-jose[cryptography]==3.3.0
-passlib[bcrypt]==1.7.4
-psycopg2-binary==2.9.9
-python-dotenv==1.0.1
-pandas==2.2.3
-numpy==1.26.4
-joblib==1.4.2
-shap==0.46.0
-scikit-learn==1.5.2
-xgboost==2.1.1
-lightgbm==4.5.0
 python-multipart==0.0.12
 pydantic==2.9.2
 pydantic-settings==2.5.2
+
+# ── Auth (Crucible AI) ─────────────────────────────────────────────────────────────
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+
+# ── Persistence ──────────────────────────────────────────────────────────────
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.36
+redis==5.2.1
+
+# ── Scientific core (shared) ─────────────────────────────────────────────────
+numpy==2.2.6
+pandas==2.2.3
+scipy==1.14.1
+scikit-learn==1.9.0
+joblib==1.4.2
+
+# ── Models & explainability (Crucible AI) ──────────────────────────────────────────
+lightgbm==4.5.0
+xgboost==2.1.1
+shap==0.46.0
+
+# ── Geospatial (Crucible AI) ──────────────────────────────────────────────────────
+# These must satisfy the floors declared in crucible/pyproject.toml
+# (rasterio>=1.5, geopandas>=1.1, shapely>=2.1, pyproj>=3.8), which is what
+# `test_environment_contract.py` asserts.
+rasterio==1.5.1
+geopandas==1.1.4
+shapely==2.1.2
+pyproj==3.8.0
+
+# ── External services (Crucible AI) ────────────────────────────────────────────────
 groq==0.11.0
 gdown==6.1.1
 modal==1.5.5
-redis>=5.2.0
-gradio>=4.40.0
+python-dotenv==1.0.1
+
+# Declared explicitly rather than inherited from gdown/modal: the gateway's
+# bridge to the Crucible AI engine depends on it directly.
+requests==2.32.3

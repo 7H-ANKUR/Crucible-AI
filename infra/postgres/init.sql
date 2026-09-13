@@ -1,5 +1,5 @@
 -- =============================================================
--- MINEx / MANGANESIS — Aiven PostgreSQL Schema
+-- Crucible AI / MANGANESIS — Aiven PostgreSQL Schema
 -- SIH26009 | Authoritative Enterprise Schema
 -- Safe to run multiple times (all statements are idempotent)
 -- =============================================================
@@ -422,4 +422,4 @@ INSERT INTO gov.schema_migrations (version, description) VALUES
   ('v2.0.0', 'Hardening v2: partial unique indexes, FK constraints, CHECK constraints, migration tracking')
 ON CONFLICT (version) DO NOTHING;
 
-SELECT 'Schema created successfully (MINEx Hardening v2)' AS status;
+SELECT 'Schema created successfully (Crucible AI Hardening v2)' AS status;

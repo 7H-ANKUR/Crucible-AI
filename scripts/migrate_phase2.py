@@ -5,10 +5,10 @@ Runs non-destructive CREATE TABLE IF NOT EXISTS against the live DB.
 import sys
 from pathlib import Path
 
-# Add project root to Python path so we can import apps.api
+# Add project root to Python path so we can import app.api
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from apps.api.core.db import execute, init_db
+from app.api.core.db import execute, init_db
 
 
 def migrate():

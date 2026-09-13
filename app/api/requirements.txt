@@ -1,0 +1,8 @@
+# The API image installs the shared v3 dependency set. Versions live at the v3
+# root so the gateway and the Crucible AI engine cannot resolve to different builds of
+# numpy, scikit-learn, or joblib — which would silently change how the committed
+# model artifacts deserialize.
+#
+# Do not add pins here.
+
+-r ../../requirements.txt
