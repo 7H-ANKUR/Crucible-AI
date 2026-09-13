@@ -1,4 +1,4 @@
-# v3 — Crucible AI + Crucible AI on one environment
+# v3 — Crucible AI + AyaskX on one environment
 
 The Crucible AI mining intelligence platform and the Crucible AI autonomous-ML engine, unified
 onto a single Python 3.12 interpreter and a single dependency set, with Crucible AI's
