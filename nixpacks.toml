@@ -1,1 +1,9 @@
 providers = ["python"]
+
+[phases.setup]
+# LightGBM requires the GNU OpenMP runtime (libgomp) which is not included
+# in the default Nixpacks Python image. Without it, all LGBMRegressor models
+# (production_forecast_champion, p10, p50, p90, explainer) fail to load and
+# the API falls back to a static heuristic — same number for every mine.
+nixPkgs = ["...", "gcc"]
+aptPkgs = ["...", "libgomp1"]
