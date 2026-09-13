@@ -1,0 +1,6 @@
+task,model,split,metric_roc_auc,metric_pr_auc,metric_brier,split_type,leakage_status,data_origin
+prospectivity,logistic_baseline,test,0.9005,0.8488,0.1246,spatial,PASS,SYNTHETIC
+prospectivity,logistic_baseline,validation,0.8365,0.7095,0.1593,spatial,PASS,SYNTHETIC
+prospectivity,random_forest,validation,0.8323,0.6612,0.1629,spatial,PASS,SYNTHETIC
+prospectivity,xgboost,validation,0.816,0.6444,0.1729,spatial,PASS,SYNTHETIC
+prospectivity,lightgbm,validation,0.8098,0.6223,0.1688,spatial,PASS,SYNTHETIC

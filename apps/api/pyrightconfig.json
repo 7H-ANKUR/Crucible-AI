@@ -1,0 +1,17 @@
+{
+  "pythonVersion": "3.11",
+  "include": ["."],
+  "exclude": ["**/node_modules", "**/__pycache__", "**/artifacts"],
+  "executionEnvironments": [
+    {
+      "root": ".",
+      "pythonPath": "../../.venv/Scripts/python.exe",
+      "extraPaths": ["../../"]
+    }
+  ],
+  "reportMissingModuleSource": "none",
+  "reportMissingImports": "none",
+  "reportUnknownMemberType": "none",
+  "reportUnknownVariableType": "none",
+  "typeCheckingMode": "off"
+}

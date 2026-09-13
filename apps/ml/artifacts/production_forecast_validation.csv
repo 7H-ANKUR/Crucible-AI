@@ -1,0 +1,5 @@
+task,model,split,metric_mae,metric_r2,metric_mape_pct,split_type,leakage_status,data_origin
+production_forecast,lightgbm,test,30.9,0.7742,19.26,temporal,PASS,SYNTHETIC
+production_forecast,linear_baseline,validation,27.55,0.8216,17.36,temporal,PASS,SYNTHETIC
+production_forecast,xgboost,validation,27.55,0.8207,16.43,temporal,PASS,SYNTHETIC
+production_forecast,lightgbm,validation,27.46,0.8224,16.37,temporal,PASS,SYNTHETIC

@@ -1,0 +1,5 @@
+task,model,split,metric_roc_auc,metric_pr_auc,metric_brier,split_type,leakage_status,data_origin
+shortfall,logistic_baseline_calibrated,test,0.7241,0.6532,0.2167,temporal,PASS,SYNTHETIC
+shortfall,logistic_baseline,validation,0.6235,0.3479,0.1827,temporal,PASS,SYNTHETIC
+shortfall,xgboost,validation,0.6155,0.3383,0.1873,temporal,PASS,SYNTHETIC
+shortfall,lightgbm,validation,0.6187,0.3427,0.1863,temporal,PASS,SYNTHETIC

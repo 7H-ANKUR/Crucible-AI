@@ -1,0 +1,263 @@
+@import "tailwindcss";
+@import "maplibre-gl/dist/maplibre-gl.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================================================
+   Design tokens — LIGHT (default: white + golden)
+   ============================================================ */
+:root {
+  --tk-page: #f6f7f9;
+  --tk-deep: #ffffff;
+  --tk-deep2: #ffffff;
+  --tk-card: #ffffff;
+  --tk-panel: #ffffff;
+  --tk-panel2: #f1f3f5;
+  --tk-panel3: #e9ecef;
+  --tk-panel4: #dfe3e8;
+  --tk-chipon: #d8e4ea;
+
+  --tk-ink: #182430;
+  --tk-ink2: #55636d;
+  --tk-ink3: #8a959c;
+  --tk-inkb: #3e6a86;
+  --tk-inkc: #2273a0;
+
+  --tk-line: #e3e6ea;
+  --tk-line2: #dcc9b4;
+  --tk-line3: #c9d2d8;
+
+  --tk-accentt: #a06a00;   /* golden as text on white */
+  --tk-okt: #1f7a5c;
+  --tk-warnt: #9a6a10;
+  --tk-dangert: #c23b33;
+  --tk-infot: #2273a0;
+
+  /* constants — same in both themes */
+  --tk-onaccent: #07141B;
+  --tk-btn: #182430;       /* solid CTA button */
+  --tk-btnt: #f6f7f9;      /* CTA label */
+  --tk-frost: #223038;     /* overlay strokes/tints on light bg */
+}
+
+/* ============================================================
+   Design tokens — DARK (the original Stitch palette)
+   ============================================================ */
+.dark {
+  --tk-page: #08151c;
+  --tk-deep: #041017;
+  --tk-deep2: #07141B;
+  --tk-card: #0d1d26;
+  --tk-panel: #101d24;
+  --tk-panel2: #142128;
+  --tk-panel3: #1f2c33;
+  --tk-panel4: #2a363e;
+  --tk-chipon: #304a57;
+
+  --tk-ink: #d7e4ef;
+  --tk-ink2: #d9c3af;
+  --tk-ink3: #7f95a1;
+  --tk-inkb: #afcbda;
+  --tk-inkc: #93d3ef;
+
+  --tk-line: #16313D;
+  --tk-line2: #544435;
+  --tk-line3: #41606B;
+
+  --tk-accentt: #FFC56F;
+  --tk-okt: #2E9B76;
+  --tk-warnt: #D99523;
+  --tk-dangert: #ff8a80;
+  --tk-infot: #93d3ef;
+
+  --tk-onaccent: #07141B;
+  --tk-btn: #ffffff;
+  --tk-btnt: #07141B;
+  --tk-frost: #ffffff;
+}
+
+/* Semantic Tailwind tokens (utilities like bg-page, text-ink, border-line).
+   `inline` keeps var() references so .dark flips them live and /alpha
+   modifiers work via color-mix. */
+@theme inline {
+  --color-page: var(--tk-page);
+  --color-deep: var(--tk-deep);
+  --color-deep2: var(--tk-deep2);
+  --color-card: var(--tk-card);
+  --color-panel: var(--tk-panel);
+  --color-panel2: var(--tk-panel2);
+  --color-panel3: var(--tk-panel3);
+  --color-panel4: var(--tk-panel4);
+  --color-chipon: var(--tk-chipon);
+  --color-ink: var(--tk-ink);
+  --color-ink2: var(--tk-ink2);
+  --color-ink3: var(--tk-ink3);
+  --color-inkb: var(--tk-inkb);
+  --color-inkc: var(--tk-inkc);
+  --color-line: var(--tk-line);
+  --color-line2: var(--tk-line2);
+  --color-line3: var(--tk-line3);
+  --color-accent: #FFC56F;
+  --color-accent2: #ffbd77;
+  --color-accent3: #f59a23;
+  --color-accentt: var(--tk-accentt);
+  --color-onaccent: var(--tk-onaccent);
+  --color-btn: var(--tk-btn);
+  --color-btnt: var(--tk-btnt);
+  --color-frost: var(--tk-frost);
+  --color-ok: #2E9B76;
+  --color-okt: var(--tk-okt);
+  --color-warn: #D99523;
+  --color-warnt: var(--tk-warnt);
+  --color-danger: #D9574F;
+  --color-dangert: var(--tk-dangert);
+  --color-info: #93d3ef;
+  --color-infot: var(--tk-infot);
+}
+
+@layer base {
+  body {
+    background-color: var(--tk-page);
+    color: var(--tk-ink);
+    font-family: "Inter", sans-serif;
+  }
+}
+
+/* ============================================================
+   Glass utilities — light defaults, .dark overrides
+   ============================================================ */
+.liquid-glass {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.45));
+  backdrop-filter: blur(18px) saturate(135%);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 16px 48px rgba(24, 36, 48, 0.12);
+}
+.dark .liquid-glass {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 16px 48px rgba(2, 12, 17, 0.25);
+}
+
+.liquid-glass-dark {
+  background: var(--tk-deep2);
+  backdrop-filter: blur(18px) saturate(135%);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  box-shadow: 0 16px 48px rgba(24, 36, 48, 0.14);
+  border: 1px solid var(--tk-line);
+}
+.dark .liquid-glass-dark {
+  background: linear-gradient(135deg, rgba(7, 20, 27, 0.85), rgba(7, 20, 27, 0.96));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 16px 48px rgba(2, 12, 17, 0.45);
+}
+
+.glass-panel {
+  background: var(--tk-deep2);
+  backdrop-filter: blur(18px) saturate(135%);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  box-shadow: 0 16px 48px rgba(24, 36, 48, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border-radius: 24px;
+}
+.dark .glass-panel {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05));
+  box-shadow: 0 16px 48px rgba(2, 12, 17, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.dark-glass {
+  background: var(--tk-panel2);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.dark .dark-glass {
+  background: linear-gradient(135deg, rgba(25, 52, 64, 0.45), rgba(22, 49, 61, 0.2));
+}
+
+.data-table-container {
+  background-color: var(--tk-deep2);
+  border-radius: 0.75rem;
+}
+
+.ambient-shadow {
+  box-shadow: 0 16px 48px rgba(24, 36, 48, 0.18);
+}
+.dark .ambient-shadow {
+  box-shadow: 0 16px 48px rgba(2, 12, 17, 0.5);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out both;
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spinSlow 8s linear infinite;
+}
+
+/* Material Symbols icon font (filled variant via font-variation-settings) */
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-display: swap;
+  text-rendering: optimizeLegibility;
+  -webkit-font-feature-settings: "liga";
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--tk-panel2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--tk-line3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--tk-accentt);
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* MapLibre popup — themed */
+.maplibregl-popup-content {
+  background: var(--tk-deep2) !important;
+  color: var(--tk-ink) !important;
+  border: 1px solid var(--tk-accentt) !important;
+  border-radius: 12px !important;
+  font-family: "Inter", sans-serif !important;
+  font-size: 12px !important;
+  box-shadow: 0 16px 48px rgba(24, 36, 48, 0.25) !important;
+}
+.maplibregl-popup-tip {
+  border-top-color: var(--tk-deep2) !important;
+  border-bottom-color: var(--tk-deep2) !important;
+}
+
+@keyframes drawerIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+.animate-drawerIn {
+  animation: drawerIn 0.22s ease-out both;
+}

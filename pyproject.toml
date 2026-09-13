@@ -1,0 +1,6 @@
+[project]
+name = "minex"
+version = "1.0.0"
+
+[tool.vercel]
+entrypoint = "apps.api.main:app"

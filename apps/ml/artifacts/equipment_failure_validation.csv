@@ -1,0 +1,5 @@
+task,model,split,metric_roc_auc,metric_pr_auc,metric_baseline_pr_auc,metric_lift,metric_brier,split_type,leakage_status,data_origin
+equipment_failure,logistic_baseline,test,0.6018,0.1315,0.0873,1.51,0.2452,temporal,PASS,SYNTHETIC
+equipment_failure,logistic_baseline,validation,0.5927,0.1234,0.0849,1.45,0.2416,temporal,PASS,SYNTHETIC
+equipment_failure,xgboost,validation,0.5807,0.1166,0.0849,1.37,0.2139,temporal,PASS,SYNTHETIC
+equipment_failure,lightgbm,validation,0.5753,0.115,0.0849,1.36,0.2017,temporal,PASS,SYNTHETIC
