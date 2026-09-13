@@ -31,7 +31,7 @@ const themeInit = `try{var t=localStorage.getItem('crucible_theme');if(t==='dark
  * Skipped for local origins (dev backends do not sleep). The origin is embedded via
  * JSON.stringify so it cannot break out of the string literal.
  */
-const warmupInit = `try{var u=${JSON.stringify(API_ORIGIN)};if(u&&!/^https?:\\/\\/(localhost|127\\.0\\.0\\.1|\\[::1\\])/i.test(u)){fetch(u+'/health/live',{mode:'cors',cache:'no-store',credentials:'omit'}).catch(function(){});}}catch(e){}`;
+const warmupInit = `try{var u=${JSON.stringify(API_ORIGIN)};if(u&&!/^https?:\\/\\/(localhost|127\\.0\\.0\\.1|\\[::1\\])/i.test(u)){fetch(u+'/ping',{mode:'cors',cache:'no-store',credentials:'omit'}).catch(function(){});}}catch(e){}`;
 
 export default function RootLayout({
   children,

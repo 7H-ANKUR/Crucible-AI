@@ -23,9 +23,9 @@ export default function ScenarioPage() {
     objective: 'BALANCED',
     max_additional_fuel_pct: 14,
     fleet_reallocation: 'MEDIUM',
-    maintenance_flexibility: 'LIMITED',
+    maintenance_flexibility: 'LOW',
     route_flexibility: 'MEDIUM',
-    operating_time_mode: 'CURRENT',
+    operating_time_flexibility: 'NONE',
     risk_tolerance: 'BALANCED',
   };
 
@@ -97,13 +97,13 @@ export default function ScenarioPage() {
     let next: ScenarioControls;
     switch(preset) {
       case 'MAX_OUTPUT':
-        next = { objective: 'MAXIMIZE_PRODUCTION', max_additional_fuel_pct: 25, fleet_reallocation: 'HIGH', maintenance_flexibility: 'HIGH', route_flexibility: 'HIGH', operating_time_mode: 'MAX_AVAILABLE', risk_tolerance: 'AGGRESSIVE' };
+        next = { objective: 'MAXIMIZE_PRODUCTION', max_additional_fuel_pct: 25, fleet_reallocation: 'HIGH', maintenance_flexibility: 'HIGH', route_flexibility: 'HIGH', operating_time_flexibility: 'HIGH', risk_tolerance: 'AGGRESSIVE' };
         break;
       case 'COST_SAVER':
-        next = { objective: 'MINIMIZE_COST', max_additional_fuel_pct: 5, fleet_reallocation: 'LOW', maintenance_flexibility: 'PRESERVE', route_flexibility: 'LOW', operating_time_mode: 'CURRENT', risk_tolerance: 'CONSERVATIVE' };
+        next = { objective: 'MINIMIZE_COST', max_additional_fuel_pct: 5, fleet_reallocation: 'LOW', maintenance_flexibility: 'NONE', route_flexibility: 'LOW', operating_time_flexibility: 'NONE', risk_tolerance: 'CONSERVATIVE' };
         break;
       case 'SAFE_STEADY':
-        next = { objective: 'MINIMIZE_RISK', max_additional_fuel_pct: 10, fleet_reallocation: 'MEDIUM', maintenance_flexibility: 'PRESERVE', route_flexibility: 'LOW', operating_time_mode: 'CURRENT', risk_tolerance: 'CONSERVATIVE' };
+        next = { objective: 'MINIMIZE_RISK', max_additional_fuel_pct: 10, fleet_reallocation: 'MEDIUM', maintenance_flexibility: 'NONE', route_flexibility: 'LOW', operating_time_flexibility: 'NONE', risk_tolerance: 'CONSERVATIVE' };
         break;
       case 'BALANCED':
       default:
@@ -212,7 +212,7 @@ export default function ScenarioPage() {
                 <label className="text-xs font-bold text-ink2 mb-0.5 block">Moving Equipment (Fleet)</label>
                 <span className="text-[10px] text-ink3 mb-1.5 block">Shifting trucks/loaders to active faces</span>
                 <div className="flex rounded-lg overflow-hidden border border-line">
-                  {['LOW', 'MEDIUM', 'HIGH'].map(rt => (
+                  {['NONE', 'LOW', 'MEDIUM', 'HIGH'].map(rt => (
                     <button 
                       key={rt}
                       onClick={() => updateControl('fleet_reallocation', rt)}
@@ -229,13 +229,13 @@ export default function ScenarioPage() {
                 <label className="text-xs font-bold text-ink2 mb-0.5 block">Delaying Maintenance</label>
                 <span className="text-[10px] text-ink3 mb-1.5 block">Postponing non-critical service</span>
                 <div className="flex rounded-lg overflow-hidden border border-line">
-                  {['PRESERVE', 'LIMITED', 'HIGH'].map(rt => (
+                  {['NONE', 'LOW', 'MEDIUM', 'HIGH'].map(rt => (
                     <button 
                       key={rt}
                       onClick={() => updateControl('maintenance_flexibility', rt)}
                       className={`flex-1 text-[10px] font-bold py-1.5 ${controls.maintenance_flexibility === rt ? 'bg-ink/10 text-ink' : 'bg-panel text-ink2 hover:bg-panel2'}`}
                     >
-                      {rt === 'PRESERVE' ? 'NONE' : rt}
+                      {rt === 'NONE' ? 'PRESERVE' : rt === 'LOW' ? 'LIMITED' : rt}
                     </button>
                   ))}
                 </div>
@@ -246,7 +246,7 @@ export default function ScenarioPage() {
                 <label className="text-xs font-bold text-ink2 mb-0.5 block">Changing Haul Routes</label>
                 <span className="text-[10px] text-ink3 mb-1.5 block">Allowing alternative pathing</span>
                 <div className="flex rounded-lg overflow-hidden border border-line">
-                  {['LOW', 'MEDIUM', 'HIGH'].map(rt => (
+                  {['NONE', 'LOW', 'MEDIUM', 'HIGH'].map(rt => (
                     <button 
                       key={rt}
                       onClick={() => updateControl('route_flexibility', rt)}
