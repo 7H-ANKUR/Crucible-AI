@@ -50,13 +50,23 @@ export default function MobileProduction() {
                 key={i}
                 className={`flex-1 rounded-t-sm relative overflow-hidden ${
                   b.isPeak
-                    ? 'bg-copper-accent/85 border-t border-copper-accent'
+                    ? 'bg-copper-accent border-2 border-primary-container shadow-xs'
                     : b.projected
-                    ? 'bg-surface-container-low/50 border-t border-dashed border-copper-accent/50'
-                    : 'bg-surface-container-low/60'
+                    ? 'bg-copper-accent/20 border-2 border-dashed border-copper-accent'
+                    : 'bg-earth-espresso/85 border-2 border-earth-charcoal shadow-xs'
                 }`}
                 style={{ height: `${Math.max(6, (b.heightPercent / maxVal) * 100)}%` }}
-              />
+              >
+                {b.projected && (
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      backgroundImage:
+                        'repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(180,106,54,0.35) 3px, rgba(180,106,54,0.35) 6px)',
+                    }}
+                  />
+                )}
+              </div>
             ))}
           </div>
           <div className="flex justify-between text-[9px] text-secondary mt-1">
