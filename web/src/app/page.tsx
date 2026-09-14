@@ -16,6 +16,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function LandingPage() {
   const [email, setEmail] = useState('');
@@ -33,17 +34,18 @@ export default function LandingPage() {
     <div className="bg-[#14110f] text-[#fff8f4] font-sans overflow-x-hidden selection:bg-[#9e5a2a] selection:text-white min-h-screen">
       
       {/* ── 1. Main Header ──────────────────────────────────────────────── */}
-      <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md bg-[#14110f]/85 border-b border-[#2c2520]/50">
+      <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md bg-[#14110f]/85">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           {/* Brand Logo */}
           <Link aria-label="Crucible AI Home" className="flex items-center gap-3 group" href="/">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#d3996d] to-[#9e5a2a] flex items-center justify-center p-1.5 shadow-lg shadow-[#9e5a2a]/25 group-hover:scale-105 transition-transform duration-300">
-              <svg className="w-full h-full text-white" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
-                <polygon points="12 2 2 7 12 12 22 7 12 2" />
-                <polyline points="2 17 12 22 22 17" />
-                <polyline points="2 12 12 17 22 12" />
-              </svg>
-            </div>
+            <Image
+              src="/icon.svg"
+              alt="Crucible AI Logo"
+              width={36}
+              height={36}
+              className="w-9 h-9 rounded-lg shadow-lg shadow-[#ea580c]/25 group-hover:scale-105 transition-transform duration-300 object-contain"
+              priority
+            />
             <div className="flex flex-col">
               <span className="font-['Space_Grotesk'] font-extrabold text-xl tracking-wider text-white">
                 CRUCIBLE<span className="text-[#d3996d]">AI</span>
@@ -76,16 +78,10 @@ export default function LandingPage() {
           {/* Action Buttons */}
           <div className="flex items-center gap-4">
             <Link
-              className="text-sm font-medium text-stone-300 hover:text-white transition-colors duration-200"
+              className="text-sm font-medium text-stone-300 hover:text-white px-5 py-2 rounded-full border border-stone-700/60 hover:border-[#d3996d]/60 transition-all duration-200"
               href="/sign-in"
             >
               Sign In
-            </Link>
-            <Link
-              className="bg-[#9e5a2a] hover:bg-[#b56832] text-white text-sm font-medium px-5 py-2.5 rounded-full transition-all duration-300 shadow-md shadow-[#9e5a2a]/30 hover:shadow-[#9e5a2a]/50"
-              href="/command-center"
-            >
-              Launch Live Portal
             </Link>
           </div>
         </div>
@@ -442,13 +438,13 @@ export default function LandingPage() {
             {/* Brand Summary Column */}
             <div className="col-span-2">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#d3996d] to-[#9e5a2a] flex items-center justify-center p-1.5">
-                  <svg className="w-full h-full text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <polygon points="12 2 2 7 12 12 22 7 12 2" />
-                    <polyline points="2 17 12 22 22 17" />
-                    <polyline points="2 12 12 17 22 12" />
-                  </svg>
-                </div>
+                <Image
+                  src="/icon.svg"
+                  alt="Crucible AI Logo"
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 rounded-lg object-contain"
+                />
                 <span className="font-['Space_Grotesk'] font-bold text-xl text-white tracking-wider">
                   CRUCIBLE<span className="text-[#d3996d]">AI</span>
                 </span>

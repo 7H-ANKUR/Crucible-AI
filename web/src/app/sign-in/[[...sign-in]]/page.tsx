@@ -7,6 +7,7 @@
  */
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { SignIn, useAuth } from '@clerk/nextjs';
 
 const FEATURE_PILLS = [
@@ -64,18 +65,20 @@ export default function LoginPage() {
       >
         {/* Quarry satellite background */}
         <div className="absolute inset-0 z-0">
-          <img
+          <Image
             alt="Aerial view of mineral quarry excavation"
-            className="w-full h-full object-cover object-center"
-            style={{ filter: 'brightness(0.55) contrast(1.1) saturate(0.85)' }}
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCf57TlQw-OD9pHdBsvsD2v8HiLm5uesE1biua5LBZfBI_hFjAcm_S4cFFFk_7DX9b8gPLZ1JSKIlklguhXd0Ty0iI9Ovs2njhji3xGhcIocQXY7Yyox_lHUe5pK38d-F_R0xI-dPMT_NrZtYFyg3Aw71SL3GF1R2UNheJpKS1mhGeBZDyFwrZS8VV1gKHTJ58XYgvwjVQwZHKNQ9Ey610MOIh1HrGdDeI1fsJijYfnd8HPnJ1EaJpGNwFfit7urARk0w"
+            fill
+            priority
+            className="object-cover object-center"
+            style={{ filter: 'brightness(0.65) contrast(1.15) saturate(0.9)' }}
+            src="/images/signup-hero.webp"
           />
           {/* Gradient overlay */}
           <div
             className="absolute inset-0"
             style={{
-              background: `radial-gradient(circle at top left, rgba(14,11,8,0.45), rgba(14,11,8,0.88) 70%, #0e0b08 100%),
-                           linear-gradient(to right, rgba(14,11,8,0.3) 0%, rgba(14,11,8,0.95) 100%)`,
+              background: `radial-gradient(circle at top left, rgba(14,11,8,0.35), rgba(14,11,8,0.85) 70%, #0e0b08 100%),
+                           linear-gradient(to right, rgba(14,11,8,0.2) 0%, rgba(14,11,8,0.92) 100%)`,
             }}
           />
         </div>
@@ -84,17 +87,16 @@ export default function LoginPage() {
         <div className="relative z-10 flex flex-col justify-between h-full" style={{ minHeight: 640 }}>
           {/* Logo */}
           <header className="flex items-center gap-3">
-            <div className="flex items-center gap-2" style={{ color: '#fff' }}>
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                <polygon points="6 3 18 3 22 9 12 22 2 9" />
-                <polyline points="12 22 7 9" />
-                <polyline points="12 22 17 9" />
-                <line x1="2" y1="9" x2="22" y2="9" />
-              </svg>
-              <span style={{ fontSize: '1.5rem', fontWeight: 900, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#fff' }}>
-                CRUCIBLE
-              </span>
-            </div>
+            <Image
+              src="/icon.svg"
+              alt="Crucible AI Logo"
+              width={36}
+              height={36}
+              className="w-9 h-9 rounded-lg object-contain shadow-lg shadow-[#ea580c]/25"
+            />
+            <span style={{ fontSize: '1.5rem', fontWeight: 900, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#fff' }}>
+              CRUCIBLE <span style={{ color: '#d3996d' }}>AI</span>
+            </span>
           </header>
 
           {/* Headline */}
