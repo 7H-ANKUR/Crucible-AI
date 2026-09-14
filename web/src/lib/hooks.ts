@@ -8,7 +8,7 @@
  */
 import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@clerk/nextjs';
-import { fleetSummary, mapFleetInsights, type FleetSummary, type Insight } from '@/lib/insight';
+import { fleetSummary, mapFleetInsights, type FleetSummary, type Insight, FALLBACK_FLEET_INSIGHTS, FALLBACK_FLEET_SUMMARY } from '@/lib/insight';
 import { apiFetch } from '@/lib/api';
 import {
   FALLBACK_FORECAST,
@@ -97,7 +97,11 @@ export function useRiskVectors(mineId: string) {
           },
         } as RiskVector;
       });
-      if (top.length) setRisks([...top, ...FALLBACK_RISKS].slice(0, 6));
+      if (top.length) {
+        setRisks([...top, ...FALLBACK_RISKS].slice(0, 6));
+      } else {
+        setRisks(FALLBACK_RISKS);
+      }
     })();
     return () => {
       alive = false;
@@ -219,10 +223,21 @@ export function useFleetInsights(mineId: string) {
         const token = await getToken();
         const api = await apiFetch<any>(`/equipment/${mineId}/fleet`, {}, token);
         if (!alive) return;
-        setInsights(mapFleetInsights(api));
-        setSummary(fleetSummary(api));
+        
+        const mapped = mapFleetInsights(api);
+        if (mapped.length > 0) {
+          setInsights(mapped);
+          setSummary(fleetSummary(api));
+        } else {
+          // If the backend returns empty or is unreachable, use fallbacks
+          setInsights(FALLBACK_FLEET_INSIGHTS);
+          setSummary(FALLBACK_FLEET_SUMMARY);
+        }
       } catch {
-        /* empty state renders */
+        if (alive) {
+          setInsights(FALLBACK_FLEET_INSIGHTS);
+          setSummary(FALLBACK_FLEET_SUMMARY);
+        }
       } finally {
         if (alive) setLoading(false);
       }

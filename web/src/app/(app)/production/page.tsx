@@ -448,14 +448,14 @@ export default function ProductionPage() {
                           onMouseLeave={() => setHoveredBarIndex(null)}
                           onTouchStart={() => setHoveredBarIndex(index)}
                           onTouchEnd={() => setHoveredBarIndex(null)}
-                          className="flex-1 min-w-0 bg-copper-accent/15 rounded-t-sm relative group border-2 border-dashed border-copper-accent transition-all hover:bg-copper-accent/25 cursor-pointer shadow-xs"
+                          className="flex-1 min-w-0 bg-copper-accent/25 rounded-t-sm relative group border-2 border-dashed border-copper-accent transition-all hover:bg-copper-accent/40 cursor-pointer shadow-md"
                           style={{ height: `${bar.heightPercent}%` }}
                         >
                           <div
                             className="absolute inset-0 rounded-t-sm"
                             style={{
                               backgroundImage:
-                                'repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(180,106,54,0.32) 5px, rgba(180,106,54,0.32) 10px)',
+                                'repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(180,106,54,0.5) 4px, rgba(180,106,54,0.5) 8px)',
                             }}
                           ></div>
                         </div>
@@ -468,10 +468,10 @@ export default function ProductionPage() {
                         onMouseLeave={() => setHoveredBarIndex(null)}
                         onTouchStart={() => setHoveredBarIndex(index)}
                         onTouchEnd={() => setHoveredBarIndex(null)}
-                        className="flex-1 min-w-0 bg-earth-espresso/85 rounded-t-sm relative group border-2 border-earth-charcoal transition-all hover:bg-earth-espresso shadow-xs"
+                        className="flex-1 min-w-0 bg-earth-charcoal rounded-t-sm relative group border-2 border-copper-accent/30 transition-all hover:bg-earth-espresso shadow-md"
                         style={{ height: `${bar.heightPercent}%` }}
                       >
-                        <div className="absolute inset-0 bg-earth-charcoal/10 group-hover:bg-transparent transition-colors rounded-t-sm"></div>
+                        <div className="absolute inset-0 bg-canvas-sandstone/5 group-hover:bg-transparent transition-colors rounded-t-sm"></div>
                       </div>
                     );
                   })}
