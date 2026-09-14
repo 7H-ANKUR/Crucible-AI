@@ -102,6 +102,7 @@ def _build_health_payload() -> dict:
     }
 
 
+@router.get("/ping", summary="Alias for liveness probe (bypasses adblockers)")
 @router.get("/health/live", summary="Liveness probe")
 def health_live():
     """

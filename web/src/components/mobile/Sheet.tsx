@@ -33,7 +33,7 @@ export function Sheet({
       <div
         onClick={(e) => e.stopPropagation()}
         role="dialog"
-        className="relative bg-deep2 border-t border-accent/30 rounded-t-[24px] shadow-2xl transition-transform duration-200"
+        className="relative bg-surface-parchment border-t border-earth-border rounded-t-[24px] shadow-2xl transition-transform duration-200"
         style={{ transform: `translateY(${Math.min(drag, 0)}px)`, maxHeight }}
       >
         <div
@@ -47,10 +47,10 @@ export function Sheet({
             setDrag(0);
           }}
         >
-          <div className="w-12 h-1.5 rounded-full bg-ink3" />
+          <div className="w-12 h-1.5 rounded-full bg-secondary/30" />
         </div>
         {title && (
-          <div className="px-5 pb-1 text-[10px] font-bold text-accentt uppercase tracking-widest">{title}</div>
+          <div className="px-5 pb-1 text-[10px] font-bold text-copper-accent uppercase tracking-widest">{title}</div>
         )}
         <div className="px-5 pb-[calc(20px+env(safe-area-inset-bottom))] overflow-y-auto" style={{ maxHeight: `calc(${maxHeight} - 52px)` }}>
           {children}

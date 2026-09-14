@@ -2,15 +2,7 @@
 
 /**
  * primitives.tsx — the small pieces every Command Center surface reuses.
- *
- * These exist so that provenance is impossible to omit. A number rendered
- * through `<Metric>` carries its calculation mode; a judgement rendered through
- * `<EvidenceBadge>` carries the factors behind it. A page cannot accidentally
- * present a heuristic estimate with the same authority as a model prediction,
- * because the component that draws it needs to be told which it is.
- *
- * Visual language is industrial control room: dense, quiet, and monochrome until
- * something is actually wrong. Colour is a signal, not decoration.
+ * Reskinned to Stitch "Earthy Industrial" design system (light-only).
  */
 import React, { useState } from 'react';
 import {
@@ -18,7 +10,6 @@ import {
   EvidenceQuality,
   MODE_LABEL,
   Severity,
-  SEVERITY_TONE,
 } from '@/lib/command';
 
 /* ------------------------------------------------------------------ chrome */
@@ -37,12 +28,12 @@ export function Panel({
   dense?: boolean;
 }) {
   return (
-    <section className="rounded-xl border border-line2/60 bg-panel2/60 backdrop-blur-sm overflow-hidden">
+    <section className="rounded border border-earth-border bg-surface-parchment shadow-[0_1px_8px_rgba(30,25,21,0.05)] overflow-hidden">
       {title && (
-        <header className="flex items-start justify-between gap-3 px-4 pt-3 pb-2 border-b border-line2/40">
+        <header className="flex items-start justify-between gap-3 px-4 pt-3 pb-2 border-b border-earth-border">
           <div className="min-w-0">
-            <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-ink2">{title}</h2>
-            {subtitle && <p className="mt-0.5 text-xs text-ink2/70 truncate">{subtitle}</p>}
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-secondary">{title}</h2>
+            {subtitle && <p className="mt-0.5 text-xs text-on-surface-variant truncate">{subtitle}</p>}
           </div>
           {action}
         </header>
@@ -54,7 +45,7 @@ export function Panel({
 
 export function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="text-[10px] font-bold uppercase tracking-[0.16em] text-ink2/70 mb-2">
+    <h3 className="text-[10px] font-bold uppercase tracking-[0.16em] text-secondary mb-2">
       {children}
     </h3>
   );
@@ -62,10 +53,6 @@ export function SectionLabel({ children }: { children: React.ReactNode }) {
 
 /* ------------------------------------------------------------- provenance */
 
-/**
- * Says how a number was produced. Deliberately understated — it should be
- * checkable at a glance and ignorable when it is not in question.
- */
 export function ProvenanceBadge({
   mode,
   detail,
@@ -77,10 +64,10 @@ export function ProvenanceBadge({
 }) {
   const tone =
     mode === 'MODEL_BACKED'
-      ? 'text-sky-400 border-sky-500/30 bg-sky-500/5'
+      ? 'text-primary border-primary/30 bg-primary-fixed/40'
       : mode === 'HEURISTIC'
-        ? 'text-amber-400/90 border-amber-500/25 bg-amber-500/5'
-        : 'text-slate-400 border-slate-500/30 bg-slate-500/5';
+        ? 'text-telemetry-amber border-telemetry-amber/30 bg-telemetry-amber/10'
+        : 'text-secondary border-earth-border bg-surface-container';
 
   return (
     <span
@@ -93,19 +80,12 @@ export function ProvenanceBadge({
 }
 
 const EVIDENCE_TONE: Record<EvidenceQuality, string> = {
-  HIGH: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/5',
-  MEDIUM: 'text-amber-400 border-amber-500/30 bg-amber-500/5',
-  LOW: 'text-orange-400 border-orange-500/30 bg-orange-500/5',
-  UNAVAILABLE: 'text-slate-400 border-slate-500/30 bg-slate-500/5',
+  HIGH:        'text-telemetry-emerald border-telemetry-emerald/30 bg-telemetry-emerald/10',
+  MEDIUM:      'text-telemetry-amber   border-telemetry-amber/30   bg-telemetry-amber/10',
+  LOW:         'text-copper-accent     border-copper-accent/30      bg-copper-accent/10',
+  UNAVAILABLE: 'text-secondary         border-earth-border          bg-surface-container',
 };
 
-/**
- * Evidence quality, expandable into the factors behind it.
- *
- * This replaced a confidence percentage. A grade that can show its reasons is
- * more useful than a number that cannot, and it does not imply a calibration
- * that was never performed.
- */
 export function EvidenceBadge({
   quality,
   reasons = [],
@@ -124,7 +104,7 @@ export function EvidenceBadge({
         type="button"
         onClick={() => hasDetail && setOpen((v) => !v)}
         className={`inline-flex items-center gap-1 rounded border px-1.5 py-px text-[9px] font-bold uppercase tracking-wider ${EVIDENCE_TONE[quality]} ${
-          hasDetail ? 'cursor-pointer hover:brightness-125' : 'cursor-default'
+          hasDetail ? 'cursor-pointer hover:brightness-95' : 'cursor-default'
         }`}
       >
         {quality === 'UNAVAILABLE' ? 'No evidence' : `${quality} evidence`}
@@ -132,13 +112,13 @@ export function EvidenceBadge({
       </button>
 
       {open && hasDetail && (
-        <div className="absolute right-0 z-30 mt-1 w-72 rounded-lg border border-line2 bg-panel3 p-3 shadow-2xl">
+        <div className="absolute right-0 z-30 mt-1 w-72 rounded border border-earth-border bg-surface-parchment p-3 shadow-xl">
           {limiters.length > 0 && (
             <>
               <SectionLabel>What limits this</SectionLabel>
               <ul className="mb-2 space-y-1">
                 {limiters.map((l) => (
-                  <li key={l} className="text-[11px] leading-snug text-amber-300/90">
+                  <li key={l} className="text-[11px] leading-snug text-telemetry-amber">
                     {l}
                   </li>
                 ))}
@@ -150,7 +130,7 @@ export function EvidenceBadge({
               <SectionLabel>Measured</SectionLabel>
               <ul className="space-y-1">
                 {reasons.map((r) => (
-                  <li key={r} className="text-[11px] leading-snug text-ink2">
+                  <li key={r} className="text-[11px] leading-snug text-on-surface-variant">
                     {r}
                   </li>
                 ))}
@@ -165,13 +145,6 @@ export function EvidenceBadge({
 
 /* ----------------------------------------------------------------- values */
 
-/**
- * A number with its unit and provenance, or a stated absence.
- *
- * `value === null` renders "Not available" plus the reason. It never falls back
- * to zero: a fabricated zero reads as a measurement, and in an operational
- * context that is worse than a blank.
- */
 export function Metric({
   label,
   value,
@@ -188,10 +161,10 @@ export function Metric({
   size?: 'sm' | 'md' | 'lg';
 }) {
   const toneClass = {
-    default: 'text-ink',
-    bad: 'text-orange-400',
-    good: 'text-emerald-400',
-    muted: 'text-ink2',
+    default: 'text-earth-charcoal',
+    bad:     'text-telemetry-crimson',
+    good:    'text-telemetry-emerald',
+    muted:   'text-on-surface-variant',
   }[tone];
 
   const sizeClass = { sm: 'text-base', md: 'text-xl', lg: 'text-3xl' }[size];
@@ -199,23 +172,28 @@ export function Metric({
   return (
     <div className="min-w-0">
       <div className="flex items-center gap-1.5">
-        <span className="text-[10px] font-semibold uppercase tracking-wider text-ink2/70">
+        <span className="text-[10px] font-semibold uppercase tracking-wider text-secondary">
           {label}
         </span>
         {mode && <ProvenanceBadge mode={mode} detail={hint} />}
       </div>
-      <div className={`mt-0.5 font-semibold tabular-nums ${sizeClass} ${toneClass}`}>{value}</div>
-      {hint && <p className="mt-0.5 text-[11px] leading-snug text-ink2/60">{hint}</p>}
+      <div className={`mt-0.5 font-semibold tabular-nums font-['Space_Grotesk'] ${sizeClass} ${toneClass}`}>{value}</div>
+      {hint && <p className="mt-0.5 text-[11px] leading-snug text-on-surface-variant">{hint}</p>}
     </div>
   );
 }
 
 export function SeverityChip({ severity }: { severity: Severity }) {
   const label = severity === 'NONE' ? 'Nominal' : severity.toLowerCase();
+  // Map old SEVERITY_TONE (which uses dark-mode colors) to earthy tones
+  const tone =
+    severity === 'CRITICAL'   ? 'border-telemetry-crimson/40 bg-telemetry-crimson/10 text-telemetry-crimson' :
+    severity === 'DISRUPTION' ? 'border-copper-accent/40 bg-copper-accent/10 text-copper-accent' :
+    severity === 'WATCH'      ? 'border-telemetry-amber/40 bg-telemetry-amber/10 text-telemetry-amber' :
+    severity === 'NONE'       ? 'border-telemetry-emerald/40 bg-telemetry-emerald/10 text-telemetry-emerald' :
+                                'border-earth-border bg-surface-container text-secondary';
   return (
-    <span
-      className={`inline-flex items-center rounded border px-1.5 py-px text-[9px] font-bold uppercase tracking-wider ${SEVERITY_TONE[severity]}`}
-    >
+    <span className={`inline-flex items-center rounded border px-1.5 py-px text-[9px] font-bold uppercase tracking-wider ${tone}`}>
       {label}
     </span>
   );
@@ -223,10 +201,6 @@ export function SeverityChip({ severity }: { severity: Severity }) {
 
 /* ------------------------------------------------------------------ notes */
 
-/**
- * A stated limitation. Used wherever the platform is declining to answer, so
- * that gaps read as deliberate rather than as something failing to load.
- */
 export function Caveat({
   children,
   icon = 'info',
@@ -238,11 +212,11 @@ export function Caveat({
 }) {
   const cls =
     tone === 'warn'
-      ? 'border-amber-500/25 bg-amber-500/5 text-amber-200/80'
-      : 'border-line2/50 bg-panel3/40 text-ink2/80';
+      ? 'border-telemetry-amber/30 bg-telemetry-amber/10 text-telemetry-amber'
+      : 'border-earth-border bg-surface-container text-on-surface-variant';
 
   return (
-    <div className={`flex gap-2 rounded-lg border px-3 py-2 text-[11px] leading-snug ${cls}`}>
+    <div className={`flex gap-2 rounded border px-3 py-2 text-[11px] leading-snug ${cls}`}>
       <span className="material-symbols-outlined !text-[14px] shrink-0 mt-px opacity-70">
         {icon}
       </span>
@@ -251,10 +225,8 @@ export function Caveat({
   );
 }
 
-/** Skeletons, not spinners — a spinner over a stale operational number is worse
- *  than an obvious placeholder, because it looks like the number is current. */
 export function Skeleton({ className = '' }: { className?: string }) {
-  return <div className={`animate-pulse rounded bg-panel4/60 ${className}`} />;
+  return <div className={`animate-pulse rounded bg-surface-container-high ${className}`} />;
 }
 
 export function PanelSkeleton({ rows = 3 }: { rows?: number }) {
@@ -267,20 +239,20 @@ export function PanelSkeleton({ rows = 3 }: { rows?: number }) {
   );
 }
 
-/** Horizontal utilisation bar. Colour only past the thresholds that matter. */
+/** Horizontal utilisation bar — earthy colours. */
 export function UtilisationBar({ pct, status }: { pct: number | null; status: string }) {
   if (pct === null) {
-    return <div className="h-1.5 w-full rounded-full bg-panel4/50" title="Not measured" />;
+    return <div className="h-1.5 w-full rounded-full bg-surface-container-high" title="Not measured" />;
   }
   const colour =
     status === 'SATURATED'
-      ? 'bg-red-400'
+      ? 'bg-telemetry-crimson'
       : status === 'CONSTRAINED'
-        ? 'bg-amber-400'
-        : 'bg-emerald-400/70';
+        ? 'bg-telemetry-amber'
+        : 'bg-telemetry-emerald';
 
   return (
-    <div className="h-1.5 w-full rounded-full bg-panel4/50 overflow-hidden">
+    <div className="h-1.5 w-full rounded-full bg-surface-container-high overflow-hidden">
       <div
         className={`h-full rounded-full transition-all ${colour}`}
         style={{ width: `${Math.min(100, Math.max(2, pct))}%` }}

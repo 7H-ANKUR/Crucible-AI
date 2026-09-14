@@ -89,10 +89,10 @@ export interface ScenarioMetrics {
 export interface ScenarioControls {
   objective: "MAXIMIZE_PRODUCTION" | "BALANCED" | "MINIMIZE_COST" | "MINIMIZE_RISK";
   max_additional_fuel_pct: number;
-  fleet_reallocation: "LOW" | "MEDIUM" | "HIGH";
-  maintenance_flexibility: "PRESERVE" | "LIMITED" | "HIGH";
-  route_flexibility: "LOW" | "MEDIUM" | "HIGH";
-  operating_time_mode: "CURRENT" | "EXTENDED_AVAILABILITY" | "MAX_AVAILABLE";
+  fleet_reallocation: "NONE" | "LOW" | "MEDIUM" | "HIGH";
+  maintenance_flexibility: "NONE" | "LOW" | "MEDIUM" | "HIGH";
+  route_flexibility: "NONE" | "LOW" | "MEDIUM" | "HIGH";
+  operating_time_flexibility: "NONE" | "LOW" | "MEDIUM" | "HIGH";
   risk_tolerance: "CONSERVATIVE" | "BALANCED" | "AGGRESSIVE";
 }
 

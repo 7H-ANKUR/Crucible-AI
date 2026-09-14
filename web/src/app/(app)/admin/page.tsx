@@ -4,6 +4,7 @@
  * /admin — Super-admin console: see every admin, create more admins by
  * email, and demote users. Guarded twice: client-side by role, server-side
  * by /api/admin.
+ * Reskinned to Earthy Industrial.
  */
 import React, { useCallback, useEffect, useState } from 'react';
 import { useCrucibleAuth } from '@/lib/roles';
@@ -97,10 +98,10 @@ export default function AdminPage() {
 
   if (!isSignedIn) {
     return (
-      <main className="flex-1 bg-deep min-h-screen p-8 grid place-items-center">
+      <main className="flex-1 bg-canvas-sandstone min-h-screen p-8 grid place-items-center">
         <div className="text-center">
-          <span className="material-symbols-outlined text-ink3 text-5xl">lock</span>
-          <p className="mt-3 text-sm text-ink2">Sign in as a super admin to manage admins.</p>
+          <span className="material-symbols-outlined text-secondary text-5xl">lock</span>
+          <p className="mt-3 text-sm text-secondary">Sign in as a super admin to manage admins.</p>
         </div>
       </main>
     );
@@ -108,19 +109,19 @@ export default function AdminPage() {
 
   if (!isSuperAdmin) {
     return (
-      <main className="flex-1 bg-deep min-h-screen p-8 grid place-items-center">
+      <main className="flex-1 bg-canvas-sandstone min-h-screen p-8 grid place-items-center">
         <div className="text-center">
-          <span className="material-symbols-outlined text-dangert text-5xl">gpp_bad</span>
-          <p className="mt-3 text-sm text-ink2">Super admin access only.</p>
+          <span className="material-symbols-outlined text-telemetry-crimson text-5xl">gpp_bad</span>
+          <p className="mt-3 text-sm text-secondary">Super admin access only.</p>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="flex-1 bg-deep min-h-screen p-4 md:p-6 lg:p-8 pb-16">
+    <main className="flex-1 bg-canvas-sandstone min-h-screen p-4 md:p-6 lg:p-8 pb-16">
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-accent text-onaccent px-4 py-2.5 rounded-xl shadow-2xl text-xs font-bold flex items-center gap-2 animate-bounce">
+        <div className="fixed bottom-6 right-6 z-50 bg-copper-accent text-canvas-sandstone px-4 py-2.5 rounded-xl shadow-lg text-xs font-bold flex items-center gap-2 animate-bounce">
           <span className="material-symbols-outlined text-base">check_circle</span>
           <span>{toast}</span>
         </div>
@@ -128,64 +129,64 @@ export default function AdminPage() {
 
       <header className="mb-6">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-[11px] font-bold text-ink3 tracking-widest uppercase">Platform</span>
-          <span className="text-ink3">/</span>
-          <span className="text-[11px] font-bold text-accentt tracking-widest uppercase">Admins</span>
+          <span className="text-[11px] font-bold text-secondary tracking-widest uppercase">Platform</span>
+          <span className="text-secondary">/</span>
+          <span className="text-[11px] font-bold text-copper-accent tracking-widest uppercase">Admins</span>
         </div>
-        <h1 className="font-['Manrope'] text-3xl md:text-4xl font-bold text-ink tracking-tight">Admin Management</h1>
-        <p className="text-sm text-ink2 mt-1 max-w-2xl">
+        <h1 className="font-['Space_Grotesk'] text-3xl md:text-4xl font-bold text-earth-charcoal tracking-tight">Admin Management</h1>
+        <p className="text-sm text-secondary mt-1 max-w-2xl">
           Create department admins as needed. Department admins see only their department&apos;s problems and analysis; super admins see everything.
         </p>
       </header>
 
       {error && (
-        <div className="mb-4 max-w-2xl text-xs text-warnt bg-warn/10 border border-warn/40 rounded-xl px-4 py-2.5">{error}</div>
+        <div className="mb-4 max-w-2xl text-xs text-telemetry-amber bg-telemetry-amber/10 border border-telemetry-amber/40 rounded-xl px-4 py-2.5">{error}</div>
       )}
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* Create form */}
         <section className="xl:col-span-1">
-          <form onSubmit={createAdmin} className="glass-panel p-6 border border-frost/10 flex flex-col gap-4">
-            <h3 className="font-['Manrope'] text-lg font-bold text-accentt flex items-center gap-2">
+          <form onSubmit={createAdmin} className="bg-surface-parchment p-6 border border-earth-border rounded-2xl flex flex-col gap-4 shadow-sm">
+            <h3 className="font-['Space_Grotesk'] text-lg font-bold text-copper-accent flex items-center gap-2">
               <span className="material-symbols-outlined">person_add</span>
               Create / Assign Admin
             </h3>
 
             <div>
-              <label className="text-[11px] font-bold text-ink2 uppercase tracking-wider block mb-1">Email</label>
+              <label className="text-[11px] font-bold text-secondary uppercase tracking-wider block mb-1">Email</label>
               <input
                 type="email"
                 required
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 placeholder="admin@crucible.in"
-                className="w-full bg-deep2 border border-line rounded-xl px-3.5 py-2 text-xs text-ink focus:outline-none focus:border-accent"
+                className="w-full bg-surface-container-low border border-earth-border rounded-xl px-3.5 py-2 text-xs text-earth-charcoal focus:outline-none focus:border-copper-accent transition-colors"
               />
             </div>
 
             <div>
-              <label className="text-[11px] font-bold text-ink2 uppercase tracking-wider block mb-1">Display name</label>
+              <label className="text-[11px] font-bold text-secondary uppercase tracking-wider block mb-1">Display name</label>
               <input
                 type="text"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 placeholder="Sunita Ops"
-                className="w-full bg-deep2 border border-line rounded-xl px-3.5 py-2 text-xs text-ink focus:outline-none focus:border-accent"
+                className="w-full bg-surface-container-low border border-earth-border rounded-xl px-3.5 py-2 text-xs text-earth-charcoal focus:outline-none focus:border-copper-accent transition-colors"
               />
             </div>
 
             <div>
-              <label className="text-[11px] font-bold text-ink2 uppercase tracking-wider block mb-1">Role</label>
+              <label className="text-[11px] font-bold text-secondary uppercase tracking-wider block mb-1">Role</label>
               <select
                 value={form.role}
                 onChange={(e) => setForm({ ...form, role: e.target.value })}
-                className="w-full bg-deep2 border border-line rounded-xl px-3.5 py-2 text-xs text-ink focus:outline-none focus:border-accent"
+                className="w-full bg-surface-container-low border border-earth-border rounded-xl px-3.5 py-2 text-xs text-earth-charcoal focus:outline-none focus:border-copper-accent transition-colors"
               >
                 {ASSIGNABLE_ROLES.map((r) => (
                   <option key={r} value={r}>{ROLE_LABEL[r]}</option>
                 ))}
               </select>
-              <p className="text-[10px] text-ink3 mt-1.5">
+              <p className="text-[10px] text-secondary mt-1.5">
                 {form.role === 'super_admin'
                   ? 'Sees every department and can create more admins.'
                   : `Sees only the ${form.role.replace('_admin', '').replace('mine_planner', 'planning')} department.`}
@@ -193,21 +194,21 @@ export default function AdminPage() {
             </div>
 
             <div>
-              <label className="text-[11px] font-bold text-ink2 uppercase tracking-wider block mb-1">
-                Password <span className="text-ink3 normal-case">(new accounts)</span>
+              <label className="text-[11px] font-bold text-secondary uppercase tracking-wider block mb-1">
+                Password <span className="text-secondary normal-case">(new accounts)</span>
               </label>
               <input
                 type="password"
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                 placeholder="Min 8 characters"
-                className="w-full bg-deep2 border border-line rounded-xl px-3.5 py-2 text-xs text-ink focus:outline-none focus:border-accent"
+                className="w-full bg-surface-container-low border border-earth-border rounded-xl px-3.5 py-2 text-xs text-earth-charcoal focus:outline-none focus:border-copper-accent transition-colors"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 bg-accent text-onaccent text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-accent2 transition-all flex items-center justify-center gap-2 shadow-lg"
+              className="w-full py-3 bg-earth-charcoal text-canvas-sandstone text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-earth-espresso transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95"
             >
               <span className="material-symbols-outlined text-sm">person_add</span>
               Save admin
@@ -217,56 +218,56 @@ export default function AdminPage() {
 
         {/* Admin list */}
         <section className="xl:col-span-2">
-          <div className="rounded-[24px] bg-deep2 border border-line p-6 shadow-2xl">
+          <div className="rounded-[24px] bg-surface-parchment border border-earth-border p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-ink flex items-center gap-2">
-                <span className="material-symbols-outlined text-inkb" style={{ fontVariationSettings: "'FILL' 1" }}>admin_panel_settings</span>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-earth-charcoal flex items-center gap-2">
+                <span className="material-symbols-outlined text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>admin_panel_settings</span>
                 Current admins
-                <span className="text-[11px] text-ink3 font-normal">({admins.length})</span>
+                <span className="text-[11px] text-secondary font-normal">({admins.length})</span>
               </h3>
-              <button onClick={load} className="text-[11px] font-bold text-inkb hover:text-ink uppercase tracking-wider">Refresh</button>
+              <button onClick={load} className="text-[11px] font-bold text-secondary hover:text-earth-charcoal uppercase tracking-wider transition-colors">Refresh</button>
             </div>
 
             {loading ? (
-              <p className="text-sm text-ink3 py-6 text-center">Loading admins…</p>
+              <p className="text-sm text-secondary py-6 text-center">Loading admins…</p>
             ) : !admins.length ? (
-              <p className="text-sm text-ink3 py-6 text-center">
+              <p className="text-sm text-secondary py-6 text-center">
                 No admins assigned yet — create the first one (or run the super-admin bootstrap script).
               </p>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="border-b border-line">
+                    <tr className="border-b border-earth-border">
                       {['Admin', 'Email', 'Role', 'Scope', ''].map((h) => (
-                        <th key={h} className="py-2.5 px-3 text-[10px] text-ink3 uppercase tracking-widest">{h}</th>
+                        <th key={h} className="py-2.5 px-3 text-[10px] text-secondary uppercase tracking-widest">{h}</th>
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="text-[13px] divide-y divide-line/50">
+                  <tbody className="text-[13px] divide-y divide-earth-border/50">
                     {admins.map((a) => (
-                      <tr key={a.userId} className="hover:bg-panel4/30 transition-colors">
-                        <td className="py-3 px-3 font-medium text-ink">{a.name}</td>
-                        <td className="py-3 px-3 text-inkb font-mono text-xs">{a.email}</td>
+                      <tr key={a.userId} className="hover:bg-surface-container-low transition-colors">
+                        <td className="py-3 px-3 font-medium text-earth-charcoal">{a.name}</td>
+                        <td className="py-3 px-3 text-secondary font-mono text-xs">{a.email}</td>
                         <td className="py-3 px-3">
                           <span
                             className={`px-2 py-0.5 rounded-full border text-[10px] font-bold uppercase ${
                               a.role === 'super_admin'
-                                ? 'bg-accent/15 text-accentt border-accent/40'
-                                : 'bg-chipon/40 text-inkb border-chipon'
+                                ? 'bg-copper-accent/15 text-copper-accent border-copper-accent/40'
+                                : 'bg-surface-container text-secondary border-earth-border'
                             }`}
                           >
                             {ROLE_LABEL[a.role as Role] ?? a.role}
                           </span>
                         </td>
-                        <td className="py-3 px-3 text-ink2 text-xs">
+                        <td className="py-3 px-3 text-secondary text-xs">
                           {a.role === 'super_admin' || a.role === 'management' ? 'All departments' : `${a.role.replace('_admin', '').replace('mine_planner', 'planning')} only`}
                         </td>
                         <td className="py-3 px-3 text-right">
                           {a.role !== 'super_admin' && (
                             <button
                               onClick={() => demote(a.userId, a.email)}
-                              className="text-[11px] font-bold text-dangert hover:underline"
+                              className="text-[11px] font-bold text-telemetry-crimson hover:underline"
                             >
                               Demote
                             </button>
@@ -285,8 +286,8 @@ export default function AdminPage() {
       {/* ML engine — platform health for the Crucible AI service behind the Lab. */}
       <section className="mt-8">
         <div className="flex items-baseline gap-3 mb-4">
-          <h2 className="font-['Manrope'] text-xl font-bold text-ink tracking-tight">ML Engine</h2>
-          <span className="text-xs text-ink3">
+          <h2 className="font-['Space_Grotesk'] text-xl font-bold text-earth-charcoal tracking-tight">ML Engine</h2>
+          <span className="text-xs text-secondary">
             Internal service on loopback — powers the ML Lab
           </span>
         </div>

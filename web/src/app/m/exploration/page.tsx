@@ -3,6 +3,8 @@
 /**
  * m/exploration — full-screen GIS map + bottom sheet target details.
  * Same provider config and India gate as desktop; touch-friendly markers.
+ * 
+ * Reskinned to Earthy Industrial.
  */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -11,7 +13,6 @@ import { Pill } from '@/components/mobile/ui';
 import { apiFetch } from '@/lib/api';
 import { FALLBACK_TARGETS, type ExplorationTarget } from '@/lib/crucible';
 import { resolveMapStyle, applyMapTheme, MAP_RASTER_ATTRIBUTION, assertIndiaOnly, PROB_COLOR } from '@/lib/mapConfig';
-import { getTheme } from '@/lib/theme';
 
 interface LocationContext {
   state?: string | null;
@@ -144,7 +145,7 @@ export default function MobileExploration() {
       if (cancelled || !mapContainer.current) return;
       const map = new maplibregl.Map({
         container: mapContainer.current,
-        style: resolveMapStyle(getTheme()),
+        style: resolveMapStyle('light'),
         center: [82.3, 21.5],
         zoom: 7,
         attributionControl: false,
@@ -268,7 +269,7 @@ export default function MobileExploration() {
       </div>
 
       {/* Attribution */}
-      <div className="absolute bottom-2 right-2 z-10 text-[9px] text-ink3 bg-deep2/70 px-1.5 py-0.5 rounded">
+      <div className="absolute bottom-2 right-2 z-10 text-[9px] text-on-surface-variant bg-surface-container-low/80 px-1.5 py-0.5 rounded shadow-sm border border-earth-border">
         {MAP_RASTER_ATTRIBUTION.split('·')[0]?.trim()} · SYNTHETIC
       </div>
 
@@ -277,13 +278,13 @@ export default function MobileExploration() {
         {selected && (
           <div className="animate-fadeIn">
             <div className="flex items-center justify-between gap-2 mb-1">
-              <h2 className="font-['Manrope'] text-2xl font-bold text-ink">{selected.name}</h2>
-              <span className="px-2.5 py-1 bg-warn/20 border border-warn text-warnt text-[10px] font-bold rounded-full">
+              <h2 className="font-['Space_Grotesk'] text-2xl font-bold text-earth-charcoal">{selected.name}</h2>
+              <span className="px-2.5 py-1 bg-telemetry-amber/20 border border-telemetry-amber/40 text-telemetry-amber text-[10px] font-bold rounded-full">
                 {selected.status}
               </span>
             </div>
-            <p className="text-xs text-ink2 font-mono">{selected.coordinates}</p>
-            <p className="text-[11px] text-infot mb-3">
+            <p className="text-xs text-secondary font-mono">{selected.coordinates}</p>
+            <p className="text-[11px] text-copper-accent mb-3">
               {locCtx && !locCtx.unavailable
                 ? [locCtx.district, locCtx.state, 'India'].filter(Boolean).join(' · ')
                 : locCtx?.unavailable
@@ -292,17 +293,17 @@ export default function MobileExploration() {
             </p>
 
             <div className="grid grid-cols-2 gap-2.5 mb-3">
-              <div className="bg-card border border-line rounded-xl p-3">
-                <div className="text-[9px] font-bold text-ink2 uppercase">Prospectivity</div>
-                <div className="font-['Space_Grotesk'] text-2xl font-bold text-accentt">{selected.probability}%</div>
+              <div className="bg-surface-container-low border border-earth-border rounded-xl p-3 shadow-sm">
+                <div className="text-[9px] font-bold text-secondary uppercase">Prospectivity</div>
+                <div className="font-['Space_Grotesk'] text-2xl font-bold text-copper-accent">{selected.probability}%</div>
               </div>
-              <div className="bg-card border border-line rounded-xl p-3">
-                <div className="text-[9px] font-bold text-ink2 uppercase">Confidence</div>
-                <div className="font-['Space_Grotesk'] text-2xl font-bold text-okt">{selected.subsurfaceConf}</div>
+              <div className="bg-surface-container-low border border-earth-border rounded-xl p-3 shadow-sm">
+                <div className="text-[9px] font-bold text-secondary uppercase">Confidence</div>
+                <div className="font-['Space_Grotesk'] text-2xl font-bold text-telemetry-emerald">{selected.subsurfaceConf}</div>
               </div>
             </div>
 
-            <div className="bg-card border border-line rounded-xl p-3 mb-3 text-[11px] space-y-1.5">
+            <div className="bg-surface-container-low border border-earth-border rounded-xl p-3 mb-3 text-[11px] space-y-1.5 shadow-sm">
               {[
                 ['Geology', selected.geologicalLayers],
                 ['Subsurface', 'Limited (no drillhole data)'],
@@ -311,41 +312,41 @@ export default function MobileExploration() {
                 ['Uncertainty', 'HIGH'],
               ].map(([k, v]) => (
                 <div key={k} className="flex justify-between">
-                  <span className="text-ink3 uppercase font-bold text-[10px]">{k}</span>
-                  <span className="text-ink text-right">{v}</span>
+                  <span className="text-secondary uppercase font-bold text-[10px] tracking-wider">{k}</span>
+                  <span className="text-earth-charcoal text-right font-medium">{v}</span>
                 </div>
               ))}
             </div>
 
-            <div className="bg-panel2 rounded-xl border border-line2/40 p-3 mb-3">
+            <div className="bg-surface-container rounded-xl border border-earth-border p-3 mb-3 shadow-sm">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-bold text-accentt uppercase tracking-wider">AI Assessment</span>
+                <span className="text-[10px] font-bold text-copper-accent uppercase tracking-wider flex items-center gap-1"><span className="material-symbols-outlined text-[12px]">auto_awesome</span> AI Assessment</span>
                 <button
                   onClick={askAI}
                   disabled={briefLoading}
-                  className="px-3 py-1.5 bg-accent text-onaccent text-[11px] font-bold rounded-lg active:scale-95 disabled:opacity-50"
+                  className="px-3 py-1.5 bg-primary-container text-on-primary-container text-[11px] font-bold rounded-lg active:scale-95 disabled:opacity-50"
                 >
                   {briefLoading ? 'Analysing…' : brief ? 'Ask again' : 'Ask AI'}
                 </button>
               </div>
               {brief && (
-                <div className="text-[11px] text-ink bg-deep2 p-4 rounded-lg border border-line leading-relaxed overflow-y-auto max-h-[400px]">
-                  <div className="prose prose-sm prose-invert max-w-none prose-headings:text-accentt prose-headings:font-bold prose-headings:text-[11px] prose-headings:uppercase prose-headings:tracking-wider prose-headings:mt-4 prose-headings:mb-2 first:prose-headings:mt-0 prose-p:text-ink prose-p:mb-3 last:prose-p:mb-0 prose-ul:my-2 prose-li:my-0.5">
+                <div className="text-[11px] text-earth-charcoal bg-surface-container-low p-4 rounded-lg border border-earth-border leading-relaxed overflow-y-auto max-h-[400px]">
+                  <div className="prose prose-sm max-w-none prose-headings:text-copper-accent prose-headings:font-bold prose-headings:text-[11px] prose-headings:uppercase prose-headings:tracking-wider prose-headings:mt-4 prose-headings:mb-2 first:prose-headings:mt-0 prose-p:text-earth-charcoal prose-p:mb-3 last:prose-p:mb-0 prose-ul:my-2 prose-li:my-0.5">
                     <ReactMarkdown>{brief.text}</ReactMarkdown>
                   </div>
                   {brief.source === 'groq' && (
-                    <span className="block mt-4 text-[9px] text-ink3 uppercase font-bold pt-2 border-t border-line">
+                    <span className="block mt-4 text-[9px] text-secondary uppercase font-bold pt-2 border-t border-earth-border">
                       Interpreted by GPT-OSS-20B · scores unchanged
                     </span>
                   )}
                 </div>
               )}
               {!brief && !briefLoading && (
-                <p className="text-[11px] text-ink3">Explain this target&apos;s evidence in plain language.</p>
+                <p className="text-[11px] text-secondary font-medium">Explain this target&apos;s evidence in plain language.</p>
               )}
             </div>
 
-            <p className="text-[9px] text-ink3">Model score — not a confirmed deposit or reserve claim. SYNTHETIC demo data.</p>
+            <p className="text-[9px] text-secondary">Model score — not a confirmed deposit or reserve claim. SYNTHETIC demo data.</p>
           </div>
         )}
       </Sheet>

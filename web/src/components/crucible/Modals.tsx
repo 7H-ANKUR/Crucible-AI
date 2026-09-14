@@ -4,6 +4,8 @@
  * Modals — Evidence audit, drill review, AI optimizer, and deploy-success
  * dialogs ported from the Stitch implementation. The AI Optimizer now calls
  * the real /scenarios/run endpoint instead of the Gemini stub.
+ * 
+ * Reskinned to Earthy Industrial.
  */
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -23,53 +25,53 @@ export function ShortfallModal({
 }) {
   if (!insight) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
-      <div className="liquid-glass-dark border border-accent/40 rounded-2xl max-w-2xl w-full p-6 md:p-8 shadow-2xl relative text-ink flex flex-col gap-5">
-        <button onClick={onClose} className="absolute top-5 right-5 text-ink2 hover:text-ink p-1.5 rounded-lg hover:bg-frost/10 transition-colors">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-charcoal/60 backdrop-blur-md animate-fadeIn">
+      <div className="bg-surface-parchment border border-earth-border rounded-xl max-w-2xl w-full p-6 md:p-8 shadow-xl relative text-earth-charcoal flex flex-col gap-5">
+        <button onClick={onClose} className="absolute top-5 right-5 text-secondary hover:text-earth-charcoal p-1.5 rounded-lg hover:bg-surface-container-low transition-colors">
           <span className="material-symbols-outlined">close</span>
         </button>
 
         <div>
-          <div className="flex items-center gap-2 mb-1 text-xs font-bold text-accentt uppercase tracking-wider">
+          <div className="flex items-center gap-2 mb-1 text-xs font-bold text-copper-accent uppercase tracking-wider">
             <span className="material-symbols-outlined text-sm">trending_down</span>
             <span>Production Shortfall Analysis</span>
           </div>
-          <h2 className="font-['Manrope'] text-2xl font-bold text-ink flex items-center gap-3">
+          <h2 className="font-['Space_Grotesk'] text-2xl font-bold text-earth-charcoal flex items-center gap-3">
             <span>{insight.stateLabel}</span>
-            <span className="text-xs bg-warn/20 text-warnt border border-warn/40 px-2.5 py-0.5 rounded-full">
+            <span className="text-xs bg-telemetry-amber/20 text-telemetry-amber border border-telemetry-amber/40 px-2.5 py-0.5 rounded-full">
               {insight.shortfallProbability}% Probability
             </span>
           </h2>
-          <p className="text-xs text-ink2 mt-1 font-mono">
+          <p className="text-xs text-secondary mt-1 font-mono">
             Expected {insight.expected} over {insight.horizonLabel} · {insight.expectedPerShift}/shift
           </p>
         </div>
 
         {/* Expected vs planned target over the selected horizon */}
         <div className="grid grid-cols-3 gap-3">
-          <div className="bg-deep2 p-3 rounded-xl border border-line">
-            <div className="text-[10px] uppercase font-bold text-inkb tracking-wider">Expected</div>
-            <div className="text-lg font-bold text-accentt mt-0.5">{insight.expected}</div>
+          <div className="bg-surface-container-low p-3 rounded-xl border border-earth-border">
+            <div className="text-[10px] uppercase font-bold text-secondary tracking-wider">Expected</div>
+            <div className="text-lg font-bold text-copper-accent mt-0.5">{insight.expected}</div>
           </div>
-          <div className="bg-deep2 p-3 rounded-xl border border-line">
-            <div className="text-[10px] uppercase font-bold text-inkb tracking-wider">Planned target</div>
-            <div className="text-lg font-bold text-ink mt-0.5">{insight.plannedTarget ?? '—'}</div>
+          <div className="bg-surface-container-low p-3 rounded-xl border border-earth-border">
+            <div className="text-[10px] uppercase font-bold text-secondary tracking-wider">Planned target</div>
+            <div className="text-lg font-bold text-earth-charcoal mt-0.5">{insight.plannedTarget ?? '—'}</div>
           </div>
-          <div className={`p-3 rounded-xl border ${insight.deficit ? 'bg-danger/10 border-danger/40' : 'bg-ok/10 border-ok/40'}`}>
-            <div className="text-[10px] uppercase font-bold text-inkb tracking-wider">Projected gap</div>
-            <div className={`text-lg font-bold mt-0.5 ${insight.deficit ? 'text-dangert' : 'text-okt'}`}>
+          <div className={`p-3 rounded-xl border ${insight.deficit ? 'bg-telemetry-crimson/10 border-telemetry-crimson/40' : 'bg-telemetry-emerald/10 border-telemetry-emerald/40'}`}>
+            <div className="text-[10px] uppercase font-bold text-secondary tracking-wider">Projected gap</div>
+            <div className={`text-lg font-bold mt-0.5 ${insight.deficit ? 'text-telemetry-crimson' : 'text-telemetry-emerald'}`}>
               {insight.deficit ? `−${insight.deficit}` : 'On target'}
             </div>
           </div>
         </div>
 
-        <div className="bg-deep2 p-4 rounded-xl border border-line space-y-3">
-          <div className="text-xs font-bold text-inkb uppercase tracking-wider">Why this shortfall is flagged</div>
+        <div className="bg-surface-container-low p-4 rounded-xl border border-earth-border space-y-3">
+          <div className="text-xs font-bold text-secondary uppercase tracking-wider">Why this shortfall is flagged</div>
           {insight.drivers.length > 0 ? (
             <ul className="space-y-2">
               {insight.drivers.map((d, i) => (
-                <li key={i} className="flex items-center gap-2 text-sm text-ink">
-                  <span className={`material-symbols-outlined ${d.direction === 'negative' ? 'text-dangert' : 'text-okt'}`}>
+                <li key={i} className="flex items-center gap-2 text-sm text-earth-charcoal">
+                  <span className={`material-symbols-outlined ${d.direction === 'negative' ? 'text-telemetry-crimson' : 'text-telemetry-emerald'}`}>
                     {d.direction === 'negative' ? 'south' : 'north'}
                   </span>
                   {d.label} {d.direction === 'negative' ? '(pulling production down)' : '(supporting production)'}
@@ -77,19 +79,19 @@ export function ShortfallModal({
               ))}
             </ul>
           ) : (
-            <p className="text-xs text-ink2">
+            <p className="text-xs text-secondary">
               No single dominant driver — the forecast model attributes the risk to a combination of
               operating conditions. Run scenarios to test mitigations.
             </p>
           )}
         </div>
 
-        <div className="bg-deep2 p-4 rounded-xl border border-line">
-          <div className="text-xs font-bold text-ink2 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-sm text-warnt">rule</span>
+        <div className="bg-surface-container-low p-4 rounded-xl border border-earth-border">
+          <div className="text-xs font-bold text-secondary uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <span className="material-symbols-outlined text-sm text-telemetry-amber">rule</span>
             <span>Synthetic Calibration</span>
           </div>
-          <p className="text-xs text-inkb leading-relaxed">
+          <p className="text-xs text-secondary leading-relaxed">
             {insight.simulated
               ? 'Shortfall probability calculated using partially simulated baseline telemetry.'
               : 'Shortfall probability calculated using live baseline telemetry.'}
@@ -97,7 +99,7 @@ export function ShortfallModal({
         </div>
 
         <div className="flex justify-end gap-3 pt-2">
-          <button onClick={onClose} className="px-4 py-2.5 rounded-xl border border-line3 text-xs font-bold text-ink2 hover:text-ink hover:bg-frost/5 transition-colors">
+          <button onClick={onClose} className="px-4 py-2.5 rounded-xl border border-earth-border text-xs font-bold text-secondary hover:text-earth-charcoal hover:bg-surface-container transition-colors">
             Dismiss
           </button>
           <button
@@ -105,7 +107,7 @@ export function ShortfallModal({
               onClose();
               onSimulateMitigation();
             }}
-            className="px-5 py-2.5 rounded-xl bg-accent text-onaccent text-xs font-bold uppercase tracking-wider hover:bg-accent2 transition-all flex items-center gap-2 shadow-lg shadow-accent/20"
+            className="px-5 py-2.5 rounded-xl bg-primary-container text-on-primary-container text-xs font-bold uppercase tracking-wider hover:opacity-95 transition-all flex items-center gap-2 shadow-sm"
           >
             <span>Run Scenarios</span>
             <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -126,71 +128,71 @@ export function EvidenceModal({
 }) {
   if (!risk) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
-      <div className="liquid-glass-dark border border-accent/40 rounded-2xl max-w-2xl w-full p-6 md:p-8 shadow-2xl relative text-ink flex flex-col gap-5">
-        <button onClick={onClose} className="absolute top-5 right-5 text-ink2 hover:text-ink p-1.5 rounded-lg hover:bg-frost/10 transition-colors">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-charcoal/60 backdrop-blur-md animate-fadeIn">
+      <div className="bg-surface-parchment border border-earth-border rounded-xl max-w-2xl w-full p-6 md:p-8 shadow-xl relative text-earth-charcoal flex flex-col gap-5">
+        <button onClick={onClose} className="absolute top-5 right-5 text-secondary hover:text-earth-charcoal p-1.5 rounded-lg hover:bg-surface-container-low transition-colors">
           <span className="material-symbols-outlined">close</span>
         </button>
 
         <div>
-          <div className="flex items-center gap-2 mb-1 text-xs font-bold text-accentt uppercase tracking-wider">
+          <div className="flex items-center gap-2 mb-1 text-xs font-bold text-copper-accent uppercase tracking-wider">
             <span className="material-symbols-outlined text-sm">verified</span>
             <span>Evidence Audit &amp; Vector Telemetry</span>
           </div>
-          <h2 className="font-['Manrope'] text-2xl font-bold text-ink flex items-center gap-3">
+          <h2 className="font-['Space_Grotesk'] text-2xl font-bold text-earth-charcoal flex items-center gap-3">
             <span>{risk.title}</span>
-            <span className="text-xs bg-danger/20 text-dangert border border-danger/40 px-2.5 py-0.5 rounded-full">
+            <span className="text-xs bg-telemetry-crimson/20 text-telemetry-crimson border border-telemetry-crimson/40 px-2.5 py-0.5 rounded-full">
               {risk.confidence}% Confidence
             </span>
           </h2>
-          <p className="text-xs text-ink2 mt-1 font-mono">
+          <p className="text-xs text-secondary mt-1 font-mono">
             Vector ID: {risk.id} | Projected Impact: {risk.impact}
           </p>
         </div>
 
-        <div className="bg-deep2 p-4 rounded-xl border border-line space-y-3">
-          <div className="text-xs font-bold text-inkb uppercase tracking-wider">Telemetry Observation</div>
-          <p className="text-sm text-ink leading-relaxed">{risk.evidence.description}</p>
-          <div className="flex items-center gap-2 text-xs text-infot pt-2 border-t border-line">
+        <div className="bg-surface-container-low p-4 rounded-xl border border-earth-border space-y-3">
+          <div className="text-xs font-bold text-secondary uppercase tracking-wider">Telemetry Observation</div>
+          <p className="text-sm text-earth-charcoal leading-relaxed">{risk.evidence.description}</p>
+          <div className="flex items-center gap-2 text-xs text-copper-accent pt-2 border-t border-earth-border">
             <span className="material-symbols-outlined text-sm">sensors</span>
             <span>Source: {risk.evidence.telemetrySource}</span>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="bg-deep2 p-4 rounded-xl border border-line">
-            <div className="text-xs font-bold text-ink2 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-              <span className="material-symbols-outlined text-sm text-accentt">local_shipping</span>
+          <div className="bg-surface-container-low p-4 rounded-xl border border-earth-border">
+            <div className="text-xs font-bold text-secondary uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-sm text-copper-accent">local_shipping</span>
               <span>Affected Units</span>
             </div>
-            <ul className="space-y-1 text-xs text-ink">
+            <ul className="space-y-1 text-xs text-earth-charcoal">
               {risk.evidence.affectedUnits.map((u, i) => (
                 <li key={i} className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 bg-accent rounded-full"></span>
+                  <span className="w-1.5 h-1.5 bg-copper-accent rounded-full"></span>
                   <span className="font-mono">{u}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="bg-deep2 p-4 rounded-xl border border-line">
-            <div className="text-xs font-bold text-ink2 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-              <span className="material-symbols-outlined text-sm text-warnt">rule</span>
+          <div className="bg-surface-container-low p-4 rounded-xl border border-earth-border">
+            <div className="text-xs font-bold text-secondary uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-sm text-telemetry-amber">rule</span>
               <span>Synthetic Calibration</span>
             </div>
-            <p className="text-xs text-inkb leading-relaxed">{risk.evidence.syntheticAssumptions}</p>
+            <p className="text-xs text-secondary leading-relaxed">{risk.evidence.syntheticAssumptions}</p>
           </div>
         </div>
 
-        <div className="bg-ok/10 border border-ok/40 p-4 rounded-xl">
-          <div className="text-xs font-bold text-okt uppercase tracking-wider mb-1 flex items-center gap-1.5">
+        <div className="bg-telemetry-emerald/10 border border-telemetry-emerald/40 p-4 rounded-xl">
+          <div className="text-xs font-bold text-telemetry-emerald uppercase tracking-wider mb-1 flex items-center gap-1.5">
             <span className="material-symbols-outlined text-sm">check_circle</span>
             <span>Recommended Mitigation</span>
           </div>
-          <p className="text-xs text-ink leading-relaxed">{risk.evidence.recommendedMitigation}</p>
+          <p className="text-xs text-earth-charcoal leading-relaxed">{risk.evidence.recommendedMitigation}</p>
         </div>
 
         <div className="flex justify-end gap-3 pt-2">
-          <button onClick={onClose} className="px-4 py-2.5 rounded-xl border border-line3 text-xs font-bold text-ink2 hover:text-ink hover:bg-frost/5 transition-colors">
+          <button onClick={onClose} className="px-4 py-2.5 rounded-xl border border-earth-border text-xs font-bold text-secondary hover:text-earth-charcoal hover:bg-surface-container transition-colors">
             Dismiss
           </button>
           <button
@@ -198,7 +200,7 @@ export function EvidenceModal({
               onClose();
               onSimulateMitigation(risk);
             }}
-            className="px-5 py-2.5 rounded-xl bg-accent text-onaccent text-xs font-bold uppercase tracking-wider hover:bg-accent2 transition-all flex items-center gap-2 shadow-lg shadow-accent/20"
+            className="px-5 py-2.5 rounded-xl bg-primary-container text-on-primary-container text-xs font-bold uppercase tracking-wider hover:opacity-95 transition-all flex items-center gap-2 shadow-sm"
           >
             <span>Simulate in Scenario Workspace</span>
             <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -227,72 +229,72 @@ export function DrillReviewModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
-      <div className="liquid-glass-dark border border-accent/40 rounded-2xl max-w-2xl w-full p-6 md:p-8 shadow-2xl relative text-ink flex flex-col gap-5 max-h-[90vh] overflow-y-auto">
-        <button onClick={onClose} className="absolute top-5 right-5 text-ink2 hover:text-ink p-1.5 rounded-lg hover:bg-frost/10 transition-colors">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-charcoal/60 backdrop-blur-md animate-fadeIn">
+      <div className="bg-surface-parchment border border-earth-border rounded-xl max-w-2xl w-full p-6 md:p-8 shadow-xl relative text-earth-charcoal flex flex-col gap-5 max-h-[90vh] overflow-y-auto">
+        <button onClick={onClose} className="absolute top-5 right-5 text-secondary hover:text-earth-charcoal p-1.5 rounded-lg hover:bg-surface-container-low transition-colors">
           <span className="material-symbols-outlined">close</span>
         </button>
 
         <div>
-          <div className="flex items-center gap-2 mb-1 text-xs font-bold text-infot uppercase tracking-wider">
+          <div className="flex items-center gap-2 mb-1 text-xs font-bold text-copper-accent uppercase tracking-wider">
             <span className="material-symbols-outlined text-sm">science</span>
             <span>Exploration Review &amp; Assay Correlation</span>
           </div>
-          <h2 className="font-['Manrope'] text-2xl font-bold text-ink flex items-center gap-3">
+          <h2 className="font-['Space_Grotesk'] text-2xl font-bold text-earth-charcoal flex items-center gap-3">
             <span>{target.name} Review Program</span>
-            <span className="text-xs bg-warn/20 text-warnt border border-warn/40 px-2.5 py-0.5 rounded-full">
+            <span className="text-xs bg-telemetry-amber/20 text-telemetry-amber border border-telemetry-amber/40 px-2.5 py-0.5 rounded-full">
               {target.probability}% Prob.
             </span>
           </h2>
-          <p className="text-xs text-ink2 mt-1 font-mono">
+          <p className="text-xs text-secondary mt-1 font-mono">
             Coordinates: {target.coordinates} | Est. Reserves: {target.estimatedReserveTons}
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div className="bg-deep2 p-3 rounded-xl border border-line">
-            <div className="text-[10px] uppercase font-bold text-inkb">Subsurface Confidence</div>
-            <div className="text-lg font-bold text-okt mt-0.5">{target.subsurfaceConf}</div>
+          <div className="bg-surface-container-low p-3 rounded-xl border border-earth-border">
+            <div className="text-[10px] uppercase font-bold text-secondary">Subsurface Confidence</div>
+            <div className="text-lg font-bold text-telemetry-emerald mt-0.5">{target.subsurfaceConf}</div>
           </div>
-          <div className="bg-deep2 p-3 rounded-xl border border-line">
-            <div className="text-[10px] uppercase font-bold text-inkb">Density Score</div>
-            <div className="text-lg font-bold text-accentt mt-0.5">{target.densityScore} g/cm³</div>
+          <div className="bg-surface-container-low p-3 rounded-xl border border-earth-border">
+            <div className="text-[10px] uppercase font-bold text-secondary">Density Score</div>
+            <div className="text-lg font-bold text-copper-accent mt-0.5">{target.densityScore} g/cm³</div>
           </div>
-          <div className="bg-deep2 p-3 rounded-xl border border-line">
-            <div className="text-[10px] uppercase font-bold text-inkb">Maturity Grade</div>
-            <div className="text-lg font-bold text-infot mt-0.5">{target.maturity}</div>
+          <div className="bg-surface-container-low p-3 rounded-xl border border-earth-border">
+            <div className="text-[10px] uppercase font-bold text-secondary">Maturity Grade</div>
+            <div className="text-lg font-bold text-copper-accent mt-0.5">{target.maturity}</div>
           </div>
         </div>
 
-        <div className="bg-deep2 p-4 rounded-xl border border-line">
-          <div className="text-xs font-bold text-ink2 uppercase tracking-wider mb-1">Lithology &amp; Structure Summary</div>
-          <p className="text-xs text-ink leading-relaxed">{target.description}</p>
+        <div className="bg-surface-container-low p-4 rounded-xl border border-earth-border">
+          <div className="text-xs font-bold text-secondary uppercase tracking-wider mb-1">Lithology &amp; Structure Summary</div>
+          <p className="text-xs text-earth-charcoal leading-relaxed">{target.description}</p>
         </div>
 
-        <div className="bg-panel2 p-4 rounded-xl border border-line2/40 flex flex-col gap-3">
+        <div className="bg-surface-container p-4 rounded-xl border border-earth-border flex flex-col gap-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-xs font-bold text-accentt uppercase">
+            <div className="flex items-center gap-2 text-xs font-bold text-copper-accent uppercase">
               <span className="material-symbols-outlined text-sm">auto_awesome</span>
               <span>Crucible AI Subsurface Assessment</span>
             </div>
             {!aiReport && (
               <button
                 onClick={handleGenerateAIReport}
-                className="px-3 py-1 bg-accent text-onaccent text-xs font-bold rounded-lg hover:bg-accent2 transition-all flex items-center gap-1"
+                className="px-3 py-1 bg-primary-container text-on-primary-container text-xs font-bold rounded-lg hover:opacity-95 transition-all flex items-center gap-1"
               >
                 <span>Generate Report</span>
               </button>
             )}
           </div>
           {aiReport && (
-            <div className="text-xs text-ink bg-deep2 p-3 rounded-lg border border-line leading-relaxed whitespace-pre-line animate-fadeIn">
+            <div className="text-xs text-earth-charcoal bg-surface-container-low p-3 rounded-lg border border-earth-border leading-relaxed whitespace-pre-line animate-fadeIn">
               {aiReport}
             </div>
           )}
         </div>
 
         <div className="flex justify-end gap-3 pt-2">
-          <button onClick={onClose} className="px-5 py-2.5 rounded-xl border border-line3 text-xs font-bold text-ink2 hover:text-ink hover:bg-frost/5 transition-colors">
+          <button onClick={onClose} className="px-5 py-2.5 rounded-xl border border-earth-border text-xs font-bold text-secondary hover:text-earth-charcoal hover:bg-surface-container transition-colors">
             Close Review
           </button>
           <button
@@ -300,7 +302,7 @@ export function DrillReviewModal({
               window.alert(`Drill proposal for ${target.name} submitted to the Sausar Operations Board (SIMULATED — synthetic data only).`);
               onClose();
             }}
-            className="px-5 py-2.5 rounded-xl bg-ok text-white text-xs font-bold uppercase tracking-wider hover:bg-ok/80 transition-all flex items-center gap-2 shadow-lg"
+            className="px-5 py-2.5 rounded-xl bg-earth-charcoal text-canvas-sandstone text-xs font-bold uppercase tracking-wider hover:bg-earth-espresso transition-all flex items-center gap-2 shadow-sm"
           >
             <span className="material-symbols-outlined text-sm">check</span>
             <span>Approve Exploratory Borehole</span>
@@ -360,39 +362,39 @@ export function AIOptimizerModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
-      <div className="liquid-glass-dark border border-accent/40 rounded-2xl max-w-2xl w-full p-6 md:p-8 shadow-2xl relative text-ink flex flex-col gap-5 max-h-[90vh] overflow-y-auto">
-        <button onClick={onClose} className="absolute top-5 right-5 text-ink2 hover:text-ink p-1.5 rounded-lg hover:bg-frost/10 transition-colors">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-charcoal/60 backdrop-blur-md animate-fadeIn">
+      <div className="bg-surface-parchment border border-earth-border rounded-xl max-w-2xl w-full p-6 md:p-8 shadow-xl relative text-earth-charcoal flex flex-col gap-5 max-h-[90vh] overflow-y-auto">
+        <button onClick={onClose} className="absolute top-5 right-5 text-secondary hover:text-earth-charcoal p-1.5 rounded-lg hover:bg-surface-container-low transition-colors">
           <span className="material-symbols-outlined">close</span>
         </button>
 
         <div>
-          <div className="flex items-center gap-2 mb-1 text-xs font-bold text-accentt uppercase tracking-wider">
+          <div className="flex items-center gap-2 mb-1 text-xs font-bold text-copper-accent uppercase tracking-wider">
             <span className="material-symbols-outlined text-sm">auto_awesome</span>
             <span>Crucible AI Decision Engine</span>
           </div>
-          <h2 className="font-['Manrope'] text-2xl font-bold text-ink">Operational Scenario Solver</h2>
-          <p className="text-xs text-ink2 mt-1">
+          <h2 className="font-['Space_Grotesk'] text-2xl font-bold text-earth-charcoal">Operational Scenario Solver</h2>
+          <p className="text-xs text-secondary mt-1">
             Simulate dynamic fleet dispatch, crusher speed modulation, and mine throughput optimization.
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="text-xs font-bold text-ink2 uppercase tracking-wider block mb-1.5">Sector / Pit Zone</label>
+            <label className="text-xs font-bold text-secondary uppercase tracking-wider block mb-1.5">Sector / Pit Zone</label>
             <input
               type="text"
               value={sector}
               onChange={(e) => setSector(e.target.value)}
-              className="w-full bg-deep2 border border-line rounded-xl px-3.5 py-2 text-xs text-ink focus:outline-none focus:border-accent"
+              className="w-full bg-surface-container-low border border-earth-border rounded-xl px-3.5 py-2 text-xs text-earth-charcoal focus:outline-none focus:border-copper-accent"
             />
           </div>
           <div>
-            <label className="text-xs font-bold text-ink2 uppercase tracking-wider block mb-1.5">Fuel &amp; Fleet Surge Tolerance</label>
+            <label className="text-xs font-bold text-secondary uppercase tracking-wider block mb-1.5">Fuel &amp; Fleet Surge Tolerance</label>
             <select
               value={fuelTolerance}
               onChange={(e) => setFuelTolerance(e.target.value)}
-              className="w-full bg-deep2 border border-line rounded-xl px-3.5 py-2 text-xs text-ink focus:outline-none focus:border-accent"
+              className="w-full bg-surface-container-low border border-earth-border rounded-xl px-3.5 py-2 text-xs text-earth-charcoal focus:outline-none focus:border-copper-accent"
             >
               <option>Standard (±10%)</option>
               <option>Aggressive Throughput (±25%)</option>
@@ -400,28 +402,28 @@ export function AIOptimizerModal({
             </select>
           </div>
           <div className="sm:col-span-2">
-            <label className="text-xs font-bold text-ink2 uppercase tracking-wider block mb-1.5">Operational Constraint / Bottleneck</label>
+            <label className="text-xs font-bold text-secondary uppercase tracking-wider block mb-1.5">Operational Constraint / Bottleneck</label>
             <textarea
               rows={2}
               value={bottleneck}
               onChange={(e) => setBottleneck(e.target.value)}
-              className="w-full bg-deep2 border border-line rounded-xl px-3.5 py-2 text-xs text-ink focus:outline-none focus:border-accent"
+              className="w-full bg-surface-container-low border border-earth-border rounded-xl px-3.5 py-2 text-xs text-earth-charcoal focus:outline-none focus:border-copper-accent"
             />
           </div>
         </div>
 
         {error && (
-          <div className="text-xs text-warnt bg-warn/10 border border-warn/40 rounded-xl px-3 py-2">{error}</div>
+          <div className="text-xs text-telemetry-crimson bg-telemetry-crimson/10 border border-telemetry-crimson/40 rounded-xl px-3 py-2">{error}</div>
         )}
 
         <button
           onClick={handleRunSimulation}
           disabled={isLoading}
-          className="w-full py-3 bg-accent text-onaccent text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-accent2 transition-all flex items-center justify-center gap-2 shadow-lg disabled:opacity-60"
+          className="w-full py-3 bg-primary-container text-on-primary-container text-xs font-bold uppercase tracking-wider rounded-xl hover:opacity-95 transition-all flex items-center justify-center gap-2 shadow-sm disabled:opacity-60"
         >
           {isLoading ? (
             <>
-              <span className="w-4 h-4 border-2 border-onaccent border-t-transparent rounded-full animate-spin"></span>
+              <span className="w-4 h-4 border-2 border-on-primary-container border-t-transparent rounded-full animate-spin"></span>
               <span>Running Discrete Simulation...</span>
             </>
           ) : (
@@ -433,15 +435,15 @@ export function AIOptimizerModal({
         </button>
 
         {simulationResult && (
-          <div className="bg-deep2 p-4 rounded-xl border border-accent/40 space-y-3 animate-fadeIn">
-            <div className="flex justify-between items-center pb-2 border-b border-line">
-              <div className="font-['Manrope'] font-bold text-sm text-accentt">{simulationResult.scenarioName}</div>
-              <span className="text-xs bg-ok/20 text-okt px-2 py-0.5 rounded font-bold">
+          <div className="bg-surface-container-low p-4 rounded-xl border border-copper-accent/40 space-y-3 animate-fadeIn">
+            <div className="flex justify-between items-center pb-2 border-b border-earth-border">
+              <div className="font-['Space_Grotesk'] font-bold text-sm text-copper-accent">{simulationResult.scenarioName}</div>
+              <span className="text-xs bg-telemetry-emerald/20 text-telemetry-emerald px-2 py-0.5 rounded font-bold">
                 {simulationResult.confidence}% Confidence
               </span>
             </div>
-            <div className="text-xs text-ink bg-panel2/50 p-2.5 rounded-lg">
-              <span className="font-bold text-okt">Key Driver: </span>
+            <div className="text-xs text-earth-charcoal bg-surface-container p-2.5 rounded-lg">
+              <span className="font-bold text-telemetry-emerald">Key Driver: </span>
               {simulationResult?.keyDriver ?? 'Fleet reallocation increases utilization, correlating to throughput gain.'}
             </div>
             <div className="flex justify-end gap-2 pt-2">
@@ -451,7 +453,7 @@ export function AIOptimizerModal({
                   onClose();
                   router.push('/scenario');
                 }}
-                className="px-4 py-2 bg-ok text-white text-xs font-bold rounded-lg hover:bg-ok/80 transition-colors"
+                className="px-4 py-2 bg-earth-charcoal text-canvas-sandstone text-xs font-bold rounded-lg hover:bg-earth-espresso transition-colors"
               >
                 Apply to Scenario Workspace
               </button>
@@ -475,35 +477,35 @@ export function DeploySuccessModal({
 }) {
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
-      <div className="liquid-glass-dark border border-ok/50 rounded-2xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative text-ink flex flex-col items-center text-center gap-4">
-        <div className="w-16 h-16 rounded-full bg-ok/20 border border-ok flex items-center justify-center text-okt mb-2 shadow-[0_0_30px_rgba(46,155,118,0.4)]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-charcoal/60 backdrop-blur-md animate-fadeIn">
+      <div className="bg-surface-parchment border border-telemetry-emerald/50 rounded-xl max-w-lg w-full p-6 md:p-8 shadow-xl relative text-earth-charcoal flex flex-col items-center text-center gap-4">
+        <div className="w-16 h-16 rounded-full bg-telemetry-emerald/20 border border-telemetry-emerald flex items-center justify-center text-telemetry-emerald mb-2 shadow-[0_0_30px_rgba(45,106,79,0.4)]">
           <span className="material-symbols-outlined text-3xl">verified</span>
         </div>
 
-        <h2 className="font-['Manrope'] text-2xl font-bold text-ink">Scenario Dispatched to Operations</h2>
+        <h2 className="font-['Space_Grotesk'] text-2xl font-bold text-earth-charcoal">Scenario Dispatched to Operations</h2>
 
-        <p className="text-xs text-ink2 leading-relaxed max-w-sm">
+        <p className="text-xs text-secondary leading-relaxed max-w-sm">
           Intervention instructions dispatched to the operations ledger. Work orders generated for the affected fleet units and the crusher PM window adjustment.
         </p>
 
-        <div className="w-full bg-deep2 p-4 rounded-xl border border-line text-left text-xs font-mono space-y-1.5 text-inkb">
+        <div className="w-full bg-surface-container-low p-4 rounded-xl border border-earth-border text-left text-xs font-mono space-y-1.5 text-secondary">
           <div className="flex justify-between">
             <span>Work Order ID:</span>
-            <span className="text-accentt">WO-MN-{Math.floor(10000 + Math.random() * 89999)}</span>
+            <span className="text-copper-accent">WO-MN-{Math.floor(10000 + Math.random() * 89999)}</span>
           </div>
           <div className="flex justify-between">
             <span>Audit Log Status:</span>
-            <span className="text-infot">GOVERNED &amp; SIGNED</span>
+            <span className="text-telemetry-emerald">GOVERNED &amp; SIGNED</span>
           </div>
           <div className="flex justify-between">
             <span>Data Origin:</span>
-            <span className="text-warnt">SYNTHETIC (demo)</span>
+            <span className="text-telemetry-amber">SYNTHETIC (demo)</span>
           </div>
         </div>
 
         <div className="flex w-full gap-3 mt-4">
-          <button onClick={onClose} className="flex-1 py-3 rounded-xl border border-line3 text-xs font-bold text-ink2 hover:text-ink transition-colors">
+          <button onClick={onClose} className="flex-1 py-3 rounded-xl border border-earth-border text-xs font-bold text-secondary hover:text-earth-charcoal hover:bg-surface-container transition-colors">
             Stay in Workspace
           </button>
           <button
@@ -511,7 +513,7 @@ export function DeploySuccessModal({
               onClose();
               onNavigateToLive();
             }}
-            className="flex-1 py-3 rounded-xl bg-ok text-white text-xs font-bold uppercase tracking-wider hover:bg-ok/90 transition-all shadow-lg"
+            className="flex-1 py-3 rounded-xl bg-earth-charcoal text-canvas-sandstone text-xs font-bold uppercase tracking-wider hover:bg-earth-espresso transition-all shadow-sm"
           >
             Monitor Live Telemetry
           </button>
@@ -552,27 +554,27 @@ export function PredictionBrainstormModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
-      <div className="liquid-glass-dark border border-accent/40 rounded-2xl max-w-2xl w-full p-6 md:p-8 shadow-2xl relative text-ink flex flex-col gap-5 max-h-[90vh] overflow-y-auto">
-        <button onClick={onClose} className="absolute top-5 right-5 text-ink2 hover:text-ink p-1.5 rounded-lg hover:bg-frost/10 transition-colors">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-charcoal/60 backdrop-blur-md animate-fadeIn">
+      <div className="bg-surface-parchment border border-earth-border rounded-xl max-w-2xl w-full p-6 md:p-8 shadow-xl relative text-earth-charcoal flex flex-col gap-5 max-h-[90vh] overflow-y-auto">
+        <button onClick={onClose} className="absolute top-5 right-5 text-secondary hover:text-earth-charcoal p-1.5 rounded-lg hover:bg-surface-container-low transition-colors">
           <span className="material-symbols-outlined">close</span>
         </button>
 
         <div>
-          <div className="flex items-center gap-2 mb-1 text-xs font-bold text-accentt uppercase tracking-wider">
+          <div className="flex items-center gap-2 mb-1 text-xs font-bold text-copper-accent uppercase tracking-wider">
             <span className="material-symbols-outlined text-sm">psychology</span>
             <span>Prediction Analysis & AI Brainstorming</span>
           </div>
-          <h2 className="font-['Manrope'] text-2xl font-bold text-ink">Projected Production Drivers</h2>
+          <h2 className="font-['Space_Grotesk'] text-2xl font-bold text-earth-charcoal">Projected Production Drivers</h2>
         </div>
 
-        <div className="bg-deep2 p-4 rounded-xl border border-line space-y-3">
-          <div className="text-xs font-bold text-inkb uppercase tracking-wider">Key Factors Influencing Production</div>
+        <div className="bg-surface-container-low p-4 rounded-xl border border-earth-border space-y-3">
+          <div className="text-xs font-bold text-secondary uppercase tracking-wider">Key Factors Influencing Production</div>
           {insight.drivers.length > 0 ? (
             <ul className="space-y-2">
               {insight.drivers.map((d, i) => (
-                <li key={i} className="flex items-center gap-2 text-sm text-ink">
-                  <span className={`material-symbols-outlined ${d.direction === 'negative' ? 'text-dangert' : 'text-okt'}`}>
+                <li key={i} className="flex items-center gap-2 text-sm text-earth-charcoal">
+                  <span className={`material-symbols-outlined ${d.direction === 'negative' ? 'text-telemetry-crimson' : 'text-telemetry-emerald'}`}>
                     {d.direction === 'negative' ? 'south' : 'north'}
                   </span>
                   {d.label} {d.direction === 'negative' ? '(reducing yield)' : '(improving yield)'}
@@ -580,7 +582,7 @@ export function PredictionBrainstormModal({
               ))}
             </ul>
           ) : (
-            <p className="text-xs text-ink2">No single dominant driver identified by the model.</p>
+            <p className="text-xs text-secondary">No single dominant driver identified by the model.</p>
           )}
         </div>
 
@@ -588,11 +590,11 @@ export function PredictionBrainstormModal({
           <button
             onClick={handleBrainstorm}
             disabled={isBrainstorming}
-            className="w-full py-3 bg-panel2 border border-accent/40 text-accentt text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-accent/10 transition-all flex items-center justify-center gap-2"
+            className="w-full py-3 bg-surface-container border border-copper-accent/40 text-copper-accent text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-copper-accent/10 transition-all flex items-center justify-center gap-2"
           >
             {isBrainstorming ? (
               <>
-                <span className="w-4 h-4 border-2 border-accentt border-t-transparent rounded-full animate-spin"></span>
+                <span className="w-4 h-4 border-2 border-copper-accent border-t-transparent rounded-full animate-spin"></span>
                 <span>AI is analyzing drivers...</span>
               </>
             ) : (
@@ -603,19 +605,19 @@ export function PredictionBrainstormModal({
             )}
           </button>
         ) : (
-          <div className="bg-panel2 p-4 rounded-xl border border-accent/40">
-            <div className="flex items-center gap-2 text-xs font-bold text-accentt uppercase mb-2">
+          <div className="bg-surface-container p-4 rounded-xl border border-copper-accent/40">
+            <div className="flex items-center gap-2 text-xs font-bold text-copper-accent uppercase mb-2">
               <span className="material-symbols-outlined text-sm">auto_awesome</span>
               <span>AI Recommended Actions</span>
             </div>
-            <div className="text-sm text-ink leading-relaxed whitespace-pre-line">
+            <div className="text-sm text-earth-charcoal leading-relaxed whitespace-pre-line">
               {brainstormResult}
             </div>
           </div>
         )}
 
         <div className="flex justify-end gap-3 pt-2">
-          <button onClick={onClose} className="px-4 py-2.5 rounded-xl border border-line3 text-xs font-bold text-ink2 hover:text-ink hover:bg-frost/5 transition-colors">
+          <button onClick={onClose} className="px-4 py-2.5 rounded-xl border border-earth-border text-xs font-bold text-secondary hover:text-earth-charcoal hover:bg-surface-container transition-colors">
             Close
           </button>
           <button
@@ -623,7 +625,7 @@ export function PredictionBrainstormModal({
               onClose();
               onSimulateMitigation();
             }}
-            className="px-5 py-2.5 rounded-xl bg-accent text-onaccent text-xs font-bold uppercase tracking-wider hover:bg-accent2 transition-all flex items-center gap-2 shadow-lg shadow-accent/20"
+            className="px-5 py-2.5 rounded-xl bg-primary-container text-on-primary-container text-xs font-bold uppercase tracking-wider hover:opacity-95 transition-all flex items-center gap-2 shadow-sm"
           >
             <span>Test in Scenario Workspace</span>
             <span className="material-symbols-outlined text-sm">arrow_forward</span>

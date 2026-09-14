@@ -2,6 +2,8 @@
 
 /**
  * m/governance — segmented control over Data Health / Models / Ledger / Decisions.
+ * 
+ * Reskinned to Earthy Industrial.
  */
 import React, { useEffect, useState } from 'react';
 import { apiFetch } from '@/lib/api';
@@ -79,23 +81,23 @@ export default function MobileGovernance() {
           {health.map((d) => (
             <Card key={d.domain} className="!p-3.5 flex items-center justify-between">
               <div>
-                <div className="text-sm font-bold text-ink">{d.domain}</div>
-                <div className="text-[10px] text-ink3">
+                <div className="text-sm font-bold text-earth-charcoal">{d.domain}</div>
+                <div className="text-[10px] text-secondary">
                   {d.rows.toLocaleString('en-IN')} rows · {d.latest.slice(0, 10)}
                 </div>
               </div>
               <span
                 className={`text-[9px] font-bold uppercase px-2 py-0.5 rounded-full border ${
                   d.freshness === 'FRESH'
-                    ? 'text-okt border-ok/40 bg-ok/10'
-                    : 'text-warnt border-warn/40 bg-warn/10'
+                    ? 'text-telemetry-emerald border-telemetry-emerald/40 bg-telemetry-emerald/10'
+                    : 'text-telemetry-amber border-telemetry-amber/40 bg-telemetry-amber/10'
                 }`}
               >
                 {d.freshness}
               </span>
             </Card>
           ))}
-          {!health.length && <Card className="text-center text-xs text-ink3">Data health loads with the API on :8000.</Card>}
+          {!health.length && <Card className="text-center text-xs text-secondary">Data health loads with the API on :8000.</Card>}
         </div>
       )}
 
@@ -104,21 +106,21 @@ export default function MobileGovernance() {
           {models.map((m, i) => (
             <Card key={i} className="!p-3.5">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-bold text-ink capitalize">{m.task.replace(/_/g, ' ')}</span>
-                <span className="text-[9px] font-bold text-okt bg-ok/10 border border-ok/30 px-2 py-0.5 rounded-full uppercase">
+                <span className="text-sm font-bold text-earth-charcoal capitalize">{m.task.replace(/_/g, ' ')}</span>
+                <span className="text-[9px] font-bold text-telemetry-emerald bg-telemetry-emerald/10 border border-telemetry-emerald/30 px-2 py-0.5 rounded-full uppercase">
                   Champion
                 </span>
               </div>
-              <div className="text-[11px] text-inkb font-mono mt-1">{m.model}</div>
+              <div className="text-[11px] text-secondary font-mono mt-1">{m.model}</div>
               {(m.metric_roc_auc != null || m.metric_pr_auc != null) && (
-                <div className="flex gap-4 mt-1 text-[11px] text-ink2">
+                <div className="flex gap-4 mt-1 text-[11px] text-secondary">
                   {m.metric_roc_auc != null && <span>ROC-AUC {m.metric_roc_auc}</span>}
                   {m.metric_pr_auc != null && <span>PR-AUC {m.metric_pr_auc}</span>}
                 </div>
               )}
             </Card>
           ))}
-          {!models.length && <Card className="text-center text-xs text-ink3">Model registry loads with the API.</Card>}
+          {!models.length && <Card className="text-center text-xs text-secondary">Model registry loads with the API.</Card>}
         </div>
       )}
 
@@ -127,14 +129,14 @@ export default function MobileGovernance() {
           {ledger.map((e) => (
             <Card key={e.id} className="!p-3">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-bold text-ink truncate">{e.entityNode}</span>
-                <span className="text-[10px] text-ink3 font-mono">{e.time}</span>
+                <span className="text-[11px] font-bold text-earth-charcoal truncate">{e.entityNode}</span>
+                <span className="text-[10px] text-secondary font-mono">{e.time}</span>
               </div>
               <div className="flex items-center justify-between mt-1">
-                <span className="text-[11px] text-inkb">{e.predictionType}</span>
+                <span className="text-[11px] text-secondary">{e.predictionType}</span>
                 <span
                   className={`text-[11px] font-bold ${
-                    e.confidence >= 80 ? 'text-dangert' : e.confidence >= 50 ? 'text-warnt' : 'text-okt'
+                    e.confidence >= 80 ? 'text-telemetry-crimson' : e.confidence >= 50 ? 'text-telemetry-amber' : 'text-telemetry-emerald'
                   }`}
                 >
                   {e.confidence}%

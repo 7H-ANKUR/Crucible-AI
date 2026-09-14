@@ -157,6 +157,10 @@ export async function apiPost<T>(
   body: unknown,
   clerkToken?: string | null
 ): Promise<T> {
+  const token = clerkToken ?? getToken();
+  if (!token) {
+    throw new Error('Guest users cannot perform changes.');
+  }
   return apiFetch<T>(path, { method: 'POST', body: JSON.stringify(body) }, clerkToken);
 }
 

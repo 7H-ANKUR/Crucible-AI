@@ -127,7 +127,7 @@ export function warmBackend(): Promise<void> {
     const deadline = Date.now() + COLD_START_BUDGET_MS;
 
     while (Date.now() < deadline) {
-      if (await probe('/health/live', ATTEMPT_TIMEOUT_MS)) {
+      if (await probe('/ping', ATTEMPT_TIMEOUT_MS)) {
         lastWarmAt = Date.now();
         setState('warm');
         // Second stage, fire-and-forget: /health/ready runs `SELECT 1`, which opens a
