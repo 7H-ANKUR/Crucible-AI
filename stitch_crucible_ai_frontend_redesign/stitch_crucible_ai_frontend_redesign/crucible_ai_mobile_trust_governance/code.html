@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><title>Crucible AI - Mineral Intelligence</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "telemetry-amber": "#C47C17", "earth-charcoal": "#1E1915", "canvas-sandstone": "#F7F3EE", "outline-variant": "#d8c2b6", "on-secondary-fixed": "#221a14", "on-primary": "#ffffff", "tertiary-fixed": "#ffdbcb", "on-secondary-fixed-variant": "#4f453e", "surface": "#fff8f4", "telemetry-crimson": "#A63A2A", "primary-container": "#9e5a2a", "surface-elevation": "#E3DACF", "surface-bright": "#fff8f4", "primary": "#804314", "primary-fixed": "#ffdbc7", "inverse-on-surface": "#f9efe6", "surface-container-low": "#fcf2e9", "on-error-container": "#93000a", "error-container": "#ffdad6", "surface-tint": "#8e4e1e", "on-secondary-container": "#6d625b", "earth-border": "#D8CFC4", "surface-dim": "#e2d8d0", "on-tertiary": "#ffffff", "on-tertiary-fixed-variant": "#713714", "earth-espresso": "#2C1A14", "on-tertiary-fixed": "#341100", "surface-container-lowest": "#ffffff", "surface-container-high": "#f0e6de", "copper-accent": "#B46A36", "error": "#ba1a1a", "secondary-fixed-dim": "#d2c4bb", "surface-variant": "#ebe1d8", "tertiary-fixed-dim": "#ffb691", "surface-container-highest": "#ebe1d8", "on-surface-variant": "#53443b", "secondary-container": "#efe0d6", "tertiary-container": "#9d5a35", "secondary": "#675c55", "on-tertiary-container": "#ffe9df", "on-background": "#1f1b16", "on-primary-fixed": "#311300", "primary-fixed-dim": "#ffb689", "on-primary-container": "#ffe9de", "on-secondary": "#ffffff", "on-primary-fixed-variant": "#713707", "ore-gold": "#C59B27", "surface-container": "#f6ece3", "background": "#fff8f4", "outline": "#867369", "inverse-surface": "#35302a", "on-error": "#ffffff", "secondary-fixed": "#efe0d6", "tertiary": "#804320", "inverse-primary": "#ffb689", "on-surface": "#1f1b16", "surface-parchment": "#EDE6DD", "telemetry-emerald": "#2D6A4F" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-sm": "0.5rem", "margin-md": "1.5rem", "space-md": "1rem", "margin": "1rem", "gutter-lg": "2rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "gutter-md": "1.5rem", "space-xl": "2rem", "margin-lg": "2rem", "gutter": "1rem" }, "fontFamily": { "label-lg": ["Space Grotesk"], "body-sm": ["Work Sans"], "headline-sm": ["Space Grotesk"], "headline-xl-mobile": ["Space Grotesk"], "label-sm": ["Space Grotesk"], "body-lg": ["Work Sans"], "label-md": ["Space Grotesk"], "body-md": ["Work Sans"], "headline-md": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "headline-lg-mobile": ["Space Grotesk"], "headline-xl": ["Space Grotesk"] }, "fontSize": { "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "headline-sm": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "headline-xl-mobile": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-xl": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.03em", "fontWeight": "700" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style></head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(30,25,21,0.04)]"><div class="h-14 px-3 flex items-center justify-between gap-2"><div class="flex items-center gap-1.5"><button aria-label="Navigation Drawer" class="w-11 h-11 flex items-center justify-center text-earth-espresso hover:bg-surface-variant/40 rounded transition-colors active:scale-95" type="button"><span class="material-symbols-outlined text-[22px]">menu</span></button><div class="flex items-center gap-2 pl-0.5"><img alt="Geometric mineral prism emblem with faceted copper and warm charcoal facets for Crucible AI mining operations platform. Brand logo. - Primary color: #9e5a2a - Font: spaceGrotesk - Mode: light - Roundness: rounded-sm" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XKURaUWBxRvJ7PerWT4jwanheS9Cgsk9ahJads6JJOIlk3KMXvRbsIjhZIt1hzwHQQKUlpOcSju173XRm_W-m3gRM7au31gYibmvXkFDvniGPVkh2PHqVXIVPmkOoIO1HTVFiYu7sHYyxYlqiRVvKyWodaKq0PUa85F0jClmZzBlrK1SvnD0e11vO03zTXgenJEH0KbFkpcKqL6iOtuBMRKsUCEhhpBCBb_u7IKMpxl6E8KWDWO6u9koY"/><span class="font-headline-sm text-headline-sm tracking-tight text-earth-espresso hidden xs:inline-block">CRUCIBLE</span></div></div><div class="flex items-center gap-1.5"><button class="h-9 px-2.5 flex items-center gap-1 bg-surface-parchment hover:bg-surface-elevation text-earth-espresso rounded active:scale-98 transition-colors max-w-[150px] sm:max-w-none" type="button"><span class="material-symbols-outlined text-[16px] text-copper-accent">layers</span><span class="font-label-md text-label-md truncate">Kansanshi Pit North</span><span class="material-symbols-outlined text-[16px] text-on-surface-variant">arrow_drop_down</span></button><div class="relative flex items-center"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="sr-only">User Profile MV</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-14 pb-20 bg-surface"><div class="flex flex-col w-full px-3 py-3 gap-4">
+<!-- Header & Context Banner -->
+<div class="flex flex-col gap-2 bg-surface-container rounded-xl p-4 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-telemetry-emerald animate-pulse"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary">TRUST &amp; COMPLIANCE</span>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-elevation text-earth-espresso">
+        Protocol M-491
+      </span>
+</div>
+<div class="flex items-end justify-between pt-1">
+<div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-earth-espresso tracking-tight">Model Governance</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Autonomous safety gate &amp; cryptographically attested deployment</p>
+</div>
+<button class="flex items-center gap-1 bg-surface-elevation hover:bg-surface-variant text-earth-charcoal px-2.5 py-1.5 rounded active:scale-95 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px] text-copper-accent">file_download</span>
+<span class="font-label-sm text-label-sm">Export SOC2</span>
+</button>
+</div>
+<!-- Telemetry Compliance Chips -->
+<div class="grid grid-cols-2 gap-2 pt-2">
+<div class="flex items-center gap-2 bg-surface-container-low p-2.5 rounded-lg shadow-sm">
+<div class="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-telemetry-emerald text-[18px]">verified_user</span>
+</div>
+<div class="min-w-0">
+<div class="font-label-sm text-label-sm text-on-surface-variant truncate">ISO-13849 PL-d</div>
+<div class="font-label-md text-label-md text-earth-charcoal font-semibold">100% Nominal</div>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low p-2.5 rounded-lg shadow-sm">
+<div class="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-copper-accent text-[18px]">gavel</span>
+</div>
+<div class="min-w-0">
+<div class="font-label-sm text-label-sm text-on-surface-variant truncate">Mine Code ZMK-2024-C</div>
+<div class="font-label-md text-label-md text-earth-charcoal font-semibold">Audited • 0 Drift</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Governance Horizontal Scroll Tabs -->
+<div class="w-full overflow-x-auto no-scrollbar -mx-3 px-3">
+<div class="flex items-center gap-2 min-w-max pb-1" id="nav-tabs">
+<button class="tab-btn active flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-earth-charcoal text-surface-container-lowest shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[16px] text-copper-accent">task_alt</span>
+<span class="font-label-md text-label-md">Approvals &amp; Gate</span>
+<span class="px-1.5 py-0.2 rounded-full bg-primary-container text-surface text-[10px] font-bold leading-tight ml-0.5">2</span>
+</button>
+<button class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container hover:bg-surface-elevation text-earth-charcoal transition-all" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">vital_signs</span>
+<span class="font-label-md text-label-md">Data Health</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">(4)</span>
+</button>
+<button class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container hover:bg-surface-elevation text-earth-charcoal transition-all" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">model_training</span>
+<span class="font-label-md text-label-md">Model Registry</span>
+</button>
+<button class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container hover:bg-surface-elevation text-earth-charcoal transition-all" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">receipt_long</span>
+<span class="font-label-md text-label-md">Prediction Ledger</span>
+</button>
+<button class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container hover:bg-surface-elevation text-earth-charcoal transition-all" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">memory</span>
+<span class="font-label-md text-label-md">Decision Memory</span>
+</button>
+</div>
+</div>
+<!-- Challenger Model Stage Alert Section -->
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-copper-accent text-[20px]">shield_with_heart</span>
+<span class="font-headline-sm text-headline-sm text-earth-espresso">Challenger Promotion Gates</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Dual Signature</span>
+</div>
+<!-- Card 1: Crucible-Transformer-v4.2-Surrogate -->
+<div class="flex flex-col bg-surface-container rounded-xl shadow-md overflow-hidden relative" id="card-model-1">
+<!-- Visual Top Status Bar -->
+<div class="h-1.5 w-full bg-telemetry-amber"></div>
+<div class="p-3.5 flex flex-col gap-3">
+<!-- Card Header -->
+<div class="flex items-start justify-between gap-2">
+<div class="min-w-0">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="px-2 py-0.5 rounded bg-telemetry-amber/20 text-telemetry-amber font-label-sm text-label-sm uppercase tracking-wide flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] animate-spin">sync</span>
+              Awaiting Safety Sign-Off
+            </span>
+<span class="px-1.5 py-0.5 rounded bg-surface-elevation text-on-surface-variant font-label-sm text-label-sm">v4.2</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-earth-espresso truncate">Crucible-Transformer-v4.2-Surrogate</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[15px] text-copper-accent">precision_manufacturing</span>
+            Target: SAG Mill Feed &amp; Throughput Controller
+          </p>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-earth-charcoal active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">info</span>
+</button>
+</div>
+<!-- Telemetry Sparkline & Metric Bento Mini-Grid -->
+<div class="grid grid-cols-4 gap-1.5 bg-surface-container-lowest p-2 rounded-lg shadow-sm">
+<div class="flex flex-col p-1.5 rounded bg-surface-container-low">
+<span class="font-label-sm text-label-sm text-on-surface-variant">ROC-AUC</span>
+<span class="font-label-lg text-label-lg text-earth-espresso mt-0.5">0.984</span>
+<span class="font-label-sm text-label-sm text-telemetry-emerald flex items-center">+0.012</span>
+</div>
+<div class="flex flex-col p-1.5 rounded bg-surface-container-low">
+<span class="font-label-sm text-label-sm text-on-surface-variant">PR-AUC</span>
+<span class="font-label-lg text-label-lg text-earth-espresso mt-0.5">0.972</span>
+<span class="font-label-sm text-label-sm text-telemetry-emerald flex items-center">+0.018</span>
+</div>
+<div class="flex flex-col p-1.5 rounded bg-surface-container-low">
+<span class="font-label-sm text-label-sm text-on-surface-variant">MAE</span>
+<span class="font-label-lg text-label-lg text-earth-espresso mt-0.5">0.009</span>
+<span class="font-label-sm text-label-sm text-telemetry-emerald flex items-center">-14% err</span>
+</div>
+<div class="flex flex-col p-1.5 rounded bg-surface-container-high">
+<span class="font-label-sm text-label-sm text-copper-accent font-semibold">Net Lift</span>
+<span class="font-label-lg text-label-lg text-copper-accent mt-0.5 font-bold">+3.3%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">+42t/hr</span>
+</div>
+</div>
+<!-- Model Performance SVG Visual Spark -->
+<div class="flex items-center justify-between px-2 py-1.5 bg-surface-container-low rounded-md">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-telemetry-emerald">show_chart</span>
+<span class="font-label-sm text-label-sm text-earth-espresso">14-Day Baseline Drift Variance</span>
+</div>
+<div class="w-24 h-6">
+<svg class="w-full h-full stroke-copper-accent fill-none" preserveaspectratio="none" viewbox="0 0 100 24">
+<path d="M0,18 Q15,10 30,14 T60,8 T80,11 L100,5" stroke-linecap="round" stroke-width="2"></path>
+<path class="fill-copper-accent/15 stroke-none" d="M0,18 Q15,10 30,14 T60,8 T80,11 L100,5 L100,24 L0,24 Z"></path>
+</svg>
+</div>
+</div>
+<!-- Checksum & Cryptographic Verification -->
+<div class="flex items-center justify-between bg-surface-container-high px-2.5 py-1.5 rounded text-earth-charcoal">
+<div class="flex items-center gap-1 min-w-0">
+<span class="material-symbols-outlined text-[15px] text-on-surface-variant shrink-0">fingerprint</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-mono truncate">SHA-256: 0x88f2ba019ec41103f1...</span>
+</div>
+<span class="font-label-sm text-label-sm text-telemetry-emerald uppercase tracking-wider font-semibold shrink-0">Attested</span>
+</div>
+<!-- Dual Signature Gate Progress Block -->
+<div class="flex flex-col gap-2 bg-surface-container-lowest p-3 rounded-lg shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Dual-Signature Mandate</span>
+<span class="font-label-sm text-label-sm font-semibold text-copper-accent">1 of 2 Signed</span>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Signature 1: Signed -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-6 h-6 rounded-full bg-telemetry-emerald/20 flex items-center justify-center text-telemetry-emerald shrink-0">
+<span class="material-symbols-outlined text-[15px]">check</span>
+</div>
+<div class="truncate">
+<p class="font-label-md text-label-md text-earth-espresso font-semibold truncate">Marcus Vance</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Operations Superintendent • Signed 08:42 UTC</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-telemetry-emerald text-[20px] shrink-0">verified</span>
+</div>
+<!-- Signature 2: Pending Safety Officer -->
+<div class="flex items-center justify-between p-2 rounded bg-telemetry-amber/10">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-6 h-6 rounded-full bg-telemetry-amber/30 flex items-center justify-center text-telemetry-amber shrink-0 animate-pulse">
+<span class="material-symbols-outlined text-[15px]">hourglass_top</span>
+</div>
+<div class="truncate">
+<p class="font-label-md text-label-md text-earth-espresso font-semibold truncate">Elena Rostova, Ph.D.</p>
+<p class="font-body-sm text-body-sm text-telemetry-amber truncate">Chief Safety Officer • Action Required</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-telemetry-amber text-surface font-label-sm text-label-sm">PENDING</span>
+</div>
+</div>
+</div>
+<!-- Action Gate Buttons -->
+<div class="grid grid-cols-2 gap-2 pt-1" id="gate-actions-1">
+<button class="w-full py-2.5 px-3 rounded bg-telemetry-emerald hover:bg-opacity-90 text-surface font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 shadow-sm active:scale-98 transition-transform" onclick="signAndPromote(1)" type="button">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Approve &amp; Promote</span>
+</button>
+<button class="w-full py-2.5 px-3 rounded bg-surface-container-high hover:bg-telemetry-crimson/10 text-telemetry-crimson font-label-md text-label-md font-semibold flex items-center justify-center gap-1 active:scale-98 transition-transform" onclick="rejectModel(1)" type="button">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+<span>Reject / Retrain</span>
+</button>
+</div>
+<!-- Dynamic Approval Confirmation State (Hidden initially) -->
+<div class="hidden flex-col items-center gap-1.5 p-3 rounded-lg bg-telemetry-emerald/15 text-earth-espresso animate-fadeIn" id="confirmed-state-1">
+<div class="flex items-center gap-2 text-telemetry-emerald">
+<span class="material-symbols-outlined text-[20px]">task_alt</span>
+<span class="font-label-md text-label-md font-bold">Promotion Ratified</span>
+</div>
+<p class="font-body-sm text-body-sm text-center text-on-surface-variant">Dual-Key seal created. Model scheduled for CAN-bus upload to SAG Mill 01 at 00:00 UTC.</p>
+</div>
+</div>
+</div>
+<!-- Card 2: MARL-Fleet-v2.2-Adaptive -->
+<div class="flex flex-col bg-surface-container rounded-xl shadow-md overflow-hidden relative" id="card-model-2">
+<div class="h-1.5 w-full bg-copper-accent"></div>
+<div class="p-3.5 flex flex-col gap-3">
+<div class="flex items-start justify-between gap-2">
+<div class="min-w-0">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="px-2 py-0.5 rounded bg-copper-accent/20 text-copper-accent font-label-sm text-label-sm uppercase tracking-wide flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">policy</span>
+              Awaiting Safety Officer
+            </span>
+<span class="px-1.5 py-0.5 rounded bg-surface-elevation text-on-surface-variant font-label-sm text-label-sm">Fleet</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-earth-espresso truncate">MARL-Fleet-v2.2-Adaptive</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[15px] text-copper-accent">local_shipping</span>
+            Target: Dynamic Haul Routing (Pit North &amp; Bench 4)
+          </p>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-earth-charcoal active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">info</span>
+</button>
+</div>
+<!-- Quick Metrics Strip -->
+<div class="grid grid-cols-2 gap-2 bg-surface-container-lowest p-2.5 rounded-lg shadow-sm">
+<div class="flex items-center gap-2 p-2 rounded bg-surface-container-low">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-telemetry-emerald">
+<span class="material-symbols-outlined text-[20px]">trending_up</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Throughput Lift</span>
+<div class="font-headline-sm text-headline-sm text-earth-espresso font-bold">+14.2%</div>
+</div>
+</div>
+<div class="flex items-center gap-2 p-2 rounded bg-surface-container-low">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">shield</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Collision Variance</span>
+<div class="font-headline-sm text-headline-sm text-earth-espresso font-bold">0.0001%</div>
+</div>
+</div>
+</div>
+<!-- Micro Audit Check -->
+<div class="flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm px-1">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-telemetry-emerald">check_circle</span>
+          Simulated 400,000 pit cycles in sandbox
+        </span>
+<span class="font-mono text-label-sm text-label-sm">0 Incidents</span>
+</div>
+<!-- Action Gate Buttons -->
+<div class="grid grid-cols-2 gap-2 pt-1" id="gate-actions-2">
+<button class="w-full py-2.5 px-3 rounded bg-telemetry-emerald hover:bg-opacity-90 text-surface font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 shadow-sm active:scale-98 transition-transform" onclick="signAndPromote(2)" type="button">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Approve &amp; Promote</span>
+</button>
+<button class="w-full py-2.5 px-3 rounded bg-surface-container-high hover:bg-telemetry-crimson/10 text-telemetry-crimson font-label-md text-label-md font-semibold flex items-center justify-center gap-1 active:scale-98 transition-transform" onclick="rejectModel(2)" type="button">
+<span class="material-symbols-outlined text-[18px]">block</span>
+<span>Reject</span>
+</button>
+</div>
+<!-- Dynamic State for Model 2 -->
+<div class="hidden flex-col items-center gap-1.5 p-3 rounded-lg bg-telemetry-emerald/15 text-earth-espresso" id="confirmed-state-2">
+<div class="flex items-center gap-2 text-telemetry-emerald">
+<span class="material-symbols-outlined text-[20px]">task_alt</span>
+<span class="font-label-md text-label-md font-bold">Autonomous Haul Fleet Authorized</span>
+</div>
+<p class="font-body-sm text-body-sm text-center text-on-surface-variant">Firmware bundle queued for dispatch telemetry mesh.</p>
+</div>
+</div>
+</div>
+<!-- Immutable Decision Memory & Audit Ledger -->
+<div class="flex flex-col bg-surface-container rounded-xl p-3.5 gap-3 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-copper-accent text-[20px]">lock_clock</span>
+<h3 class="font-headline-sm text-headline-sm text-earth-espresso">Immutable Decision Memory</h3>
+</div>
+<div class="flex items-center gap-1 bg-surface-container-high px-2 py-0.5 rounded text-telemetry-emerald">
+<span class="w-1.5 h-1.5 rounded-full bg-telemetry-emerald"></span>
+<span class="font-label-sm text-label-sm font-semibold">SHA-256 OK</span>
+</div>
+</div>
+<!-- Merkle Root Banner -->
+<div class="flex flex-col gap-1 p-2.5 rounded-lg bg-earth-espresso text-surface-parchment shadow-inner">
+<div class="flex items-center justify-between text-copper-accent">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Cryptographic Merkle Root</span>
+<span class="material-symbols-outlined text-[14px]">token</span>
+</div>
+<div class="font-mono text-body-sm text-body-sm font-medium tracking-tight text-surface break-all">
+        0x88f2ba019ec41103a890472cbef4021dd9
+      </div>
+<div class="flex items-center justify-between pt-1 text-[11px] text-surface-dim">
+<span>Block #4,821,092</span>
+<span>Zambian Mining Cadastre Timestamp</span>
+</div>
+</div>
+<!-- Ledger Transaction Items -->
+<div class="flex flex-col gap-2">
+<!-- Item 1 -->
+<div class="flex items-start gap-2.5 p-2 rounded-lg bg-surface-container-low">
+<div class="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center text-copper-accent shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">how_to_reg</span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-earth-espresso font-mono font-bold">0x7c9a...e31b</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">12m ago</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mt-0.5">
+<span class="font-semibold text-earth-charcoal">Marcus Vance</span> approved promotion token for SAG Mill Surrogate.
+          </p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-telemetry-emerald flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">done_all</span> Valid Hash
+            </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">• 1.4 MB Artifact signed</span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-start gap-2.5 p-2 rounded-lg bg-surface-container-low">
+<div class="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">sync_alt</span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-earth-espresso font-mono font-bold">0x44d1...889a</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">2h ago</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mt-0.5">
+            Automated Drift Sentry benchmarked 24-hr Cu Recovery gradient.
+          </p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-telemetry-emerald flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">check</span> Zero Covariate Shift
+            </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Link -->
+<button class="w-full py-2 rounded bg-surface-container-high hover:bg-surface-elevation text-earth-charcoal font-label-md text-label-md flex items-center justify-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">history_edu</span>
+<span>Inspect Full Cryptographic Ledger</span>
+</button>
+</div>
+<!-- Operational Field Context Visual Card -->
+<div class="relative w-full rounded-xl overflow-hidden shadow-sm bg-earth-charcoal text-surface">
+<div class="w-full h-32 bg-cover bg-center opacity-35" data-alt="High angle shot of a massive open-pit copper mining terrace with autonomous yellow heavy hauler trucks navigating dusty tiered switchbacks under warm afternoon savanna sun with high-tech computational telemetry overlays." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBCEcUu2wqC8x1BXWGFxVMqwka166yTpcsIC-yTX0nWivKMB9ixUbsL9YPUdENuogFXKeowuGy9w7L_KEDN3VOq3SqBEutiJVI9Ye-aH38O9QTyvXGVM5EunuqQr7LMMGF283h_XkcwCoCA2PUm0orBTtMyLjaqJ8q514HS42wuVoOGHMO0KhpI8dKVFzAEAxyA1GknniAvraZK29RZKv6yyT0W0BhDNZHQYxvfQbydxAd1ipzDj8ML')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-earth-charcoal via-earth-charcoal/80 to-transparent p-3.5 flex flex-col justify-end">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-copper-accent uppercase tracking-wider">Active Edge Cluster</span>
+<h4 class="font-headline-sm text-headline-sm text-surface font-semibold">Kansanshi Node A-04</h4>
+</div>
+<span class="px-2 py-1 rounded bg-telemetry-emerald/20 text-telemetry-emerald font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-telemetry-emerald animate-pulse"></span>
+          ENFORCING
+        </span>
+</div>
+<p class="font-body-sm text-body-sm text-surface-dim mt-1">Zero inference models operate without signed Merkle certificate in hardware enclave.</p>
+</div>
+</div>
+</div>
+<!-- Client-side Micro-Interactions -->
+<script>
+  function signAndPromote(cardId) {
+    const actions = document.getElementById('gate-actions-' + cardId);
+    const confirmed = document.getElementById('confirmed-state-' + cardId);
+    if (actions && confirmed) {
+      actions.classList.add('hidden');
+      confirmed.classList.remove('hidden');
+      confirmed.classList.add('flex');
+    }
+  }
+
+  function rejectModel(cardId) {
+    const card = document.getElementById('card-model-' + cardId);
+    if (card) {
+      card.style.transition = 'all 0.3s ease';
+      card.style.opacity = '0.4';
+      card.style.filter = 'grayscale(1)';
+      const actions = document.getElementById('gate-actions-' + cardId);
+      if (actions) {
+        actions.innerHTML = '<div class="col-span-2 py-2 text-center text-telemetry-crimson font-label-md text-label-md font-bold flex items-center justify-center gap-1"><span class="material-symbols-outlined text-[18px]">cancel</span> Rejected: Queued for Re-Training</div>';
+      }
+    }
+  }
+
+  // Interactive Tab Switching
+  document.querySelectorAll('#nav-tabs .tab-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      document.querySelectorAll('#nav-tabs .tab-btn').forEach(btn => {
+        btn.classList.remove('bg-earth-charcoal', 'text-surface-container-lowest');
+        btn.classList.add('bg-surface-container', 'text-earth-charcoal');
+      });
+      this.classList.remove('bg-surface-container', 'text-earth-charcoal');
+      this.classList.add('bg-earth-charcoal', 'text-surface-container-lowest');
+    });
+  });
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(30,25,21,0.05)]" data-active-classes="text-copper-accent font-semibold"><div class="h-16 px-2 grid grid-cols-4 items-center"><a class="flex flex-col items-center justify-center gap-1 min-h-[44px] py-1 text-on-surface-variant hover:text-earth-espresso transition-colors" data-path="command" href="#"><span class="material-symbols-outlined text-[22px]">dashboard</span><span class="font-label-sm text-label-sm tracking-wider uppercase">Command</span></a><a class="flex flex-col items-center justify-center gap-1 min-h-[44px] py-1 text-on-surface-variant hover:text-earth-espresso transition-colors" data-path="operations" href="#"><span class="material-symbols-outlined text-[22px]">precision_manufacturing</span><span class="font-label-sm text-label-sm tracking-wider uppercase">Operations</span></a><a class="flex flex-col items-center justify-center gap-1 min-h-[44px] py-1 text-on-surface-variant hover:text-earth-espresso transition-colors" data-path="alerts" href="#"><span class="material-symbols-outlined text-[22px]">warning</span><span class="font-label-sm text-label-sm tracking-wider uppercase">Alerts</span></a><a aria-current="page" class="flex flex-col items-center justify-center gap-1 min-h-[44px] py-1 transition-colors text-copper-accent font-semibold" data-path="menu" href="#"><span class="material-symbols-outlined text-[22px]">grid_view</span><span class="font-label-sm text-label-sm tracking-wider uppercase">Menu</span></a></div></nav></body></html>

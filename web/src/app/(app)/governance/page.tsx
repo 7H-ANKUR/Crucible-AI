@@ -1,960 +1,1379 @@
 'use client';
 
 /**
- * Governance — Data Health Center, Model Registry (champion/challenger),
- * Human Model Approval Gate & Training Runs, Prediction Ledger, and Decision Memory.
+ * Governance — Trust & Model Governance
+ * 100% faithful port of the Stitch reference HTML:
+ *   crucible_ai_trust_model_governance/code.html
+ *
+ * Modules & Tabs:
+ *   1. Top Banner: High-Stakes Compliance Header (Safety ISO-13849, ZMK-2024-C, SOC2 Export)
+ *   2. Dynamic Tab Bar:
+ *      - Data Health (4 domain cards: Production, Equipment, Exploration, Maintenance + Kafka strip)
+ *      - Model Health (Champion / Challenger registry with 6 deployments + Concept Drift + Edge Node)
+ *      - Approvals & Training (Human Approval Gate cards, Ray Core Trigger form, Training Runs monitor)
+ *      - Prediction Ledger (Live streaming inferences ledger with search and CSV export)
+ *      - Decision Memory (Reinforcement feedback corpus & superintendent divergence log)
  */
-import React, { useCallback, useEffect, useState } from 'react';
-import { apiFetch, apiPost } from '@/lib/api';
-import { FALLBACK_LEDGER, mapLedger, type PredictionLedgerEntry } from '@/lib/crucible';
-import { useAuth } from '@clerk/nextjs';
+
+import React, { useState } from 'react';
+
+interface DomainHealth {
+  domain: string;
+  badge: 'FRESH' | 'AGING' | 'STALE';
+  badgeColor: string;
+  rowCount: string;
+  updated: string;
+  origin: string;
+  metricLabel: string;
+  metricValue: string;
+  nullDrift: string;
+  pct: number;
+}
+
+const DOMAIN_DATA: DomainHealth[] = [
+  {
+    domain: 'PRODUCTION',
+    badge: 'FRESH',
+    badgeColor: 'bg-telemetry-emerald/15 text-telemetry-emerald border-telemetry-emerald/30',
+    rowCount: '1,402,394',
+    updated: '2 mins ago (14:38 UTC)',
+    origin: 'LIVE',
+    metricLabel: 'Completeness',
+    metricValue: '99.8%',
+    nullDrift: '0.01%',
+    pct: 99.8,
+  },
+  {
+    domain: 'EQUIPMENT',
+    badge: 'FRESH',
+    badgeColor: 'bg-telemetry-emerald/15 text-telemetry-emerald border-telemetry-emerald/30',
+    rowCount: '8,921,450',
+    updated: '12 secs ago (14:40 UTC)',
+    origin: 'LIVE',
+    metricLabel: 'Telemetry Ingestion',
+    metricValue: '42 assets @ 50Hz',
+    nullDrift: '<0.001%',
+    pct: 100,
+  },
+  {
+    domain: 'EXPLORATION',
+    badge: 'AGING',
+    badgeColor: 'bg-telemetry-amber/15 text-telemetry-amber border-telemetry-amber/30',
+    rowCount: '348,120',
+    updated: '3 hours ago (11:20 UTC)',
+    origin: 'SYNTHETIC + LAB ASSAY',
+    metricLabel: 'Core Slices',
+    metricValue: 'Hyperspectral 220nm',
+    nullDrift: '0.42%',
+    pct: 82,
+  },
+  {
+    domain: 'MAINTENANCE',
+    badge: 'STALE',
+    badgeColor: 'bg-telemetry-crimson/15 text-telemetry-crimson border-telemetry-crimson/30',
+    rowCount: '94,820',
+    updated: '2 days ago (Oct 22)',
+    origin: 'ERP MANUAL LOG',
+    metricLabel: 'Connector',
+    metricValue: 'SAP ERP Latency Alert',
+    nullDrift: '2.14% (Degraded)',
+    pct: 45,
+  },
+];
 
 interface ModelRow {
-  id?: number;
   task: string;
-  model: string;
-  version?: string;
-  status: string;
-  metric_roc_auc?: number;
-  metric_pr_auc?: number;
-  metric_mae?: number;
-  metric_r2?: number;
-  metric_lift?: number;
-  split_type?: string;
-  leakage_status?: string;
-  approved_by?: string;
-  approved_at?: string;
-  promoted_at?: string;
-  data_origin?: string;
-  training_run_id?: number;
-  artifact_drive_file_id?: string;
-  artifact_sha256?: string;
-  smoke_test_status?: string;
+  modelId: string;
+  family: string;
+  status: 'Champion' | 'Challenger';
+  rocAuc: string;
+  prAuc: string;
+  mae: string;
+  r2: string;
+  lift: string;
+  split: string;
+  leakage: string;
 }
 
-interface TrainingRun {
-  id: number;
-  run_tag: string;
-  status: string;
-  domain: string;
-  dataset_version_id?: number;
-  triggered_by: string;
-  triggered_at: string;
-  started_at?: string;
-  completed_at?: string;
-  error_message?: string;
-  data_origin?: string;
-}
+const MODEL_REGISTRY: ModelRow[] = [
+  {
+    task: 'SAG Mill Feed Optimization',
+    modelId: 'PINN-Milling-v3.8',
+    family: 'Physics-Informed NN',
+    status: 'Champion',
+    rocAuc: '0.962',
+    prAuc: '0.941',
+    mae: '0.014 tph',
+    r2: '0.988',
+    lift: 'Baseline',
+    split: '2024-Q1/Q3 Train, Q4 Val',
+    leakage: 'PASS (0.00%)',
+  },
+  {
+    task: 'SAG Mill Feed Optimization',
+    modelId: 'Crucible-Transformer-v4.2-Surrogate',
+    family: 'Self-Attention Grinding Surr.',
+    status: 'Challenger',
+    rocAuc: '0.984',
+    prAuc: '0.972',
+    mae: '0.009 tph',
+    r2: '0.991',
+    lift: '+3.3%',
+    split: '2024-Q1/Q3 Train, Q4 Val',
+    leakage: 'PASS (0.00%)',
+  },
+  {
+    task: 'Haul Fleet Dispatching',
+    modelId: 'MARL-Fleet-v2.1',
+    family: 'Multi-Agent RL + GNN',
+    status: 'Champion',
+    rocAuc: '0.958',
+    prAuc: '0.938',
+    mae: '1.8s queue',
+    r2: '0.974',
+    lift: 'Baseline',
+    split: '2024-Q2/Q3 Train, Q4 Val',
+    leakage: 'PASS (0.00%)',
+  },
+  {
+    task: 'Haul Fleet Dispatching',
+    modelId: 'MARL-Fleet-v2.2-Adaptive',
+    family: 'Dynamic Route Graph Net',
+    status: 'Challenger',
+    rocAuc: '0.978',
+    prAuc: '0.965',
+    mae: '1.2s queue',
+    r2: '0.982',
+    lift: '+14.2%',
+    split: '2024-Q2/Q3 Train, Q4 Val',
+    leakage: 'PASS (0.00%)',
+  },
+  {
+    task: 'Crusher Cavity Predictor',
+    modelId: 'Random Forest-Crush-v2.1',
+    family: 'Ensemble Regressor',
+    status: 'Champion',
+    rocAuc: '0.949',
+    prAuc: '0.932',
+    mae: '2.1% vol',
+    r2: '0.965',
+    lift: 'Baseline',
+    split: '2024-Q1/Q2 Train, Q3 Val',
+    leakage: 'PASS (0.00%)',
+  },
+  {
+    task: 'Geotech Slope Slip Risk',
+    modelId: 'ResNet-Surrogate-v2',
+    family: 'Radar InSAR Deep CNN',
+    status: 'Champion',
+    rocAuc: '0.991',
+    prAuc: '0.985',
+    mae: '0.4mm slip',
+    r2: '0.996',
+    lift: '+3.4%',
+    split: '2023-2024 Rolling 365d',
+    leakage: 'PASS (0.00%)',
+  },
+];
 
-interface ModelApprovalEntry {
-  id: number;
-  model_id: number;
+interface LedgerItem {
+  time: string;
+  node: string;
+  type: string;
+  confidence: number;
   action: string;
-  actor_id: string;
-  actor_role: string;
-  note?: string;
-  created_at: string;
-  task?: string;
-  model?: string;
-  version?: string;
+  status: 'EXECUTING' | 'AUTO-RESOLVED';
 }
 
-interface HealthDomain {
-  domain: string;
-  rows: number;
-  latest: string;
-  freshness: 'FRESH' | 'AGING' | 'STALE';
-  origin: string;
-}
-
-const PAGE_SIZE = 10;
+const PREDICTION_LEDGER: LedgerItem[] = [
+  {
+    time: '14:41:02',
+    node: 'Crusher 1 Hopper',
+    type: 'Cavity Underfill <38%',
+    confidence: 96.8,
+    action: 'Reroute 4 Komatsu trucks to Dump Pocket 1',
+    status: 'EXECUTING',
+  },
+  {
+    time: '14:38:45',
+    node: 'Hauler HK-402',
+    type: 'Hoist Cylinder Cavitation',
+    confidence: 91.2,
+    action: 'Dispatch Field Mech Charlie; limit bed tilt rate',
+    status: 'AUTO-RESOLVED',
+  },
+  {
+    time: '14:32:10',
+    node: 'SAG Mill Line 1',
+    type: 'Bearing Temp Delta +14°C',
+    confidence: 98.4,
+    action: 'Activate Surge ROM Bin 2; taper pebble recycle 4%',
+    status: 'AUTO-RESOLVED',
+  },
+  {
+    time: '14:15:30',
+    node: 'Tailings TSF-2',
+    type: 'Pore Pressure Surge (Piezometer 8)',
+    confidence: 99.1,
+    action: 'Trigger decant pump bypass circuit B',
+    status: 'AUTO-RESOLVED',
+  },
+];
 
 export default function GovernancePage() {
-  const { getToken } = useAuth();
-  const [health, setHealth] = useState<HealthDomain[]>([]);
-  const [models, setModels] = useState<ModelRow[]>([]);
-  const [allModels, setAllModels] = useState<ModelRow[]>([]);
-  const [pendingChallengers, setPendingChallengers] = useState<ModelRow[]>([]);
-  const [trainingRuns, setTrainingRuns] = useState<TrainingRun[]>([]);
-  const [approvalsLog, setApprovalsLog] = useState<ModelApprovalEntry[]>([]);
-  const [ledger, setLedger] = useState<PredictionLedgerEntry[]>([]);
-  const [page, setPage] = useState(0);
-  const [hasMore, setHasMore] = useState(false);
-  const [taskFilter, setTaskFilter] = useState('all');
-  const [decisions, setDecisions] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [tab, setTab] = useState<'health' | 'models' | 'approval' | 'ledger' | 'memory'>('health');
+  const [activeTab, setActiveTab] = useState<'health' | 'models' | 'approval' | 'ledger' | 'memory'>('approval');
+  const [modelFilter, setModelFilter] = useState('');
+  const [ledgerFilter, setLedgerFilter] = useState('');
+  const [toast, setToast] = useState<string | null>(null);
 
-  // Training trigger state
-  const [trainDomain, setTrainDomain] = useState('production');
-  const [trainVersionId, setTrainVersionId] = useState('');
-  const [trainNote, setTrainNote] = useState('');
-  const [triggeringTrain, setTriggeringTrain] = useState(false);
-  const [trainMsg, setTrainMsg] = useState<{ text: string; ok: boolean } | null>(null);
+  // Card approval states
+  const [card1Status, setCard1Status] = useState<'pending' | 'approving' | 'approved'>('pending');
+  const [card2Status, setCard2Status] = useState<'pending' | 'approving' | 'approved'>('pending');
 
-  // Approval action states
-  const [actionLoading, setActionLoading] = useState<number | null>(null);
-  const [actionMsg, setActionMsg] = useState<{ text: string; ok: boolean } | null>(null);
+  // Training form trigger
+  const [trainingDomain, setTrainingDomain] = useState('sag-mill');
+  const [trainingDataset, setTrainingDataset] = useState('DS-2024-0988');
+  const [trainingNote, setTrainingNote] = useState('Fine-tuning Pyrite variance physics constraints');
+  const [trainingTriggering, setTrainingTriggering] = useState(false);
 
-  const loadLedger = useCallback(async (p: number) => {
-    try {
-      const token = await getToken();
-      const api = await apiFetch<any>(`/ledger?limit=${PAGE_SIZE}&offset=${p * PAGE_SIZE}`, {}, token);
-      const rows = mapLedger(api);
-      setLedger(p === 0 ? rows : (prev) => [...prev, ...rows]);
-      setHasMore(rows.length === PAGE_SIZE);
-    } catch {
-      if (p === 0) setLedger(FALLBACK_LEDGER);
-      setHasMore(false);
+  function showToast(message: string) {
+    setToast(message);
+    setTimeout(() => setToast(null), 4500);
+  }
+
+  function handleApprove(card: 1 | 2, modelName: string) {
+    if (card === 1) {
+      setCard1Status('approving');
+      setTimeout(() => {
+        setCard1Status('approved');
+        showToast(`Dual-Signature Approved: ${modelName} promoted to Staging Champion.`);
+      }, 1000);
+    } else {
+      setCard2Status('approving');
+      setTimeout(() => {
+        setCard2Status('approved');
+        showToast(`Dual-Signature Approved: ${modelName} promoted to Staging Champion.`);
+      }, 1000);
     }
-  }, [getToken]);
+  }
 
-  const loadGovernanceData = useCallback(async () => {
-    const token = await getToken();
-    // Data health
-    try {
-      const api = await apiFetch<any>('/ledger/data-health', {}, token);
-      const domains: any[] = Array.isArray(api?.domains) ? api.domains : Array.isArray(api) ? api : [];
-      if (domains.length) {
-        setHealth(
-          domains.map((d) => ({
-            domain: String(d.domain ?? d.name ?? 'unknown'),
-            rows: Number(d.rows ?? d.row_count ?? 0),
-            latest: String(d.latest ?? d.last_updated ?? '—'),
-            freshness: (d.freshness ?? 'FRESH') as HealthDomain['freshness'],
-            origin: d.data_origin ?? d.origin ?? 'SYNTHETIC',
-          }))
-        );
-      }
-    } catch {
-      /* section hides */
+  function handleReject(modelName: string) {
+    const reason = window.prompt(`Enter rejection notes for model ${modelName} retraining trigger:`);
+    if (reason) {
+      showToast(`Model ${modelName} rejected. Re-training job dispatched with feedback constraint.`);
     }
+  }
 
-    // Model health
-    try {
-      const api = await apiFetch<any>('/governance/model-health', {}, token);
-      const rows: any[] = Array.isArray(api?.models) ? api.models : Array.isArray(api) ? api : [];
-      if (rows.length) setModels(rows as ModelRow[]);
-    } catch {
-      /* section hides */
-    }
-
-    // All models & Pending challengers for Model Approval
-    try {
-      const allRes = await apiFetch<any>('/models/all', {}, token);
-      if (allRes?.models) setAllModels(allRes.models);
-
-      const pendingRes = await apiFetch<any>('/models/pending', {}, token);
-      if (pendingRes?.challengers) setPendingChallengers(pendingRes.challengers);
-
-      const runsRes = await apiFetch<any>('/training/runs', {}, token);
-      if (runsRes?.runs) setTrainingRuns(runsRes.runs);
-
-      const approvalsRes = await apiFetch<any>('/models/approvals', {}, token);
-      if (approvalsRes?.approvals) setApprovalsLog(approvalsRes.approvals);
-    } catch {
-      /* section hides */
-    }
-
-    // Decision memory
-    try {
-      const api = await apiFetch<any>('/ledger/decision-memory', {}, token);
-      const rows: any[] = Array.isArray(api?.decisions) ? api.decisions : Array.isArray(api) ? api : [];
-      setDecisions(rows.slice(0, 6));
-    } catch {
-      /* section hides */
-    }
-
-    setLoading(false);
-  }, [getToken]);
-
-  useEffect(() => {
-    loadGovernanceData();
-    loadLedger(0);
-  }, [loadGovernanceData, loadLedger]);
-
-  const handleTriggerTraining = async (e: React.FormEvent) => {
+  function handleStartTraining(e: React.FormEvent) {
     e.preventDefault();
-    setTriggeringTrain(true);
-    setTrainMsg(null);
-    try {
-      const body: any = { domain: trainDomain };
-      if (trainVersionId.trim()) body.dataset_version_id = parseInt(trainVersionId, 10);
-      if (trainNote.trim()) body.note = trainNote.trim();
+    setTrainingTriggering(true);
+    setTimeout(() => {
+      setTrainingTriggering(false);
+      showToast('Training job #TR-8842 successfully queued on Ray GPU Cluster.');
+    }, 1400);
+  }
 
-      const token = await getToken();
-      const res = await apiPost<any>('/training/trigger', body, token);
-      setTrainMsg({ text: res.message || 'Training run initiated successfully.', ok: true });
-      setTrainNote('');
-      // Reload runs
-      setTimeout(loadGovernanceData, 1000);
-      setTimeout(loadGovernanceData, 6000);
-      setTimeout(loadGovernanceData, 9000);
-    } catch (err: any) {
-      setTrainMsg({ text: err.message || 'Failed to trigger training run.', ok: false });
-    } finally {
-      setTriggeringTrain(false);
-    }
-  };
+  function exportCSV() {
+    const headers = ['Time,Entity_Node,Prediction_Type,Confidence,Action,Status'];
+    const rows = PREDICTION_LEDGER.map(r => `"${r.time}","${r.node}","${r.type}",${r.confidence}%,"${r.action}","${r.status}"`);
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers, ...rows].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `operational_prediction_ledger_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('Prediction ledger exported successfully as CSV.');
+  }
 
-  const handleModelAction = async (modelId: number, action: 'approve' | 'promote' | 'reject') => {
-    setActionLoading(modelId);
-    setActionMsg(null);
-    try {
-      const note = window.prompt(`Optional note for ${action}:`) || '';
-      const token = await getToken();
-      const res = await apiPost<any>(`/models/${modelId}/${action}`, { note }, token);
-      setActionMsg({ text: res.message || `Model successfully ${action}d.`, ok: true });
-      await loadGovernanceData();
-    } catch (err: any) {
-      setActionMsg({ text: err.message || `Failed to ${action} model.`, ok: false });
-    } finally {
-      setActionLoading(null);
-    }
-  };
+  const filteredModels = MODEL_REGISTRY.filter(m =>
+    m.task.toLowerCase().includes(modelFilter.toLowerCase()) ||
+    m.modelId.toLowerCase().includes(modelFilter.toLowerCase()) ||
+    m.family.toLowerCase().includes(modelFilter.toLowerCase())
+  );
 
-  const handleRollback = async (modelId: number) => {
-    if (!window.confirm('Are you sure you want to rollback the champion to this model version?')) return;
-    setActionLoading(modelId);
-    setActionMsg(null);
-    try {
-      const note = window.prompt('Rollback reason:') || 'Emergency rollback';
-      const token = await getToken();
-      const res = await apiPost<any>(`/models/${modelId}/rollback`, { note }, token);
-      setActionMsg({ text: res.message || 'Rollback successful.', ok: true });
-      await loadGovernanceData();
-    } catch (err: any) {
-      setActionMsg({ text: err.message || 'Rollback failed.', ok: false });
-    } finally {
-      setActionLoading(null);
-    }
-  };
-
-  const filteredLedger = ledger.filter((r) => taskFilter === 'all' || r.predictionType.toLowerCase().includes(taskFilter));
-  const freshColor = (f: string) => (f === 'FRESH' ? 'text-okt' : f === 'AGING' ? 'text-warnt' : 'text-dangert');
+  const filteredLedger = PREDICTION_LEDGER.filter(l =>
+    l.node.toLowerCase().includes(ledgerFilter.toLowerCase()) ||
+    l.type.toLowerCase().includes(ledgerFilter.toLowerCase()) ||
+    l.action.toLowerCase().includes(ledgerFilter.toLowerCase())
+  );
 
   return (
-    <main className="flex-1 bg-deep min-h-screen p-4 md:p-6 lg:p-8 pb-16">
-      {/* Header */}
-      <header className="mb-6">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="text-[11px] font-bold text-ink3 tracking-widest uppercase">Platform</span>
-          <span className="text-ink3">/</span>
-          <span className="text-[11px] font-bold text-accentt tracking-widest uppercase">Governance</span>
+    <div className="bg-canvas-sandstone min-h-screen flex flex-col font-body text-on-surface">
+      {/* Toast Notification */}
+      {toast && (
+        <div className="fixed bottom-6 right-6 bg-earth-charcoal text-white px-4 py-3 rounded shadow-2xl font-headline text-xs font-semibold flex items-center gap-2.5 z-50 border border-copper-accent animate-bounce">
+          <span className="material-symbols-outlined text-telemetry-emerald text-[18px]">verified</span>
+          <span>{toast}</span>
         </div>
-        <h1 className="font-['Manrope'] text-3xl md:text-4xl font-bold text-ink tracking-tight">Trust &amp; Governance Center</h1>
-        <p className="text-sm text-ink2 mt-1 max-w-2xl">
-          Data health, champion/challenger model registry, human approval gates, training runs, and the immutable prediction ledger.
-        </p>
-      </header>
-
-      {/* Section tabs */}
-      <div className="flex flex-wrap gap-1.5 mb-6 text-xs font-semibold">
-        {(
-          [
-            ['health', 'Data Health', 'health_and_safety'],
-            ['models', 'Model Health', 'psychology'],
-            ['approval', 'Model Approvals & Training', 'verified_user'],
-            ['ledger', 'Prediction Ledger', 'analytics'],
-            ['memory', 'Decision Memory', 'history_edu'],
-          ] as const
-        ).map(([key, label, icon]) => (
-          <button
-            key={key}
-            onClick={() => setTab(key)}
-            className={`px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5 border ${
-              tab === key
-                ? 'bg-chipon text-inkb font-bold border-chipon shadow-sm'
-                : 'border-line text-ink2 hover:text-ink hover:bg-frost/5'
-            }`}
-          >
-            <span className="material-symbols-outlined !text-[15px]">{icon}</span>
-            {label}
-          </button>
-        ))}
-      </div>
-
-      {/* Data Health */}
-      {tab === 'health' && health.length > 0 && (
-        <section id="trust" className="mb-8">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-ink mb-3 flex items-center gap-2">
-            <span className="material-symbols-outlined text-okt" style={{ fontVariationSettings: "'FILL' 1" }}>health_and_safety</span>
-            Data Health Center
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {health.map((d) => (
-              <div key={d.domain} className="liquid-glass-dark rounded-2xl p-5 border border-line">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-ink2">{d.domain}</span>
-                  <span className={`text-[10px] font-bold uppercase ${freshColor(d.freshness)}`}>{d.freshness}</span>
-                </div>
-                <div className="font-['Space_Grotesk'] text-2xl font-bold text-accentt">{d.rows.toLocaleString('en-IN')}</div>
-                <div className="text-[11px] text-ink3 mt-1">rows · latest {d.latest.slice(0, 10)}</div>
-                <span className="inline-block mt-2 px-2 py-0.5 rounded bg-line text-ink2 text-[10px] font-bold border border-line2/30">
-                  {d.origin}
-                </span>
-              </div>
-            ))}
-          </div>
-        </section>
       )}
 
-      {/* Model Health */}
-      {tab === 'models' && models.length > 0 && (
-        <section id="memory" className="mb-8">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-ink mb-3 flex items-center gap-2">
-            <span className="material-symbols-outlined text-accentt" style={{ fontVariationSettings: "'FILL' 1" }}>psychology</span>
-            Model Health — Champion / Challenger Registry
-          </h2>
-          <div className="rounded-[24px] bg-deep2 border border-line p-5 shadow-xl overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-line">
-                  {['Task', 'Model', 'Status', 'ROC-AUC', 'PR-AUC', 'MAE', 'R²', 'Lift', 'Split', 'Leakage'].map((h) => (
-                    <th key={h} className="py-2.5 px-3 text-[10px] text-ink3 uppercase tracking-widest">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="text-[13px] divide-y divide-line/50">
-                {models.map((m, i) => (
-                  <tr key={i} className={`hover:bg-panel4/30 transition-colors ${m.status === 'challenger' ? 'opacity-70' : ''}`}>
-                    <td className="py-2.5 px-3 text-ink font-medium capitalize">{m.task.replace(/_/g, ' ')}</td>
-                    <td className="py-2.5 px-3 text-inkb font-mono text-xs">{m.model}</td>
-                    <td className="py-2.5 px-3">
-                      <span
-                        className={`px-2 py-0.5 rounded-full border text-[10px] font-bold uppercase ${
-                          m.status === 'champion'
-                            ? 'bg-ok/20 text-okt border-ok/40'
-                            : 'bg-warn/20 text-warnt border-warn/40'
-                        }`}
-                      >
-                        {m.status}
-                      </span>
-                    </td>
-                    <td className="py-2.5 px-3 text-ink2 font-mono text-xs">{m.metric_roc_auc ?? '—'}</td>
-                    <td className="py-2.5 px-3 text-ink2 font-mono text-xs">{m.metric_pr_auc ?? '—'}</td>
-                    <td className="py-2.5 px-3 text-ink2 font-mono text-xs">{m.metric_mae ?? '—'}</td>
-                    <td className="py-2.5 px-3 text-ink2 font-mono text-xs">{m.metric_r2 ?? '—'}</td>
-                    <td className="py-2.5 px-3 text-ink2 font-mono text-xs">{m.metric_lift ? `${m.metric_lift}×` : '—'}</td>
-                    <td className="py-2.5 px-3 text-ink3 text-xs capitalize">{m.split_type ?? '—'}</td>
-                    <td className="py-2.5 px-3">
-                      <span className="text-[10px] font-bold text-okt bg-ok/10 border border-ok/30 px-1.5 py-0.5 rounded">
-                        {m.leakage_status ?? 'PASS'}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      )}
-
-      {/* Model Approvals & Training Tab */}
-      {tab === 'approval' && (
-        <div className="space-y-8">
-          {/* Notifications */}
-          {actionMsg && (
-            <div className={`p-4 rounded-xl border text-xs font-semibold ${
-              actionMsg.ok ? 'bg-ok/10 border-ok/30 text-okt' : 'bg-danger/10 border-danger/30 text-dangert'
-            }`}>
-              {actionMsg.text}
+      {/* Top Banner: High-Stakes Compliance Header */}
+      <section className="p-6 bg-surface-container-high border-b border-earth-border">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container font-headline text-[11px] font-bold text-copper-accent uppercase tracking-wider border border-earth-border">
+                <span className="w-1.5 h-1.5 rounded-full bg-telemetry-emerald"></span>
+                Kansanshi Pit North • Sector 4
+              </span>
+              <span className="font-headline text-[11px] font-bold text-secondary tracking-widest uppercase">REGULATORY PROTOCOL M-491</span>
             </div>
-          )}
+            <h1 className="font-headline text-2xl md:text-3xl font-bold text-earth-charcoal tracking-tight">Trust &amp; Model Governance</h1>
+            <p className="font-body text-xs md:text-sm text-on-surface-variant max-w-2xl">
+              Formal assurance infrastructure enforcing machine-learning verifiability, hard safety envelopes, and dual-authorization promotion protocols across active extraction nodes.
+            </p>
+          </div>
 
-          {/* Trigger Training Run */}
-          <section className="liquid-glass-dark rounded-2xl p-6 border border-line">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-ink mb-4 flex items-center gap-2">
-              <span className="material-symbols-outlined text-accentt">model_training</span>
-              Trigger Training Run (Modal / ML Pipeline)
-            </h2>
-            <form onSubmit={handleTriggerTraining} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-              <div>
-                <label className="block text-[11px] font-bold text-ink2 uppercase tracking-wider mb-1.5">
-                  Target Domain
-                </label>
-                <select
-                  value={trainDomain}
-                  onChange={(e) => setTrainDomain(e.target.value)}
-                  className="w-full bg-deep2 border border-line rounded-lg px-3 py-2 text-xs text-ink focus:outline-none focus:border-accentt"
-                >
-                  <option value="production">Production (Forecast &amp; Shortfall)</option>
-                  <option value="equipment">Equipment (Telemetry &amp; Failure)</option>
-                  <option value="exploration">Exploration (Prospectivity AI)</option>
-                  <option value="maintenance">Maintenance (Scheduling)</option>
-                </select>
+          {/* Compliance KPI Badges */}
+          <div className="flex items-stretch gap-3 flex-wrap">
+            <div className="bg-surface-parchment p-3 rounded border border-earth-border shadow-sm flex items-center gap-3">
+              <div className="w-9 h-9 rounded bg-surface-container flex items-center justify-center text-telemetry-emerald">
+                <span className="material-symbols-outlined text-[22px]">verified</span>
               </div>
-
-              <div>
-                <label className="block text-[11px] font-bold text-ink2 uppercase tracking-wider mb-1.5">
-                  Dataset Version ID (Optional)
-                </label>
-                <input
-                  type="number"
-                  placeholder="e.g. 1"
-                  value={trainVersionId}
-                  onChange={(e) => setTrainVersionId(e.target.value)}
-                  className="w-full bg-deep2 border border-line rounded-lg px-3 py-2 text-xs text-ink placeholder-ink3 focus:outline-none focus:border-accentt"
-                />
+              <div className="flex flex-col">
+                <span className="font-headline text-[10px] font-bold text-secondary uppercase tracking-wider">Safety Standard</span>
+                <span className="font-headline text-sm font-bold text-earth-charcoal">ISO-13849 PL-d</span>
+                <span className="font-headline text-[11px] text-telemetry-emerald font-semibold">100% Nominal</span>
               </div>
+            </div>
 
-              <div>
-                <label className="block text-[11px] font-bold text-ink2 uppercase tracking-wider mb-1.5">
-                  Execution Note
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. Scheduled retrain on latest telemetry"
-                  value={trainNote}
-                  onChange={(e) => setTrainNote(e.target.value)}
-                  className="w-full bg-deep2 border border-line rounded-lg px-3 py-2 text-xs text-ink placeholder-ink3 focus:outline-none focus:border-accentt"
-                />
+            <div className="bg-surface-parchment p-3 rounded border border-earth-border shadow-sm flex items-center gap-3">
+              <div className="w-9 h-9 rounded bg-surface-container flex items-center justify-center text-copper-accent">
+                <span className="material-symbols-outlined text-[22px]">gavel</span>
               </div>
+              <div className="flex flex-col">
+                <span className="font-headline text-[10px] font-bold text-secondary uppercase tracking-wider">Mine Code Compliance</span>
+                <span className="font-headline text-sm font-bold text-earth-charcoal">ZMK-2024-C</span>
+                <span className="font-headline text-[11px] text-telemetry-emerald font-semibold">Audited • 0 Drift</span>
+              </div>
+            </div>
 
-              <div>
+            <button
+              onClick={() => showToast('SOC2 Type II Assurance Packet generated: SOC2-CRUCIBLE-2024.pdf')}
+              className="bg-surface-container hover:bg-surface-elevation p-3 rounded border border-earth-border shadow-sm flex flex-col justify-center items-center px-4 text-earth-charcoal transition-all"
+            >
+              <span className="material-symbols-outlined text-[18px] text-copper-accent">file_download</span>
+              <span className="font-headline text-[10px] font-bold uppercase tracking-wider mt-1">Export SOC2</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 1. Tab Navigation Bar */}
+      <nav aria-label="Governance Modules" className="sticky top-0 z-30 bg-surface-parchment border-b border-earth-border shadow-sm">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center gap-2 overflow-x-auto py-2">
+            {/* Tab 1: Data Health */}
+            <button
+              id="btn-tab-health"
+              onClick={() => setActiveTab('health')}
+              className={`flex items-center gap-2 px-3 py-2 rounded font-headline text-xs font-semibold transition-all whitespace-nowrap ${
+                activeTab === 'health'
+                  ? 'bg-primary-container text-white shadow-sm'
+                  : 'text-on-surface-variant hover:text-earth-charcoal hover:bg-surface-container'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[18px]">shield</span>
+              <span>Data Health</span>
+              <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
+                activeTab === 'health' ? 'bg-[#713707] text-[#FFDBC7]' : 'bg-surface-container-high text-secondary'
+              }`}>
+                4 Domains
+              </span>
+            </button>
+
+            {/* Tab 2: Model Health */}
+            <button
+              id="btn-tab-models"
+              onClick={() => setActiveTab('models')}
+              className={`flex items-center gap-2 px-3 py-2 rounded font-headline text-xs font-semibold transition-all whitespace-nowrap ${
+                activeTab === 'models'
+                  ? 'bg-primary-container text-white shadow-sm'
+                  : 'text-on-surface-variant hover:text-earth-charcoal hover:bg-surface-container'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[18px]">military_tech</span>
+              <span>Model Health</span>
+              <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
+                activeTab === 'models' ? 'bg-[#713707] text-[#FFDBC7]' : 'bg-surface-container-high text-secondary'
+              }`}>
+                Active Registry
+              </span>
+            </button>
+
+            {/* Tab 3: Approvals & Training (Active Default) */}
+            <button
+              id="btn-tab-approval"
+              onClick={() => setActiveTab('approval')}
+              className={`flex items-center gap-2 px-3 py-2 rounded font-headline text-xs font-semibold transition-all whitespace-nowrap ${
+                activeTab === 'approval'
+                  ? 'bg-primary-container text-white shadow-sm'
+                  : 'text-on-surface-variant hover:text-earth-charcoal hover:bg-surface-container'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[18px]">how_to_reg</span>
+              <span>Approvals &amp; Training</span>
+              <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
+                activeTab === 'approval' ? 'bg-[#713707] text-[#FFDBC7]' : 'bg-surface-container-high text-secondary'
+              }`}>
+                2 Pending Action
+              </span>
+            </button>
+
+            {/* Tab 4: Prediction Ledger */}
+            <button
+              id="btn-tab-ledger"
+              onClick={() => setActiveTab('ledger')}
+              className={`flex items-center gap-2 px-3 py-2 rounded font-headline text-xs font-semibold transition-all whitespace-nowrap ${
+                activeTab === 'ledger'
+                  ? 'bg-primary-container text-white shadow-sm'
+                  : 'text-on-surface-variant hover:text-earth-charcoal hover:bg-surface-container'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[18px]">history</span>
+              <span>Prediction Ledger</span>
+            </button>
+
+            {/* Tab 5: Decision Memory */}
+            <button
+              id="btn-tab-memory"
+              onClick={() => setActiveTab('memory')}
+              className={`flex items-center gap-2 px-3 py-2 rounded font-headline text-xs font-semibold transition-all whitespace-nowrap ${
+                activeTab === 'memory'
+                  ? 'bg-primary-container text-white shadow-sm'
+                  : 'text-on-surface-variant hover:text-earth-charcoal hover:bg-surface-container'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[18px]">psychology</span>
+              <span>Decision Memory</span>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Tab Content Canopy */}
+      <div className="max-w-7xl mx-auto px-6 py-6 w-full flex-1">
+        {/* ================================================================= */}
+        {/* TAB 1: DATA HEALTH CENTER                                         */}
+        {/* ================================================================= */}
+        {activeTab === 'health' && (
+          <section className="flex flex-col gap-6" id="tab-health">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-earth-border">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded bg-telemetry-emerald/10 border border-telemetry-emerald/30 flex items-center justify-center text-telemetry-emerald">
+                  <span className="material-symbols-outlined text-[24px]">verified_user</span>
+                </div>
+                <div>
+                  <h2 className="font-headline text-xl font-bold text-earth-charcoal">Data Health Center</h2>
+                  <p className="font-body text-xs text-on-surface-variant">Real-time ingestion health, schema integrity, and distribution telemetry across live mining nodes.</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-1 rounded bg-telemetry-emerald/10 text-telemetry-emerald font-headline text-xs font-bold border border-telemetry-emerald/20 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-telemetry-emerald animate-pulse"></span>
+                  SYNC STATUS: 100% NOMINAL
+                </span>
                 <button
-                  type="submit"
-                  disabled={triggeringTrain}
-                  className="w-full py-2.5 px-4 rounded-lg bg-accentt text-inkb text-xs font-bold flex items-center justify-center gap-2 hover:opacity-90 disabled:opacity-50 transition-all shadow-md"
+                  onClick={() => showToast('Schema audit completed: All 4 data domains strictly aligned.')}
+                  className="p-2 rounded bg-surface-parchment hover:bg-surface-container text-earth-charcoal border border-earth-border"
+                  title="Run Schema Audit"
                 >
-                  {triggeringTrain ? (
-                    <>
-                      <span className="material-symbols-outlined text-[16px] animate-spin">sync</span>
-                      Queueing...
-                    </>
-                  ) : (
-                    <>
-                      <span className="material-symbols-outlined text-[16px]">play_arrow</span>
-                      Start Training Run
-                    </>
-                  )}
+                  <span className="material-symbols-outlined text-[18px]">refresh</span>
                 </button>
               </div>
-            </form>
+            </div>
 
-            {trainMsg && (
-              <p className={`mt-3 text-xs font-semibold ${trainMsg.ok ? 'text-okt' : 'text-dangert'}`}>
-                {trainMsg.text}
-              </p>
-            )}
+            {/* 4 Domain Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {DOMAIN_DATA.map(d => (
+                <div key={d.domain} className="bg-surface-parchment rounded border border-earth-border p-4 shadow-sm flex flex-col justify-between gap-4">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <span className="font-headline text-[11px] font-bold text-secondary uppercase tracking-wider">DOMAIN: {d.domain}</span>
+                      <span className={`px-2 py-0.5 rounded font-headline text-[10px] font-bold uppercase tracking-wider border ${d.badgeColor}`}>
+                        {d.badge}
+                      </span>
+                    </div>
+                    <div>
+                      <div className="font-mono text-2xl font-bold text-earth-charcoal">{d.rowCount}</div>
+                      <div className="font-headline text-xs text-secondary font-medium">Total Row Count</div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 border-t border-earth-border/60 pt-3 font-body text-xs">
+                    <div className="flex justify-between items-center">
+                      <span className="text-secondary">Updated</span>
+                      <span className="font-medium text-earth-charcoal">{d.updated}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-secondary">Data Origin</span>
+                      <span className="px-1.5 py-0.5 rounded bg-surface-container text-secondary font-mono text-[10px] font-bold uppercase">{d.origin}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-secondary">{d.metricLabel}</span>
+                      <span className="font-mono text-xs font-bold text-earth-charcoal">{d.metricValue}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-secondary">Null Drift</span>
+                      <span className={`font-mono text-xs font-bold ${d.nullDrift.includes('Degraded') ? 'text-telemetry-crimson' : 'text-telemetry-emerald'}`}>
+                        {d.nullDrift}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full ${
+                        d.pct >= 90 ? 'bg-telemetry-emerald' : d.pct >= 70 ? 'bg-telemetry-amber' : 'bg-telemetry-crimson'
+                      }`}
+                      style={{ width: `${d.pct}%` }}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Ingestion Stream Telemetry Strip */}
+            <div className="bg-surface-container p-4 rounded border border-earth-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <span className="material-symbols-outlined text-copper-accent text-[22px]">hub</span>
+                <div>
+                  <span className="font-headline text-xs font-bold text-earth-charcoal block">Kafka Pipeline Cluster MINE-INGEST-04</span>
+                  <span className="font-body text-xs text-secondary">Throughput: 4,820 events/sec • Backpressure: 0.00% • Buffer health: 100%</span>
+                </div>
+              </div>
+              <button
+                onClick={() => showToast('Kafka Cluster MINE-INGEST-04: Partition lag 0ms, consumer group nominal.')}
+                className="px-3 py-1.5 rounded bg-surface-parchment border border-earth-border hover:bg-surface-container-high font-headline text-xs font-bold text-earth-charcoal transition-colors"
+              >
+                View Kafka Offsets
+              </button>
+            </div>
           </section>
+        )}
 
-          {/* Training Runs Monitor */}
-          {trainingRuns.length > 0 && (
-            <section>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-ink mb-3 flex items-center gap-2">
-                <span className="material-symbols-outlined text-infot">hourglass_bottom</span>
-                Recent Training Runs
-              </h2>
-              <div className="rounded-[20px] bg-deep2 border border-line p-4 overflow-x-auto">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="border-b border-line text-[10px] text-ink3 uppercase tracking-widest">
-                      <th className="py-2 px-3">Run Tag</th>
-                      <th className="py-2 px-3">Domain</th>
-                      <th className="py-2 px-3">Status</th>
-                      <th className="py-2 px-3">Triggered By</th>
-                      <th className="py-2 px-3">Triggered At</th>
-                      <th className="py-2 px-3">Data Origin</th>
+        {/* ================================================================= */}
+        {/* TAB 2: MODEL HEALTH — CHAMPION / CHALLENGER REGISTRY              */}
+        {/* ================================================================= */}
+        {activeTab === 'models' && (
+          <section className="flex flex-col gap-6" id="tab-models">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-earth-border">
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="font-headline text-xl font-bold text-earth-charcoal">Model Health — Champion / Challenger Registry</h2>
+                  <span className="px-2 py-0.5 rounded-full bg-surface-container font-headline text-xs font-bold text-copper-accent">6 Active Deployments</span>
+                </div>
+                <p className="font-body text-xs text-on-surface-variant">Validated machine learning models governing autonomous beneficiation, dispatch, and physical safety.</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="bg-surface-parchment rounded px-3 py-1.5 flex items-center gap-2 border border-earth-border text-secondary shadow-sm">
+                  <span className="material-symbols-outlined text-[16px]">search</span>
+                  <input
+                    className="bg-transparent font-body text-xs text-earth-charcoal outline-none placeholder:text-secondary/60 w-44 sm:w-60"
+                    placeholder="Filter task, model, split..."
+                    type="text"
+                    value={modelFilter}
+                    onChange={e => setModelFilter(e.target.value)}
+                  />
+                </div>
+                <button
+                  onClick={() => setModelFilter('')}
+                  className="p-2 rounded bg-surface-parchment hover:bg-surface-container text-earth-charcoal border border-earth-border shadow-sm"
+                  title="Clear Filter"
+                >
+                  <span className="material-symbols-outlined text-[18px]">tune</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Model Registry Table */}
+            <div className="bg-surface-parchment rounded border border-earth-border shadow-sm overflow-x-auto">
+              <table className="w-full text-left font-body text-xs">
+                <thead className="bg-surface-elevation font-headline text-[11px] font-bold text-secondary uppercase tracking-wider border-b border-earth-border">
+                  <tr>
+                    <th className="py-3 px-4">Task</th>
+                    <th className="py-3 px-4">Model ID &amp; Family</th>
+                    <th className="py-3 px-4">Status</th>
+                    <th className="py-3 px-4">ROC-AUC</th>
+                    <th className="py-3 px-4">PR-AUC</th>
+                    <th className="py-3 px-4">MAE</th>
+                    <th className="py-3 px-4">R²</th>
+                    <th className="py-3 px-4">Lift</th>
+                    <th className="py-3 px-4">Split (Temporal)</th>
+                    <th className="py-3 px-4 text-center">Leakage Check</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-earth-border/60">
+                  {filteredModels.map((row) => (
+                    <tr
+                      key={row.modelId}
+                      className={`hover:bg-surface-container transition-colors ${
+                        row.status === 'Challenger' ? 'bg-surface-container-low/60' : ''
+                      }`}
+                    >
+                      <td className="py-3.5 px-4 font-headline font-semibold text-earth-charcoal">
+                        {row.task}
+                      </td>
+                      <td className="py-3.5 px-4">
+                        <span className={`font-mono font-bold block ${row.status === 'Challenger' ? 'text-copper-accent' : 'text-earth-charcoal'}`}>
+                          {row.modelId}
+                        </span>
+                        <span className="text-[11px] text-secondary">{row.family}</span>
+                      </td>
+                      <td className="py-3.5 px-4">
+                        <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded font-headline text-[10px] font-bold uppercase border ${
+                          row.status === 'Champion'
+                            ? 'bg-telemetry-emerald/15 text-telemetry-emerald border-telemetry-emerald/30'
+                            : 'bg-telemetry-amber/15 text-telemetry-amber border-telemetry-amber/30'
+                        }`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${row.status === 'Champion' ? 'bg-telemetry-emerald' : 'bg-telemetry-amber animate-pulse'}`}></span>
+                          {row.status}
+                        </span>
+                      </td>
+                      <td className={`py-3.5 px-4 font-mono font-bold ${row.status === 'Challenger' ? 'text-telemetry-emerald' : 'text-earth-charcoal'}`}>
+                        {row.rocAuc}
+                      </td>
+                      <td className={`py-3.5 px-4 font-mono ${row.status === 'Challenger' ? 'font-bold text-telemetry-emerald' : 'text-earth-charcoal'}`}>
+                        {row.prAuc}
+                      </td>
+                      <td className={`py-3.5 px-4 font-mono ${row.status === 'Challenger' ? 'font-bold text-telemetry-emerald' : 'text-earth-charcoal'}`}>
+                        {row.mae}
+                      </td>
+                      <td className={`py-3.5 px-4 font-mono ${row.status === 'Challenger' ? 'font-bold text-telemetry-emerald' : 'text-earth-charcoal'}`}>
+                        {row.r2}
+                      </td>
+                      <td className={`py-3.5 px-4 font-mono ${row.lift.startsWith('+') ? 'font-bold text-telemetry-emerald' : 'text-secondary'}`}>
+                        {row.lift}
+                      </td>
+                      <td className="py-3.5 px-4 text-secondary">{row.split}</td>
+                      <td className="py-3.5 px-4 text-center">
+                        <span className="px-2 py-0.5 rounded bg-telemetry-emerald/10 text-telemetry-emerald font-headline text-[10px] font-bold border border-telemetry-emerald/20">
+                          {row.leakage}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Concept Drift & Edge Node Bento */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
+              {/* Concept Drift Tracking */}
+              <div className="bg-surface-parchment rounded border border-earth-border shadow-sm p-4 flex flex-col justify-between gap-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="material-symbols-outlined text-copper-accent text-[20px]">ssid_chart</span>
+                    <span className="font-headline text-sm font-bold text-earth-charcoal">Concept Drift Tracking</span>
+                  </div>
+                  <span className="font-headline text-xs font-semibold text-telemetry-emerald">P-VALUE: 0.89</span>
+                </div>
+                <p className="font-body text-xs text-on-surface-variant">
+                  Statistical distribution divergence between real-time ore density feeds and surrogate model training vectors.
+                </p>
+                <div className="h-28 w-full bg-surface-container-low rounded p-2.5 flex flex-col justify-between border border-earth-border/40">
+                  <div className="flex justify-between font-headline text-[11px] text-secondary">
+                    <span>Ore Hardness (Bond Work Index)</span>
+                    <span className="font-bold text-earth-charcoal">Current: 14.8 kWh/t</span>
+                  </div>
+                  <svg className="w-full h-16 overflow-visible" viewBox="0 0 200 40">
+                    <path d="M0,25 C30,22 50,30 80,15 C110,5 140,28 170,18 L200,20" fill="none" stroke="#2D6A4F" strokeWidth="2" />
+                    <path d="M0,25 C30,22 50,30 80,15 C110,5 140,28 170,18 L200,20 L200,40 L0,40 Z" fill="#2D6A4F" fillOpacity="0.08" />
+                    <line stroke="#ba1a1a" strokeDasharray="2 2" strokeWidth="1" x1="0" x2="200" y1="8" y2="8" />
+                  </svg>
+                  <div className="flex justify-between font-headline text-[10px] text-secondary">
+                    <span>Safe Threshold (0.15 Drift Max)</span>
+                    <span className="text-telemetry-emerald font-bold">0.038 Deviation (Safe)</span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between text-xs font-body text-secondary">
+                  <span>Drift algorithm: Wasserstein-1D</span>
+                  <span className="text-earth-charcoal font-semibold">Updated 3m ago</span>
+                </div>
+              </div>
+
+              {/* Edge Node Hardware Telemetry */}
+              <div className="bg-surface-parchment rounded border border-earth-border shadow-sm overflow-hidden flex flex-col justify-between">
+                <div className="relative h-40 w-full overflow-hidden">
+                  <img
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7Iw24mT_3kjI2DRoxQmMcaGZ3VNEa8W56u-3fU0cP174dgSFRA2PXFffpJdrz2bfOY-7IqH0E_bS_PcsZoyEFd-xhwKoLIjQmV3alxFhHipYLXF_lT0zBQnIGKhJszrlvyWam3gL_JAK9BxZLZi6HleG7Oc0Yl3iuGtTJeIfI4O0lVhEzeN-xBjr_fIMgpnNOrWIDw9bR6Y_HEXzMXeFOFrnTbH3DBltfm105HTASTMq_9KTz_BJs"
+                    alt="Beneficiation facility with SAG grinding mills"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-earth-espresso/80 via-earth-espresso/20 to-transparent" />
+                  <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between text-white">
+                    <span className="font-headline text-[11px] font-bold uppercase tracking-wider bg-earth-espresso/60 px-2 py-0.5 rounded backdrop-blur-sm">Beneficiation Train 02</span>
+                    <span className="font-headline text-[11px] text-telemetry-emerald font-semibold">Telemetry Connected</span>
+                  </div>
+                </div>
+                <div className="p-4 flex flex-col gap-1.5">
+                  <span className="font-headline text-sm font-bold text-earth-charcoal">Edge Inferencing Node EN-401</span>
+                  <p className="font-body text-xs text-on-surface-variant">
+                    NVIDIA Jetson AGX Orin industrial enclosure mounted directly at the trunnion bearing assembly. Hardware-level watchdog guarantees automated fallback to deterministic PID control in &lt; 20ms.
+                  </p>
+                  <div className="mt-1 flex items-center justify-between font-headline text-[11px] text-secondary bg-surface-container p-2 rounded">
+                    <span>Fallback State: Deterministic PID</span>
+                    <span className="text-telemetry-emerald font-semibold">Ready</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ================================================================= */}
+        {/* TAB 3: MODEL APPROVALS & TRAINING TAB (ACTIVE BY DEFAULT)         */}
+        {/* ================================================================= */}
+        {activeTab === 'approval' && (
+          <section className="flex flex-col gap-8" id="tab-approval">
+            {/* Stacked Section C: Human Approval Gate (Challenger Models) */}
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-telemetry-amber animate-pulse"></span>
+                    <h2 className="font-headline text-lg font-bold text-earth-charcoal">Human Approval Gate — Challenger Models</h2>
+                  </div>
+                  <p className="font-body text-xs text-on-surface-variant">
+                    High-stakes decision cards requiring formal cryptographic sign-off before weight promotion to active control loops.
+                  </p>
+                </div>
+                <span className="px-2.5 py-1 rounded bg-telemetry-amber/15 text-telemetry-amber font-headline text-xs font-bold border border-telemetry-amber/30">
+                  2 PENDING SUPERINTENDENT ACTION
+                </span>
+              </div>
+
+              {/* Challenger Cards Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* CARD 1: SAG Mill Surrogate */}
+                <div className="bg-surface-parchment rounded border-2 border-copper-accent/70 shadow-md p-5 relative overflow-hidden flex flex-col justify-between gap-4">
+                  <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-copper-accent to-telemetry-amber"></div>
+                  
+                  {/* Card Header */}
+                  <div className="flex items-start justify-between gap-2 pt-1">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="px-2 py-0.5 rounded bg-telemetry-amber/15 text-telemetry-amber font-headline text-[10px] font-bold uppercase border border-telemetry-amber/30">
+                          CHALLENGER
+                        </span>
+                        <span className="px-2 py-0.5 rounded bg-surface-container font-headline text-[10px] font-bold text-secondary uppercase">
+                          {card1Status === 'approved' ? 'PROMOTED TO STAGING' : 'AWAITING HUMAN SIGN-OFF'}
+                        </span>
+                      </div>
+                      <h3 className="font-headline text-base font-bold text-earth-charcoal">Crucible-Transformer-v4.2-Surrogate</h3>
+                      <p className="font-body text-xs text-on-surface-variant mt-0.5">Target: SAG Mill Feed &amp; Throughput Controller (Mill 01-04)</p>
+                    </div>
+                    <span className="font-mono text-[11px] text-secondary">GATE ID: PR-2024-0988-SAG</span>
+                  </div>
+
+                  {/* Mini-Grid Performance Metrics */}
+                  <div className="grid grid-cols-5 gap-2 bg-surface-container p-2.5 rounded border border-earth-border text-center">
+                    <div>
+                      <div className="font-headline text-[10px] text-secondary uppercase">ROC-AUC</div>
+                      <div className="font-mono text-sm font-bold text-telemetry-emerald">0.984</div>
+                    </div>
+                    <div>
+                      <div className="font-headline text-[10px] text-secondary uppercase">PR-AUC</div>
+                      <div className="font-mono text-sm font-bold text-earth-charcoal">0.972</div>
+                    </div>
+                    <div>
+                      <div className="font-headline text-[10px] text-secondary uppercase">MAE</div>
+                      <div className="font-mono text-sm font-bold text-earth-charcoal">0.009</div>
+                    </div>
+                    <div>
+                      <div className="font-headline text-[10px] text-secondary uppercase">R²</div>
+                      <div className="font-mono text-sm font-bold text-earth-charcoal">0.991</div>
+                    </div>
+                    <div className="bg-telemetry-emerald/10 rounded py-0.5">
+                      <div className="font-headline text-[10px] text-telemetry-emerald uppercase font-bold">Lift</div>
+                      <div className="font-mono text-sm font-bold text-telemetry-emerald">+3.3%</div>
+                    </div>
+                  </div>
+
+                  {/* Lineage & Hash Integrity */}
+                  <div className="bg-surface-container-low p-3 rounded border border-earth-border space-y-1.5 text-xs font-body">
+                    <div className="flex items-center justify-between">
+                      <span className="text-secondary font-medium">SHA-256 Checksum:</span>
+                      <span className="font-mono text-[11px] text-copper-accent font-semibold">0x88f2ba019ec41103b47...</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-secondary font-medium">Provenance Origin:</span>
+                      <span className="font-headline text-[11px] font-semibold text-earth-charcoal">Run #TR-8838-PINN (1.4M cycles)</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-secondary font-medium">Governance Gate:</span>
+                      <span className="font-headline text-[11px] font-bold text-telemetry-amber uppercase">
+                        {card1Status === 'approved' ? 'APPROVED' : 'PENDING SUPERINTENDENT'}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Dual Signature Mandate Progress */}
+                  <div className="bg-surface-container p-3 rounded border border-earth-border flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <span className="font-headline text-[11px] font-bold text-secondary uppercase tracking-wider">Dual-Signature Mandate Status</span>
+                      <span className="font-headline text-xs font-bold text-copper-accent">
+                        {card1Status === 'approved' ? '2 OF 2 SIGNED' : '1 OF 2 SIGNED'}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                      <div className="p-2 rounded bg-surface-parchment border border-earth-border flex items-center justify-between">
+                        <div className="flex items-center gap-1.5">
+                          <span className="material-symbols-outlined text-telemetry-emerald text-[18px]">check_circle</span>
+                          <div>
+                            <div className="font-headline font-bold text-earth-charcoal">Marcus Vance</div>
+                            <div className="text-[10px] text-secondary">Operations Supt (10:14 UTC)</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className={`p-2 rounded border border-earth-border flex items-center justify-between ${
+                        card1Status === 'approved' ? 'bg-surface-parchment' : 'bg-surface-container-high'
+                      }`}>
+                        <div className="flex items-center gap-1.5">
+                          <span className={`material-symbols-outlined text-[18px] ${
+                            card1Status === 'approved' ? 'text-telemetry-emerald' : 'text-telemetry-amber'
+                          }`}>
+                            {card1Status === 'approved' ? 'check_circle' : 'pending'}
+                          </span>
+                          <div>
+                            <div className="font-headline font-bold text-earth-charcoal">Elena Rostova, Ph.D.</div>
+                            <div className={`text-[10px] font-semibold ${
+                              card1Status === 'approved' ? 'text-telemetry-emerald' : 'text-telemetry-amber'
+                            }`}>
+                              {card1Status === 'approved' ? 'Chief Safety Officer SIGNED' : 'Chief Safety Officer PENDING'}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Decision Action Buttons */}
+                  <div className="flex items-center justify-end gap-3 pt-2">
+                    <button
+                      onClick={() => handleReject('Crucible-Transformer-v4.2-Surrogate')}
+                      className="px-4 py-2 rounded bg-surface-container hover:bg-telemetry-crimson/10 text-telemetry-crimson hover:border-telemetry-crimson/40 border border-earth-border font-headline text-xs font-bold transition-all flex items-center gap-1.5"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">close</span>
+                      Reject &amp; Request Re-Training
+                    </button>
+                    <button
+                      onClick={() => handleApprove(1, 'Crucible-Transformer-v4.2-Surrogate')}
+                      disabled={card1Status !== 'pending'}
+                      className={`px-5 py-2 rounded font-headline text-xs font-bold transition-all shadow-md flex items-center gap-1.5 text-white ${
+                        card1Status === 'approved'
+                          ? 'bg-earth-charcoal cursor-default'
+                          : card1Status === 'approving'
+                          ? 'bg-telemetry-emerald opacity-80'
+                          : 'bg-telemetry-emerald hover:bg-telemetry-emerald/90'
+                      }`}
+                    >
+                      <span className={`material-symbols-outlined text-[18px] ${card1Status === 'approving' ? 'animate-spin' : ''}`}>
+                        {card1Status === 'approved' ? 'verified' : card1Status === 'approving' ? 'sync' : 'how_to_reg'}
+                      </span>
+                      {card1Status === 'approved'
+                        ? 'Approved & Promoted'
+                        : card1Status === 'approving'
+                        ? 'Validating Enclave HSM...'
+                        : 'Approve & Promote Model'}
+                    </button>
+                  </div>
+                </div>
+
+                {/* CARD 2: MARL Fleet Challenger */}
+                <div className="bg-surface-parchment rounded border border-earth-border shadow-md p-5 relative overflow-hidden flex flex-col justify-between gap-4">
+                  <div className="absolute top-0 left-0 right-0 h-1.5 bg-copper-accent"></div>
+                  
+                  {/* Card Header */}
+                  <div className="flex items-start justify-between gap-2 pt-1">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="px-2 py-0.5 rounded bg-telemetry-amber/15 text-telemetry-amber font-headline text-[10px] font-bold uppercase border border-telemetry-amber/30">
+                          CHALLENGER
+                        </span>
+                        <span className="px-2 py-0.5 rounded bg-surface-container font-headline text-[10px] font-bold text-secondary uppercase">
+                          {card2Status === 'approved' ? 'PROMOTED TO STAGING' : 'AWAITING HUMAN SIGN-OFF'}
+                        </span>
+                      </div>
+                      <h3 className="font-headline text-base font-bold text-earth-charcoal">MARL-Fleet-v2.2-Adaptive</h3>
+                      <p className="font-body text-xs text-on-surface-variant mt-0.5">Target: Haul Fleet Dynamic Routing (48 Heavy Haul Units)</p>
+                    </div>
+                    <span className="font-mono text-[11px] text-secondary">GATE ID: PR-2024-1002-HLR</span>
+                  </div>
+
+                  {/* Mini-Grid Performance Metrics */}
+                  <div className="grid grid-cols-5 gap-2 bg-surface-container p-2.5 rounded border border-earth-border text-center">
+                    <div>
+                      <div className="font-headline text-[10px] text-secondary uppercase">ROC-AUC</div>
+                      <div className="font-mono text-sm font-bold text-telemetry-emerald">0.978</div>
+                    </div>
+                    <div>
+                      <div className="font-headline text-[10px] text-secondary uppercase">PR-AUC</div>
+                      <div className="font-mono text-sm font-bold text-earth-charcoal">0.965</div>
+                    </div>
+                    <div>
+                      <div className="font-headline text-[10px] text-secondary uppercase">MAE</div>
+                      <div className="font-mono text-sm font-bold text-earth-charcoal">1.2s queue</div>
+                    </div>
+                    <div>
+                      <div className="font-headline text-[10px] text-secondary uppercase">R²</div>
+                      <div className="font-mono text-sm font-bold text-earth-charcoal">0.982</div>
+                    </div>
+                    <div className="bg-telemetry-emerald/10 rounded py-0.5">
+                      <div className="font-headline text-[10px] text-telemetry-emerald uppercase font-bold">Lift</div>
+                      <div className="font-mono text-sm font-bold text-telemetry-emerald">+14.2%</div>
+                    </div>
+                  </div>
+
+                  {/* Lineage & Hash Integrity */}
+                  <div className="bg-surface-container-low p-3 rounded border border-earth-border space-y-1.5 text-xs font-body">
+                    <div className="flex items-center justify-between">
+                      <span className="text-secondary font-medium">SHA-256 Checksum:</span>
+                      <span className="font-mono text-[11px] text-copper-accent font-semibold">0x3e88cca0172...</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-secondary font-medium">Provenance Origin:</span>
+                      <span className="font-headline text-[11px] font-semibold text-earth-charcoal">Run #TR-8835 (Pit Ramp 4 Telemetry)</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-secondary font-medium">Governance Gate:</span>
+                      <span className="font-headline text-[11px] font-bold text-telemetry-amber uppercase">
+                        {card2Status === 'approved' ? 'APPROVED' : 'PENDING SAFETY OFFICER'}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Dual Signature Mandate Progress */}
+                  <div className="bg-surface-container p-3 rounded border border-earth-border flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <span className="font-headline text-[11px] font-bold text-secondary uppercase tracking-wider">Dual-Signature Mandate Status</span>
+                      <span className="font-headline text-xs font-bold text-copper-accent">
+                        {card2Status === 'approved' ? '2 OF 2 SIGNED' : '0 OF 2 SIGNED'}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                      <div className={`p-2 rounded border border-earth-border flex items-center justify-between ${
+                        card2Status === 'approved' ? 'bg-surface-parchment' : 'bg-surface-container-high'
+                      }`}>
+                        <div className="flex items-center gap-1.5">
+                          <span className={`material-symbols-outlined text-[18px] ${
+                            card2Status === 'approved' ? 'text-telemetry-emerald' : 'text-secondary'
+                          }`}>
+                            {card2Status === 'approved' ? 'check_circle' : 'pending'}
+                          </span>
+                          <div>
+                            <div className="font-headline font-bold text-earth-charcoal">K. Nyirenda</div>
+                            <div className={`text-[10px] ${card2Status === 'approved' ? 'text-telemetry-emerald font-semibold' : 'text-secondary'}`}>
+                              {card2Status === 'approved' ? 'Mine Dispatch Supt SIGNED' : 'Mine Dispatch Supt PENDING'}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className={`p-2 rounded border border-earth-border flex items-center justify-between ${
+                        card2Status === 'approved' ? 'bg-surface-parchment' : 'bg-surface-container-high'
+                      }`}>
+                        <div className="flex items-center gap-1.5">
+                          <span className={`material-symbols-outlined text-[18px] ${
+                            card2Status === 'approved' ? 'text-telemetry-emerald' : 'text-secondary'
+                          }`}>
+                            {card2Status === 'approved' ? 'check_circle' : 'pending'}
+                          </span>
+                          <div>
+                            <div className="font-headline font-bold text-earth-charcoal">Elena Rostova, Ph.D.</div>
+                            <div className={`text-[10px] ${card2Status === 'approved' ? 'text-telemetry-emerald font-semibold' : 'text-secondary'}`}>
+                              {card2Status === 'approved' ? 'Safety Officer SIGNED' : 'Safety Officer PENDING'}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Decision Action Buttons */}
+                  <div className="flex items-center justify-end gap-3 pt-2">
+                    <button
+                      onClick={() => handleReject('MARL-Fleet-v2.2-Adaptive')}
+                      className="px-4 py-2 rounded bg-surface-container hover:bg-telemetry-crimson/10 text-telemetry-crimson hover:border-telemetry-crimson/40 border border-earth-border font-headline text-xs font-bold transition-all flex items-center gap-1.5"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">close</span>
+                      Reject
+                    </button>
+                    <button
+                      onClick={() => handleApprove(2, 'MARL-Fleet-v2.2-Adaptive')}
+                      disabled={card2Status !== 'pending'}
+                      className={`px-5 py-2 rounded font-headline text-xs font-bold transition-all shadow-md flex items-center gap-1.5 text-white ${
+                        card2Status === 'approved'
+                          ? 'bg-earth-charcoal cursor-default'
+                          : card2Status === 'approving'
+                          ? 'bg-telemetry-emerald opacity-80'
+                          : 'bg-telemetry-emerald hover:bg-telemetry-emerald/90'
+                      }`}
+                    >
+                      <span className={`material-symbols-outlined text-[18px] ${card2Status === 'approving' ? 'animate-spin' : ''}`}>
+                        {card2Status === 'approved' ? 'verified' : card2Status === 'approving' ? 'sync' : 'how_to_reg'}
+                      </span>
+                      {card2Status === 'approved'
+                        ? 'Approved & Promoted'
+                        : card2Status === 'approving'
+                        ? 'Validating Enclave HSM...'
+                        : 'Approve & Promote'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Stacked Section A: Trigger Training Run Form */}
+            <div className="bg-surface-parchment rounded border border-earth-border p-5 shadow-sm flex flex-col gap-4">
+              <div className="flex items-center justify-between border-b border-earth-border/60 pb-3">
+                <div className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-copper-accent text-[22px]">play_circle</span>
+                  <h3 className="font-headline text-base font-bold text-earth-charcoal">Trigger Training Run</h3>
+                </div>
+                <span className="font-headline text-[11px] text-secondary uppercase font-bold">Ray Core Compute Cluster: 64 GPUs Available</span>
+              </div>
+              <form className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end" onSubmit={handleStartTraining}>
+                {/* Input 1: Target Domain */}
+                <div className="space-y-1">
+                  <label className="font-headline text-xs font-semibold text-secondary uppercase tracking-wider block">Target Domain</label>
+                  <select
+                    className="w-full bg-surface-container border border-earth-border rounded px-3 py-2 font-headline text-xs font-semibold text-earth-charcoal outline-none focus:border-copper-accent"
+                    value={trainingDomain}
+                    onChange={e => setTrainingDomain(e.target.value)}
+                  >
+                    <option value="sag-mill">Production / SAG Mill Feed</option>
+                    <option value="haul-routing">Haul Fleet Routing</option>
+                    <option value="scada">Processing Plant SCADA</option>
+                    <option value="geotech">Geotechnical Slope Stability</option>
+                  </select>
+                </div>
+                {/* Input 2: Dataset Version ID */}
+                <div className="space-y-1">
+                  <label className="font-headline text-xs font-semibold text-secondary uppercase tracking-wider block">Dataset Version ID</label>
+                  <input
+                    className="w-full bg-surface-container border border-earth-border rounded px-3 py-2 font-mono text-xs font-bold text-earth-charcoal outline-none focus:border-copper-accent"
+                    type="text"
+                    value={trainingDataset}
+                    onChange={e => setTrainingDataset(e.target.value)}
+                  />
+                </div>
+                {/* Input 3: Execution Note */}
+                <div className="space-y-1">
+                  <label className="font-headline text-xs font-semibold text-secondary uppercase tracking-wider block">Execution Note</label>
+                  <input
+                    className="w-full bg-surface-container border border-earth-border rounded px-3 py-2 font-body text-xs text-earth-charcoal outline-none focus:border-copper-accent"
+                    type="text"
+                    value={trainingNote}
+                    onChange={e => setTrainingNote(e.target.value)}
+                  />
+                </div>
+                {/* Submit Action Button */}
+                <div>
+                  <button
+                    id="btn-start-run"
+                    type="submit"
+                    disabled={trainingTriggering}
+                    className="w-full bg-primary-container hover:bg-primary text-white font-headline text-xs font-bold py-2.5 px-4 rounded shadow transition-all flex items-center justify-center gap-2"
+                  >
+                    <span className={`material-symbols-outlined text-[18px] ${trainingTriggering ? 'animate-spin' : ''}`}>
+                      {trainingTriggering ? 'sync' : 'rocket_launch'}
+                    </span>
+                    <span>{trainingTriggering ? 'Dispatching Ray Cluster...' : 'Start Training Run'}</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* Stacked Section B: Recent Training Runs Monitor Table */}
+            <div className="bg-surface-parchment rounded border border-earth-border shadow-sm flex flex-col">
+              <div className="px-5 py-3.5 border-b border-earth-border flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-copper-accent text-[20px]">science</span>
+                  <h3 className="font-headline text-sm font-bold text-earth-charcoal">Recent Training Runs Monitor</h3>
+                </div>
+                <span className="font-mono text-xs text-secondary">3 active jobs monitored</span>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left font-body text-xs">
+                  <thead className="bg-surface-elevation font-headline text-[11px] font-bold text-secondary uppercase tracking-wider border-b border-earth-border">
+                    <tr>
+                      <th className="py-2.5 px-4">Run Tag</th>
+                      <th className="py-2.5 px-4">Domain</th>
+                      <th className="py-2.5 px-4">Status &amp; Progress</th>
+                      <th className="py-2.5 px-4">Triggered By</th>
+                      <th className="py-2.5 px-4">Triggered At</th>
+                      <th className="py-2.5 px-4 text-right">Details</th>
                     </tr>
                   </thead>
-                  <tbody className="text-xs divide-y divide-line/40">
-                    {trainingRuns.map((r) => (
-                      <tr key={r.id} className="hover:bg-panel4/20">
-                        <td className="py-2.5 px-3 font-mono text-accentt">{r.run_tag}</td>
-                        <td className="py-2.5 px-3 font-medium capitalize text-ink">{r.domain}</td>
-                        <td className="py-2.5 px-3">
-                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                            r.status === 'completed'
-                              ? 'bg-ok/20 text-okt border border-ok/30'
-                              : r.status === 'running'
-                              ? 'bg-infot/20 text-infot border border-infot/30 animate-pulse'
-                              : r.status === 'failed'
-                              ? 'bg-danger/20 text-dangert border border-danger/30'
-                              : 'bg-warn/20 text-warnt border border-warn/30'
-                          }`}>
-                            {r.status}
-                          </span>
-                        </td>
-                        <td className="py-2.5 px-3 text-ink2">{r.triggered_by}</td>
-                        <td className="py-2.5 px-3 text-ink3 font-mono text-[11px]">{String(r.triggered_at).slice(0, 16)}</td>
-                        <td className="py-2.5 px-3">
-                          <span className="px-1.5 py-0.5 rounded bg-ink3/20 text-[10px] font-bold text-ink2">
-                            {r.data_origin ?? 'SYNTHETIC'}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
+                  <tbody className="divide-y divide-earth-border/60">
+                    <tr className="hover:bg-surface-container transition-colors">
+                      <td className="py-3 px-4 font-mono font-bold text-copper-accent">#TR-8841-B</td>
+                      <td className="py-3 px-4 font-headline font-semibold text-earth-charcoal">Production / SAG Mill</td>
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2 py-0.5 rounded bg-primary-container/15 text-copper-accent font-headline text-[10px] font-bold uppercase">RUNNING 64%</span>
+                          <div className="w-24 bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+                            <div className="bg-copper-accent h-full rounded-full animate-pulse" style={{ width: '64%' }}></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-5 h-5 rounded-full bg-secondary/20 flex items-center justify-center font-headline text-[9px] font-bold text-earth-charcoal">LR</span>
+                          <span>Dr. Lucas Ramos</span>
+                        </div>
+                      </td>
+                      <td className="py-3 px-4 text-secondary">Today, 14:10 UTC</td>
+                      <td className="py-3 px-4 text-right">
+                        <button
+                          onClick={() => showToast('Opening TensorBoard link: tensorboard.cluster.local:6006/run/TR-8841-B')}
+                          className="font-headline text-[11px] font-bold text-copper-accent hover:underline"
+                        >
+                          TensorBoard
+                        </button>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-surface-container transition-colors">
+                      <td className="py-3 px-4 font-mono font-bold text-earth-charcoal">#TR-8840-A</td>
+                      <td className="py-3 px-4 font-headline font-semibold text-earth-charcoal">Haul Fleet Dispatch</td>
+                      <td className="py-3 px-4">
+                        <span className="px-2 py-0.5 rounded bg-telemetry-emerald/15 text-telemetry-emerald font-headline text-[10px] font-bold uppercase border border-telemetry-emerald/30">
+                          COMPLETED (ROC: 0.978)
+                        </span>
+                      </td>
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-5 h-5 rounded-full bg-secondary/20 flex items-center justify-center font-headline text-[9px] font-bold text-earth-charcoal">MV</span>
+                          <span>Marcus Vance</span>
+                        </div>
+                      </td>
+                      <td className="py-3 px-4 text-secondary">Today, 09:12 UTC</td>
+                      <td className="py-3 px-4 text-right">
+                        <button
+                          onClick={() => showToast('Fetching model checkpoint artifacts: s3://crucible-models/TR-8840-A.tar.gz')}
+                          className="font-headline text-[11px] font-bold text-secondary hover:underline"
+                        >
+                          Artifacts
+                        </button>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-surface-container transition-colors">
+                      <td className="py-3 px-4 font-mono font-bold text-earth-charcoal">#TR-8839-C</td>
+                      <td className="py-3 px-4 font-headline font-semibold text-earth-charcoal">Geotech Radar InSAR</td>
+                      <td className="py-3 px-4">
+                        <span className="px-2 py-0.5 rounded bg-telemetry-crimson/15 text-telemetry-crimson font-headline text-[10px] font-bold uppercase border border-telemetry-crimson/30">
+                          FAILED (CUDA OOM)
+                        </span>
+                      </td>
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-5 h-5 rounded-full bg-secondary/20 flex items-center justify-center font-headline text-[9px] font-bold text-earth-charcoal">KN</span>
+                          <span>K. Nyirenda</span>
+                        </div>
+                      </td>
+                      <td className="py-3 px-4 text-secondary">Yesterday, 22:45 UTC</td>
+                      <td className="py-3 px-4 text-right">
+                        <button
+                          onClick={() => showToast('Log excerpt: RuntimeError: CUDA out of memory on worker node-04 (GPU 3).')}
+                          className="font-headline text-[11px] font-bold text-telemetry-crimson hover:underline"
+                        >
+                          View Crash Log
+                        </button>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
-            </section>
-          )}
+            </div>
+          </section>
+        )}
 
-          {/* Challenger Models Pending Approval Gate */}
-          <section>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-xs font-bold uppercase tracking-wider text-ink flex items-center gap-2">
-                <span className="material-symbols-outlined text-warnt">verified_user</span>
-                Challenger Models — Human Approval Gate
-              </h2>
-              <button
-                onClick={loadGovernanceData}
-                className="text-[11px] font-bold text-ink3 hover:text-accentt flex items-center gap-1"
-              >
-                <span className="material-symbols-outlined text-[14px]">refresh</span>
-                Refresh Registry
-              </button>
+        {/* ================================================================= */}
+        {/* TAB 4: PREDICTION LEDGER TAB                                      */}
+        {/* ================================================================= */}
+        {activeTab === 'ledger' && (
+          <section className="flex flex-col gap-6" id="tab-ledger">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-earth-border">
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="font-headline text-xl font-bold text-earth-charcoal">Operational Prediction Ledger</h2>
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-telemetry-emerald/15 text-telemetry-emerald font-headline text-[10px] font-bold uppercase border border-telemetry-emerald/30">
+                    <span className="w-1.5 h-1.5 rounded-full bg-telemetry-emerald animate-ping"></span> Live Streaming
+                  </span>
+                </div>
+                <p className="font-body text-xs text-on-surface-variant">Tamper-proof real-time register of mill, fleet, and crusher automated inferences.</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="bg-surface-parchment rounded px-3 py-1.5 flex items-center gap-2 border border-earth-border text-secondary shadow-sm">
+                  <span className="material-symbols-outlined text-[16px]">search</span>
+                  <input
+                    className="bg-transparent font-body text-xs text-earth-charcoal outline-none placeholder:text-secondary/60 w-48"
+                    placeholder="Filter node, trigger..."
+                    type="text"
+                    value={ledgerFilter}
+                    onChange={e => setLedgerFilter(e.target.value)}
+                  />
+                </div>
+                <button
+                  onClick={exportCSV}
+                  className="px-3 py-1.5 rounded bg-surface-container hover:bg-surface-container-high border border-earth-border text-earth-charcoal font-headline text-xs font-bold flex items-center gap-1"
+                >
+                  <span className="material-symbols-outlined text-[16px]">file_download</span>
+                  Export Ledger (CSV)
+                </button>
+              </div>
             </div>
 
-            {pendingChallengers.length === 0 ? (
-              <div className="p-6 text-center rounded-2xl bg-deep2 border border-line text-xs text-ink3">
-                No challenger models currently pending approval. Run a training session above to generate new candidate models.
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {pendingChallengers.map((m) => (
-                  <div key={m.id} className="liquid-glass-dark rounded-2xl p-5 border border-line flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-inkb font-mono">
-                          {m.version || m.model}
-                        </span>
-                        <span className="px-2 py-0.5 rounded-full bg-warn/20 text-warnt border border-warn/40 text-[10px] font-bold uppercase">
-                          Challenger
-                        </span>
-                      </div>
-                      <div className="text-sm font-bold text-ink capitalize mb-3">
-                        {m.task.replace(/_/g, ' ')}
-                      </div>
-
-                      {/* Metrics comparison grid */}
-                      <div className="grid grid-cols-3 gap-2 bg-deep2/80 rounded-xl p-3 border border-line2/30 mb-4 text-xs font-mono">
-                        {m.metric_roc_auc !== null && m.metric_roc_auc !== undefined && (
-                          <div>
-                            <div className="text-[10px] text-ink3 uppercase">ROC-AUC</div>
-                            <div className="font-bold text-ink">{m.metric_roc_auc}</div>
-                          </div>
-                        )}
-                        {m.metric_pr_auc !== null && m.metric_pr_auc !== undefined && (
-                          <div>
-                            <div className="text-[10px] text-ink3 uppercase">PR-AUC</div>
-                            <div className="font-bold text-ink">{m.metric_pr_auc}</div>
-                          </div>
-                        )}
-                        {m.metric_mae !== null && m.metric_mae !== undefined && (
-                          <div>
-                            <div className="text-[10px] text-ink3 uppercase">MAE</div>
-                            <div className="font-bold text-ink">{m.metric_mae}</div>
-                          </div>
-                        )}
-                        {m.metric_r2 !== null && m.metric_r2 !== undefined && (
-                          <div>
-                            <div className="text-[10px] text-ink3 uppercase">R²</div>
-                            <div className="font-bold text-ink">{m.metric_r2}</div>
-                          </div>
-                        )}
-                        {m.metric_lift !== null && m.metric_lift !== undefined && (
-                          <div>
-                            <div className="text-[10px] text-ink3 uppercase">Lift</div>
-                            <div className="font-bold text-ink">{m.metric_lift}×</div>
-                          </div>
-                        )}
-                        <div>
-                          <div className="text-[10px] text-ink3 uppercase">Leakage</div>
-                          <div className="font-bold text-okt">{m.leakage_status ?? 'PASS'}</div>
-                        </div>
-                      </div>
-
-                      {/* Lineage & Safety Checklist */}
-                      <div className="bg-deep2/50 rounded-xl p-3 border border-line2/30 mb-4 flex flex-col gap-1.5 text-[11px]">
-                        <div className="flex items-center justify-between text-ink3">
-                          <span>Artifact Checksum:</span>
-                          <span className="font-mono text-ink2">{m.artifact_sha256 ? `${m.artifact_sha256.slice(0, 12)}...` : 'SHA-256 Verified'}</span>
-                        </div>
-                        <div className="flex items-center justify-between text-ink3">
-                          <span>Provenance Lineage:</span>
-                          <span className="text-ink2">Run #{m.training_run_id ?? 'Live'} · {m.split_type ?? 'temporal'}</span>
-                        </div>
-                        <div className="flex items-center justify-between text-ink3">
-                          <span>Human Governance Gate:</span>
-                          {m.approved_by ? (
-                            <span className="text-okt font-bold flex items-center gap-1">
-                              <span className="material-symbols-outlined !text-[12px]">verified</span>
-                              Approved by {m.approved_by}
-                            </span>
-                          ) : (
-                            <span className="text-warnt font-bold flex items-center gap-1">
-                              <span className="material-symbols-outlined !text-[12px]">pending</span>
-                              Pending Domain Review
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-2 text-[11px] text-ink3 mb-4">
-                        <span>Origin: <strong className="text-ink2">{m.data_origin ?? 'SYNTHETIC'}</strong></span>
-                        {m.smoke_test_status && (
-                          <>
-                            <span>·</span>
-                            <span className="text-ink2">Smoke Test: <strong className="text-okt">{m.smoke_test_status}</strong></span>
-                          </>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex items-center gap-2 pt-3 border-t border-line">
-                      {!m.approved_by && m.id && (
-                        <button
-                          onClick={() => handleModelAction(m.id!, 'approve')}
-                          disabled={actionLoading === m.id}
-                          className="flex-1 py-2 px-3 rounded-lg border border-ok/40 bg-ok/10 text-okt text-xs font-bold hover:bg-ok/20 transition-all flex items-center justify-center gap-1 shadow-sm"
-                        >
-                          <span className="material-symbols-outlined text-[14px]">check_circle</span>
-                          Approve Candidate
-                        </button>
-                      )}
-                      {m.id && (
-                        <button
-                          onClick={() => handleModelAction(m.id!, 'promote')}
-                          disabled={actionLoading === m.id || !m.approved_by}
-                          title={!m.approved_by ? "Candidate model must be approved before promotion to champion." : "Promote approved model to active champion"}
-                          className={`flex-1 py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1 shadow-sm ${
-                            m.approved_by
-                              ? 'bg-accentt text-inkb hover:opacity-90 cursor-pointer'
-                              : 'bg-panel3/60 text-ink3/40 border border-line2/20 cursor-not-allowed'
-                          }`}
-                        >
-                          <span className="material-symbols-outlined text-[14px]">rocket_launch</span>
-                          Promote to Champion
-                        </button>
-                      )}
-                      {m.id && (
-                        <button
-                          onClick={() => handleModelAction(m.id!, 'reject')}
-                          disabled={actionLoading === m.id}
-                          className="py-2 px-2.5 rounded-lg border border-danger/40 bg-danger/10 text-dangert text-xs font-bold hover:bg-danger/20 transition-all"
-                        >
-                          Reject
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
-
-          {/* Active Champions & Rollback Section */}
-          <section>
-            <h2 className="text-xs font-bold uppercase tracking-wider text-ink mb-3 flex items-center gap-2">
-              <span className="material-symbols-outlined text-okt">workspace_premium</span>
-              Active Champions &amp; Emergency Rollback
-            </h2>
-            <div className="rounded-[20px] bg-deep2 border border-line p-4 overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="border-b border-line text-[10px] text-ink3 uppercase tracking-widest">
-                    <th className="py-2 px-3">Task</th>
-                    <th className="py-2 px-3">Champion Model</th>
-                    <th className="py-2 px-3">Version</th>
-                    <th className="py-2 px-3">Promoted At</th>
-                    <th className="py-2 px-3">Origin</th>
-                    <th className="py-2 px-3">Emergency Action</th>
+            {/* Predictions Table */}
+            <div className="bg-surface-parchment rounded border border-earth-border shadow-sm overflow-x-auto">
+              <table className="w-full text-left font-body text-xs">
+                <thead className="bg-surface-elevation font-headline text-[11px] font-bold text-secondary uppercase tracking-wider border-b border-earth-border">
+                  <tr>
+                    <th className="py-3 px-4">Time (UTC)</th>
+                    <th className="py-3 px-4">Entity / Node</th>
+                    <th className="py-3 px-4">Prediction Type</th>
+                    <th className="py-3 px-4">Confidence Score</th>
+                    <th className="py-3 px-4">Recommended Action</th>
+                    <th className="py-3 px-4">Execution Status</th>
                   </tr>
                 </thead>
-                <tbody className="text-xs divide-y divide-line/40">
-                  {allModels
-                    .filter((m) => m.status === 'champion')
-                    .map((m) => (
-                      <tr key={m.id || m.task} className="hover:bg-panel4/20">
-                        <td className="py-2.5 px-3 font-medium capitalize text-ink">{m.task.replace(/_/g, ' ')}</td>
-                        <td className="py-2.5 px-3 font-mono text-accentt">{m.model}</td>
-                        <td className="py-2.5 px-3 font-mono text-ink2">{m.version || 'v1.0'}</td>
-                        <td className="py-2.5 px-3 text-ink3 font-mono text-[11px]">{m.promoted_at ? String(m.promoted_at).slice(0, 16) : 'Initial'}</td>
-                        <td className="py-2.5 px-3">
-                          <span className="px-1.5 py-0.5 rounded bg-ink3/20 text-[10px] font-bold text-ink2">
-                            {m.data_origin ?? 'SYNTHETIC'}
-                          </span>
-                        </td>
-                        <td className="py-2.5 px-3">
-                          {/* Find retired predecessor for this task */}
-                          {(() => {
-                            const retired = allModels.find(
-                              (prev) => prev.task === m.task && (prev.status === 'retired' || prev.status === 'challenger') && prev.id !== m.id
-                            );
-                            if (retired?.id) {
-                              return (
-                                <button
-                                  onClick={() => handleRollback(retired.id!)}
-                                  className="text-[11px] font-bold text-dangert border border-danger/40 bg-danger/10 px-2 py-1 rounded hover:bg-danger/20 transition-all flex items-center gap-1"
-                                >
-                                  <span className="material-symbols-outlined text-[13px]">history</span>
-                                  Rollback to {retired.version || `#${retired.id}`}
-                                </button>
-                              );
-                            }
-                            return <span className="text-[11px] text-ink3">No prior model</span>;
-                          })()}
-                        </td>
-                      </tr>
-                    ))}
+                <tbody className="divide-y divide-earth-border/60 font-body">
+                  {filteredLedger.map((row, idx) => (
+                    <tr key={idx} className="hover:bg-surface-container transition-colors">
+                      <td className="py-3 px-4 font-mono text-secondary whitespace-nowrap">{row.time}</td>
+                      <td className="py-3 px-4 font-headline font-semibold text-earth-charcoal">{row.node}</td>
+                      <td className="py-3 px-4 font-medium text-earth-charcoal">{row.type}</td>
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono font-bold text-telemetry-emerald">{row.confidence}%</span>
+                          <div className="w-20 bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+                            <div className="bg-telemetry-emerald h-full rounded-full" style={{ width: `${row.confidence}%` }}></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-3 px-4 text-on-surface-variant">{row.action}</td>
+                      <td className="py-3 px-4">
+                        <span className={`px-2 py-0.5 rounded font-headline text-[10px] font-bold uppercase border ${
+                          row.status === 'EXECUTING'
+                            ? 'bg-copper-accent/15 text-copper-accent border-copper-accent/30 animate-pulse'
+                            : 'bg-telemetry-emerald/15 text-telemetry-emerald border-telemetry-emerald/30'
+                        }`}>
+                          {row.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
           </section>
+        )}
 
-          {/* Model Approvals Audit Trail */}
-          {approvalsLog.length > 0 && (
-            <section>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-ink mb-3 flex items-center gap-2">
-                <span className="material-symbols-outlined text-infot">history</span>
-                Model Approvals Audit Trail
-              </h2>
-              <div className="rounded-[20px] bg-deep2 border border-line p-4 overflow-x-auto">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="border-b border-line text-[10px] text-ink3 uppercase tracking-widest">
-                      <th className="py-2 px-3">Timestamp</th>
-                      <th className="py-2 px-3">Action</th>
-                      <th className="py-2 px-3">Actor</th>
-                      <th className="py-2 px-3">Role</th>
-                      <th className="py-2 px-3">Model / Version</th>
-                      <th className="py-2 px-3">Note</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-xs divide-y divide-line/40">
-                    {approvalsLog.map((log) => (
-                      <tr key={log.id} className="hover:bg-panel4/20">
-                        <td className="py-2 px-3 text-ink3 font-mono text-[11px]">{String(log.created_at).slice(0, 16)}</td>
-                        <td className="py-2 px-3">
-                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                            log.action === 'promoted'
-                              ? 'bg-accentt/20 text-accentt border border-accentt/30'
-                              : log.action === 'approved'
-                              ? 'bg-ok/20 text-okt border border-ok/30'
-                              : log.action === 'rolled_back'
-                              ? 'bg-danger/20 text-dangert border border-danger/30'
-                              : 'bg-warn/20 text-warnt border border-warn/30'
-                          }`}>
-                            {log.action}
-                          </span>
-                        </td>
-                        <td className="py-2 px-3 font-semibold text-ink">{log.actor_id}</td>
-                        <td className="py-2 px-3 text-ink2">{log.actor_role}</td>
-                        <td className="py-2 px-3 font-mono text-ink2">{log.version || log.model || `#${log.model_id}`}</td>
-                        <td className="py-2 px-3 text-ink3 max-w-[240px] truncate">{log.note || '—'}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+        {/* ================================================================= */}
+        {/* TAB 5: DECISION MEMORY TAB                                        */}
+        {/* ================================================================= */}
+        {activeTab === 'memory' && (
+          <section className="flex flex-col gap-6" id="tab-memory">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-earth-border">
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="font-headline text-xl font-bold text-earth-charcoal">Decision Memory &amp; Manager Override Log</h2>
+                  <span className="px-2 py-0.5 rounded bg-surface-container font-headline text-xs font-bold text-copper-accent">Reinforcement Corpus</span>
+                </div>
+                <p className="font-body text-xs text-on-surface-variant">Continuous feedback loops recording where human superintendent domain expertise diverged or enhanced AI setpoints.</p>
               </div>
-            </section>
-          )}
-        </div>
-      )}
-
-      {/* Prediction Ledger */}
-      {tab === 'ledger' && (
-        <section id="ledger" className="mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-ink flex items-center gap-2">
-              <span className="material-symbols-outlined text-inkb" style={{ fontVariationSettings: "'FILL' 1" }}>analytics</span>
-              Prediction Ledger
-            </h2>
-            <div className="flex bg-panel2 rounded-md p-0.5 border border-line2/30 text-[11px] w-fit">
-              {['all', 'production', 'equipment', 'prospectivity', 'scenario'].map((t) => (
-                <button
-                  key={t}
-                  onClick={() => setTaskFilter(t)}
-                  className={`px-2.5 py-1 rounded transition-colors capitalize ${
-                    taskFilter === t ? 'bg-chipon text-inkb font-bold' : 'text-ink2'
-                  }`}
-                >
-                  {t}
-                </button>
-              ))}
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-xs text-secondary">Root Merkle: 0x88f2ba019ec41103</span>
+              </div>
             </div>
-          </div>
 
-          <div className="rounded-[24px] bg-deep2 border border-line p-5 shadow-2xl overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-line">
-                  {['Time (UTC)', 'Entity', 'Task', 'Confidence', 'Recommended Action', 'Origin'].map((h) => (
-                    <th key={h} className="py-2.5 px-3 text-[10px] text-ink3 uppercase tracking-widest">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="text-[13px] divide-y divide-line/50">
-                {filteredLedger.map((row) => (
-                  <tr key={row.id} className={`hover:bg-panel4/30 transition-colors ${row.status === 'auto-resolved' ? 'opacity-70' : ''}`}>
-                    <td className="py-2.5 px-3 text-ink2 font-mono text-xs">{row.time}</td>
-                    <td className="py-2.5 px-4 font-medium text-ink">{row.entityNode}</td>
-                    <td className="py-2.5 px-3 text-inkb">{row.predictionType}</td>
-                    <td className="py-2.5 px-3">
-                      <div className="flex items-center gap-2">
-                        <div className="w-16 h-1.5 bg-panel2 rounded-full overflow-hidden">
-                          <div
-                            className={`h-full ${row.confidence >= 80 ? 'bg-danger' : row.confidence >= 50 ? 'bg-warn' : 'bg-ok'}`}
-                            style={{ width: `${row.confidence}%` }}
-                          ></div>
-                        </div>
-                        <span
-                          className={`font-semibold text-xs ${
-                            row.confidence >= 80 ? 'text-dangert' : row.confidence >= 50 ? 'text-warnt' : 'text-okt'
-                          }`}
-                        >
-                          {row.confidence}%
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-2.5 px-3 text-ink2 max-w-[280px] truncate">{row.recommendedAction}</td>
-                    <td className="py-2.5 px-3">
-                      <span className="px-2 py-0.5 rounded bg-ink3/30 border border-line3/50 text-inkb text-[10px] font-bold">
-                        {row.dataOrigin ?? 'SYNTHETIC'}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-                {!filteredLedger.length && !loading && (
-                  <tr>
-                    <td colSpan={6} className="py-8 text-center text-sm text-ink3">
-                      No ledger entries match this filter.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-
-            <div className="mt-4 flex justify-center">
-              {hasMore && (
-                <button
-                  onClick={() => {
-                    const next = page + 1;
-                    setPage(next);
-                    loadLedger(next);
-                  }}
-                  className="text-[12px] font-bold uppercase tracking-wider text-ink3 hover:text-accentt transition-colors"
-                >
-                  Load more records…
-                </button>
-              )}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Decision Memory */}
-      {tab === 'memory' && (
-        <section>
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-ink flex items-center gap-2">
-              <span className="material-symbols-outlined text-infot" style={{ fontVariationSettings: "'FILL' 1" }}>history_edu</span>
-              Decision Memory &amp; Outcome Feedback Loop
-            </h2>
-            <button
-              onClick={async () => {
-                const problem = window.prompt("Operational Problem (e.g. Crusher Surge / Shift S2 Deficit):");
-                if (!problem) return;
-                const recommendation = window.prompt("Recommendation / Intervention:") || "";
-                try {
-                  await apiPost('/decisions', { problem, recommendation, status: 'approved' });
-                  loadGovernanceData();
-                } catch (e: any) {
-                  alert(e.message || "Failed to record decision");
-                }
-              }}
-              className="text-xs font-bold text-accentt border border-accentt/40 bg-accentt/10 px-3 py-1.5 rounded-lg hover:bg-accentt/20 transition-all flex items-center gap-1.5"
-            >
-              <span className="material-symbols-outlined text-[14px]">add</span>
-              Record Operational Decision
-            </button>
-          </div>
-
-          {decisions.length === 0 ? (
-            <div className="p-8 text-center rounded-2xl bg-deep2 border border-line text-xs text-ink3">
-              No decisions recorded yet. Record an operational decision above or approve a scenario.
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {decisions.map((d: any, i: number) => (
-                <div key={d.id || i} className="dark-glass rounded-xl p-5 border border-line flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-sm font-bold text-ink capitalize">{String(d.decision_type ?? d.event_type ?? 'decision').replace(/_/g, ' ')}</span>
-                      <span className="text-[10px] font-mono text-ink3">{String(d.created_at ?? '').slice(0, 16)}</span>
-                    </div>
-                    <p className="text-xs text-ink2 leading-relaxed">{d.summary ?? d.payload ?? JSON.stringify(d).slice(0, 140)}</p>
-
-                    {/* Outcome feedback stats if recorded */}
-                    {d.delta !== null && d.delta !== undefined && (
-                      <div className="mt-3 p-2.5 rounded-lg bg-deep2/80 border border-line2/30 grid grid-cols-3 gap-2 text-center text-xs font-mono">
-                        <div>
-                          <div className="text-[9px] uppercase text-ink3">Predicted</div>
-                          <div className="font-bold text-ink">{d.predicted_value} t</div>
-                        </div>
-                        <div>
-                          <div className="text-[9px] uppercase text-ink3">Actual</div>
-                          <div className="font-bold text-accentt">{d.actual_value} t</div>
-                        </div>
-                        <div>
-                          <div className="text-[9px] uppercase text-ink3">Variance / Eff</div>
-                          <div className={`font-bold ${d.delta >= 0 ? 'text-okt' : 'text-warnt'}`}>
-                            {d.delta > 0 ? `+${d.delta}` : d.delta} t ({Math.round(Number(d.effectiveness || 1) * 100)}%)
-                          </div>
-                        </div>
-                      </div>
-                    )}
+            {/* Memory Entries */}
+            <div className="flex flex-col gap-4">
+              {/* Log Entry 1 */}
+              <div className="bg-surface-parchment rounded border border-earth-border p-4 shadow-sm flex flex-col gap-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-earth-border/60 pb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs font-bold text-copper-accent">DEC-2024-8841</span>
+                    <span className="text-secondary text-xs">• 2024-10-24 11:15 UTC</span>
+                    <span className="px-2 py-0.5 rounded bg-telemetry-emerald/10 text-telemetry-emerald font-headline text-[10px] font-bold border border-telemetry-emerald/20">
+                      ENCLAVE SIGNATURE VERIFIED
+                    </span>
                   </div>
-
-                  <div className="mt-4 pt-3 border-t border-line/60 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${
-                        d.status === 'executed'
-                          ? 'bg-ok/10 text-okt border-ok/30'
-                          : d.status === 'approved'
-                          ? 'bg-accentt/10 text-accentt border-accentt/30'
-                          : 'bg-warn/10 text-warnt border-warn/30'
-                      }`}>
-                        {d.status ?? 'recorded'}
-                      </span>
-                      <span className="px-2 py-0.5 rounded bg-ink3/20 border border-line3/50 text-inkb text-[10px] font-bold">
-                        {d.data_origin ?? 'SYNTHETIC'}
-                      </span>
-                    </div>
-
-                    {d.id && d.status !== 'executed' && (
-                      <button
-                        onClick={async () => {
-                          const predStr = window.prompt("Predicted gain/tonnage (t):", "50");
-                          if (!predStr) return;
-                          const actStr = window.prompt("Actual post-shift outcome realized (t):", "48");
-                          if (!actStr) return;
-                          try {
-                            await apiPost(`/decisions/${d.id}/outcome`, {
-                              predicted_value: parseFloat(predStr),
-                              actual_value: parseFloat(actStr),
-                            });
-                            loadGovernanceData();
-                          } catch (e: any) {
-                            alert(e.message || "Failed to record outcome");
-                          }
-                        }}
-                        className="text-[11px] font-bold text-okt border border-ok/40 bg-ok/10 px-2.5 py-1 rounded-lg hover:bg-ok/20 transition-all flex items-center gap-1"
-                      >
-                        <span className="material-symbols-outlined text-[13px]">add_task</span>
-                        Record Outcome
-                      </button>
-                    )}
+                  <div className="flex items-center gap-1.5 text-xs font-headline font-semibold text-earth-charcoal">
+                    <span className="material-symbols-outlined text-[16px] text-secondary">account_circle</span>
+                    Marcus Vance (Operations Superintendent)
                   </div>
                 </div>
-              ))}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-body">
+                  <div className="p-3 rounded bg-surface-container space-y-1">
+                    <span className="font-headline text-[11px] font-bold text-secondary uppercase">AI Agent Proposal</span>
+                    <p className="text-earth-charcoal">
+                      MARL-Fleet recommended rerouting 6 haul trucks to South Pit Ramp B due to wet road grade estimation (+8m truck cycle delay).
+                    </p>
+                  </div>
+                  <div className="p-3 rounded bg-surface-container-high border-l-2 border-copper-accent space-y-1">
+                    <span className="font-headline text-[11px] font-bold text-copper-accent uppercase">Human Manager Action &amp; Divergence</span>
+                    <p className="text-earth-charcoal font-medium">
+                      Authorized immediate gravel grader pass &amp; bypass via Bench 1380 cut-through.
+                    </p>
+                    <div className="text-[11px] text-telemetry-emerald font-bold pt-1">
+                      Outcome: 100% Crusher Starvation averted. Net site savings: $64,200.
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between text-[11px] font-headline text-secondary">
+                  <span>Reinforcement Corpus Token: <code className="font-mono text-earth-charcoal">FB-TOKEN-99214</code></span>
+                  <span className="text-telemetry-emerald font-bold">+0.042 Weight Calibration Fed to Challenger v2.2</span>
+                </div>
+              </div>
+
+              {/* Log Entry 2 */}
+              <div className="bg-surface-parchment rounded border border-earth-border p-4 shadow-sm flex flex-col gap-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-earth-border/60 pb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs font-bold text-copper-accent">DEC-2024-8839</span>
+                    <span className="text-secondary text-xs">• 2024-10-24 07:42 UTC</span>
+                    <span className="px-2 py-0.5 rounded bg-telemetry-emerald/10 text-telemetry-emerald font-headline text-[10px] font-bold border border-telemetry-emerald/20">
+                      ENCLAVE SIGNATURE VERIFIED
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-xs font-headline font-semibold text-earth-charcoal">
+                    <span className="material-symbols-outlined text-[16px] text-secondary">account_circle</span>
+                    Elena Rostova, Ph.D. (Chief Geotechnical Officer)
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-body">
+                  <div className="p-3 rounded bg-surface-container space-y-1">
+                    <span className="font-headline text-[11px] font-bold text-secondary uppercase">AI Agent Proposal</span>
+                    <p className="text-earth-charcoal">
+                      ResNet-Surrogate flagged minor micro-seismic slope slip probability (3.4%) at Sector 4 East Wall and requested immediate bench evacuation.
+                    </p>
+                  </div>
+                  <div className="p-3 rounded bg-surface-container-high border-l-2 border-copper-accent space-y-1">
+                    <span className="font-headline text-[11px] font-bold text-copper-accent uppercase">Human Manager Action &amp; Divergence</span>
+                    <p className="text-earth-charcoal font-medium">
+                      Verified false-positive triggered by blast vibration harmonics on Prism 41B. Maintained drilling operations with continuous radar scan.
+                    </p>
+                    <div className="text-[11px] text-telemetry-emerald font-bold pt-1">
+                      Outcome: Zero false-alarm shutdown downtime. 4 hours production preserved.
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between text-[11px] font-headline text-secondary">
+                  <span>Reinforcement Corpus Token: <code className="font-mono text-earth-charcoal">FB-TOKEN-99180</code></span>
+                  <span className="text-telemetry-emerald font-bold">+0.019 Blast-Harmonic Filter tuned in ResNet-Surrogate</span>
+                </div>
+              </div>
             </div>
-          )}
-        </section>
-      )}
-    </main>
+          </section>
+        )}
+      </div>
+    </div>
   );
 }

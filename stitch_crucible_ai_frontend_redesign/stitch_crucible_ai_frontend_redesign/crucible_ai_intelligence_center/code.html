@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "inverse-surface": "#35302a", "earth-charcoal": "#1E1915", "on-primary-container": "#ffe9de", "surface-container": "#f6ece3", "on-primary-fixed": "#311300", "primary-fixed-dim": "#ffb689", "earth-espresso": "#2C1A14", "earth-border": "#D8CFC4", "background": "#fff8f4", "on-error-container": "#93000a", "surface-variant": "#ebe1d8", "error-container": "#ffdad6", "secondary": "#675c55", "surface-tint": "#8e4e1e", "on-secondary": "#ffffff", "on-secondary-container": "#6d625b", "on-tertiary": "#ffffff", "on-primary-fixed-variant": "#713707", "surface-container-low": "#fcf2e9", "telemetry-crimson": "#A63A2A", "surface-container-high": "#f0e6de", "surface-elevation": "#E3DACF", "tertiary-fixed": "#ffdbcb", "on-secondary-fixed-variant": "#4f453e", "telemetry-emerald": "#2D6A4F", "outline-variant": "#d8c2b6", "secondary-fixed": "#efe0d6", "primary": "#804314", "ore-gold": "#C59B27", "inverse-on-surface": "#f9efe6", "copper-accent": "#B46A36", "canvas-sandstone": "#F7F3EE", "surface-container-lowest": "#ffffff", "on-tertiary-fixed-variant": "#713714", "surface-bright": "#fff8f4", "on-primary": "#ffffff", "on-tertiary-fixed": "#341100", "surface-dim": "#e2d8d0", "surface": "#fff8f4", "inverse-primary": "#ffb689", "outline": "#867369", "on-error": "#ffffff", "tertiary": "#804320", "primary-container": "#9e5a2a", "on-tertiary-container": "#ffe9df", "on-surface-variant": "#53443b", "surface-container-highest": "#ebe1d8", "primary-fixed": "#ffdbc7", "on-background": "#1f1b16", "surface-parchment": "#EDE6DD", "secondary-fixed-dim": "#d2c4bb", "on-secondary-fixed": "#221a14", "on-surface": "#1f1b16", "tertiary-fixed-dim": "#ffb691", "tertiary-container": "#9d5a35", "secondary-container": "#efe0d6", "telemetry-amber": "#C47C17", "error": "#ba1a1a" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "gutter-lg": "2rem", "space-md": "1rem", "space-sm": "0.5rem", "margin": "1rem", "space-lg": "1.5rem", "gutter": "1rem", "margin-md": "1.5rem", "margin-lg": "2rem", "gutter-md": "1.5rem", "space-xl": "2rem", "space-xs": "0.25rem" }, "fontFamily": { "headline-lg": [ "Space Grotesk" ], "headline-md": [ "Space Grotesk" ], "headline-xl": [ "Space Grotesk" ], "label-md": [ "Space Grotesk" ], "body-sm": [ "Work Sans" ], "label-lg": [ "Space Grotesk" ], "headline-xl-mobile": [ "Space Grotesk" ], "label-sm": [ "Space Grotesk" ], "headline-lg-mobile": [ "Space Grotesk" ], "headline-sm": [ "Space Grotesk" ], "body-md": [ "Work Sans" ], "body-lg": [ "Work Sans" ] }, "fontSize": { "headline-lg": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "headline-md": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-xl": [ "44px", { "lineHeight": "52px", "letterSpacing": "-0.03em", "fontWeight": "700" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" } ], "body-sm": [ "12px", { "lineHeight": "18px", "fontWeight": "400" } ], "label-lg": [ "14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600" } ], "headline-xl-mobile": [ "32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "label-sm": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "700" } ], "headline-lg-mobile": [ "26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-sm": [ "18px", { "lineHeight": "26px", "fontWeight": "600" } ], "body-md": [ "14px", { "lineHeight": "22px", "fontWeight": "400" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-parchment border-r border-earth-border z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col h-full"><div class="h-16 px-space-md flex items-center gap-space-sm border-b border-earth-border bg-surface-container-high"><img alt="Crucible AI Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XKURaUWBxRvJ7PerWT4jwanheS9Cgsk9ahJads6JJOIlk3KMXvRbsIjhZIt1hzwHQQKUlpOcSju173XRm_W-m3gRM7au31gYibmvXkFDvniGPVkh2PHqVXIVPmkOoIO1HTVFiYu7sHYyxYlqiRVvKyWodaKq0PUa85F0jClmZzBlrK1SvnD0e11vO03zTXgenJEH0KbFkpcKqL6iOtuBMRKsUCEhhpBCBb_u7IKMpxl6E8KWDWO6u9koY"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-earth-charcoal tracking-tight">CRUCIBLE AI</span><span class="font-label-sm text-label-sm text-copper-accent uppercase tracking-wider">Mineral Core v4.2</span></div></div><div class="flex-1 overflow-y-auto py-space-sm px-space-sm"><nav class="space-y-space-md" data-active-classes="bg-primary-container text-on-primary-container font-label-md rounded"><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Command</div><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-space-xs transition-colors bg-primary-container text-on-primary-container font-label-md rounded" data-path="command-center" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span class="font-label-md text-label-md">Command Center</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Operations</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="production" href="#"><span class="material-symbols-outlined text-[18px]">precision_manufacturing</span><span class="font-label-md text-label-md">Production</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="equipment" href="#"><span class="material-symbols-outlined text-[18px]">construction</span><span class="font-label-md text-label-md">Equipment</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="haul-routing" href="#"><span class="material-symbols-outlined text-[18px]">alt_route</span><span class="font-label-md text-label-md">Haul Routing</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Explore</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="exploration" href="#"><span class="material-symbols-outlined text-[18px]">explore</span><span class="font-label-md text-label-md">Exploration</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Decide</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="scenarios" href="#"><span class="material-symbols-outlined text-[18px]">neurology</span><span class="font-label-md text-label-md">Scenarios</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="intelligence" href="#"><span class="material-symbols-outlined text-[18px]">analytics</span><span class="font-label-md text-label-md">Intelligence</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="alerts" href="#"><span class="material-symbols-outlined text-[18px]">warning</span><span class="font-label-md text-label-md">Alerts</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Data</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="data-hub" href="#"><span class="material-symbols-outlined text-[18px]">database</span><span class="font-label-md text-label-md">Data Hub</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ml-lab" href="#"><span class="material-symbols-outlined text-[18px]">science</span><span class="font-label-md text-label-md">ML Lab</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Trust</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="governance" href="#"><span class="material-symbols-outlined text-[18px]">verified_user</span><span class="font-label-md text-label-md">Governance</span></a></div></nav></div><div class="p-space-sm border-t border-earth-border bg-surface-container-low"><div class="flex items-center justify-between px-space-xs py-space-xs rounded bg-surface-container border border-earth-border"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-telemetry-emerald animate-pulse"></span><span class="font-label-sm text-label-sm text-earth-charcoal">TELEMETRY LIVE</span></div><span class="font-label-sm text-label-sm text-copper-accent font-semibold">14ms</span></div></div></div></aside><div class="pl-64 flex flex-col min-h-screen bg-canvas-sandstone"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-parchment/95 backdrop-blur-md border-b border-earth-border z-40 px-space-lg flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-space-xs rounded border border-earth-border text-on-surface"><span class="material-symbols-outlined text-copper-accent text-[18px]">terrain</span><select class="bg-transparent font-label-md text-label-md text-on-surface outline-none cursor-pointer pr-space-xs"><option value="kansanshi">Kansanshi Pit North</option><option value="tenke">Tenke Fungurume</option><option value="lumwana">Lumwana East</option></select></div><div class="h-4 w-px bg-earth-border"></div><div class="flex items-center gap-space-xs text-on-surface-variant font-label-md text-label-md"><span class="text-secondary">Crucible</span><span class="material-symbols-outlined text-[14px] text-outline">chevron_right</span><span class="text-earth-charcoal font-semibold uppercase tracking-wider">Telemetry Feed</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-space-xs rounded bg-surface-container-high border border-earth-border"><span class="material-symbols-outlined text-telemetry-emerald text-[16px]">sync</span><span class="font-label-sm text-label-sm text-on-surface-variant">SYNC: 100% NOMINAL</span></div><button class="flex items-center justify-center w-8 h-8 rounded border border-earth-border bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" title="Toggle Telemetry Palette"><span class="material-symbols-outlined text-[18px]">contrast</span></button><a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors flex items-center gap-space-xs" data-path="admin-portal" href="#"><span class="material-symbols-outlined text-[18px]">settings</span>Admin</a><div class="h-4 w-px bg-earth-border"></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-16 bg-canvas-sandstone flex-1"><div class="flex flex-col w-full">
+<!-- Top Intelligence Summary & Action Header -->
+<div class="px-gutter-lg pt-space-lg pb-space-md flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div>
+<div class="flex items-center gap-space-xs mb-1">
+<span class="px-space-xs py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm uppercase tracking-widest">Crucible Neural Engine</span>
+<span class="text-secondary font-label-sm text-label-sm uppercase tracking-wider">• DECIDE COGNITIVE CORE</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-earth-charcoal tracking-tight">Intelligence &amp; Multi-Agent Causal Reasoning</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl mt-1">
+        Deep multi-physics mineral intelligence connecting blasting fragmentation, haul cycle telemetry, and real-time mill hydrocyclone kinetics.
+      </p>
+</div>
+<div class="flex items-center gap-space-sm self-start md:self-auto">
+<div class="flex items-center gap-space-xs px-space-sm py-space-xs rounded bg-surface-elevation shadow-sm text-earth-charcoal">
+<span class="material-symbols-outlined text-[18px] text-copper-accent">auto_graph</span>
+<span class="font-label-md text-label-md">Model Drift: 0.04% (Calibrated)</span>
+</div>
+<button class="flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary-container text-on-primary-container font-label-md text-label-md hover:bg-tertiary transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">replay</span>
+        Synthesize Telemetry
+      </button>
+</div>
+</div>
+<!-- Section 1: Mine Pulse Scorecards (1-100 Pillar Scale) -->
+<div class="px-gutter-lg py-space-sm">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-md">
+<!-- Card 1: Throughput Efficiency -->
+<div class="bg-surface-parchment p-space-md rounded shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="flex justify-between items-start mb-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Throughput Efficiency</span>
+<span class="w-2 h-2 rounded-full bg-telemetry-emerald"></span>
+</div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-xl text-headline-xl text-earth-charcoal tracking-tight">91</span>
+<span class="font-label-md text-label-md text-secondary">/100</span>
+</div>
+<div class="w-full bg-surface-elevation h-1.5 rounded mt-space-sm overflow-hidden">
+<div class="bg-telemetry-emerald h-full rounded" style="width: 91%"></div>
+</div>
+<div class="flex justify-between items-center mt-space-xs">
+<span class="font-body-sm text-body-sm text-on-surface-variant">+2.4 pts vs shift avg</span>
+<span class="font-label-sm text-label-sm text-telemetry-emerald font-semibold">NOMINAL</span>
+</div>
+</div>
+<!-- Card 2: Asset Availability -->
+<div class="bg-surface-parchment p-space-md rounded shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="flex justify-between items-start mb-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Asset Availability</span>
+<span class="w-2 h-2 rounded-full bg-telemetry-emerald"></span>
+</div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-xl text-headline-xl text-earth-charcoal tracking-tight">86</span>
+<span class="font-label-md text-label-md text-secondary">/100</span>
+</div>
+<div class="w-full bg-surface-elevation h-1.5 rounded mt-space-sm overflow-hidden">
+<div class="bg-telemetry-emerald h-full rounded" style="width: 86%"></div>
+</div>
+<div class="flex justify-between items-center mt-space-xs">
+<span class="font-body-sm text-body-sm text-on-surface-variant">24/28 Haulers active</span>
+<span class="font-label-sm text-label-sm text-telemetry-emerald font-semibold">OPTIMAL</span>
+</div>
+</div>
+<!-- Card 3: Blasting Fragmentation (Sub-optimal) -->
+<div class="bg-surface-parchment p-space-md rounded shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-telemetry-amber"></div>
+<div class="flex justify-between items-start mb-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-telemetry-amber font-semibold">Blasting Fragmentation</span>
+<span class="w-2 h-2 rounded-full bg-telemetry-amber animate-pulse"></span>
+</div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-xl text-headline-xl text-telemetry-amber tracking-tight">74</span>
+<span class="font-label-md text-label-md text-secondary">/100</span>
+</div>
+<div class="w-full bg-surface-elevation h-1.5 rounded mt-space-sm overflow-hidden">
+<div class="bg-telemetry-amber h-full rounded" style="width: 74%"></div>
+</div>
+<div class="flex justify-between items-center mt-space-xs">
+<span class="font-body-sm text-body-sm text-telemetry-amber truncate" title="Sub-optimal muckpile distribution">Sub-opt muckpile dist</span>
+<span class="font-label-sm text-label-sm text-telemetry-amber font-semibold">ATTENTION</span>
+</div>
+</div>
+<!-- Card 4: Energy Intensity -->
+<div class="bg-surface-parchment p-space-md rounded shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="flex justify-between items-start mb-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Energy Intensity</span>
+<span class="w-2 h-2 rounded-full bg-telemetry-emerald"></span>
+</div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-xl text-headline-xl text-earth-charcoal tracking-tight">94</span>
+<span class="font-label-md text-label-md text-secondary">/100</span>
+</div>
+<div class="w-full bg-surface-elevation h-1.5 rounded mt-space-sm overflow-hidden">
+<div class="bg-telemetry-emerald h-full rounded" style="width: 94%"></div>
+</div>
+<div class="flex justify-between items-center mt-space-xs">
+<span class="font-body-sm text-body-sm text-on-surface-variant">14.1 kWh/t target</span>
+<span class="font-label-sm text-label-sm text-telemetry-emerald font-semibold">NOMINAL</span>
+</div>
+</div>
+<!-- Card 5: Haul Fuel Burn / Carbon -->
+<div class="bg-surface-parchment p-space-md rounded shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="flex justify-between items-start mb-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Carbon / Fuel Burn</span>
+<span class="w-2 h-2 rounded-full bg-telemetry-emerald"></span>
+</div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-xl text-headline-xl text-earth-charcoal tracking-tight">82</span>
+<span class="font-label-md text-label-md text-secondary">/100</span>
+</div>
+<div class="w-full bg-surface-elevation h-1.5 rounded mt-space-sm overflow-hidden">
+<div class="bg-telemetry-emerald h-full rounded" style="width: 82%"></div>
+</div>
+<div class="flex justify-between items-center mt-space-xs">
+<span class="font-body-sm text-body-sm text-on-surface-variant">-4.1% vs budget L/kt</span>
+<span class="font-label-sm text-label-sm text-telemetry-emerald font-semibold">STABLE</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 2: Natural Language Query & Multi-Agent Causal Reasoning Bar -->
+<div class="px-gutter-lg py-space-md">
+<div class="bg-surface-elevation rounded-xl p-space-lg shadow-md">
+<!-- Query Bar Header & Input -->
+<div class="flex flex-col gap-space-xs mb-space-md">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md uppercase tracking-wider text-copper-accent flex items-center gap-space-xs" for="nl-intelligence-input">
+<span class="material-symbols-outlined text-[18px]">neurology</span>
+            Natural Language Operational Reasoning Engine
+          </label>
+<div class="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+<span>Agent Consensus: 98.4% Confidence</span>
+</div>
+</div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-space-md text-copper-accent text-[24px]">psychology_alt</span>
+<input class="w-full bg-canvas-sandstone py-space-md pl-14 pr-32 rounded font-body-md text-body-md text-earth-charcoal placeholder:text-secondary focus:outline-none shadow-sm" id="nl-intelligence-input" type="text" value="Why did SAG Mill feed grade drop at 11:30 and how do we recover 400t/h without exceeding hauler cycle limits?"/>
+<button class="absolute right-space-sm px-space-md py-space-xs rounded bg-primary-container text-on-primary-container font-label-md text-label-md flex items-center gap-space-xs hover:bg-tertiary transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+<span>Reason</span>
+</button>
+</div>
+</div>
+<!-- AI-Generated NLQueryResult Display Box -->
+<div class="bg-surface-parchment rounded p-space-lg shadow-sm">
+<!-- Multi-Agent Reasoning Chain Header -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm bg-surface-container-high px-space-md py-space-xs rounded mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-earth-charcoal font-semibold">Active Agent Threads:</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-elevation text-earth-charcoal font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-copper-accent"></span>Geometallurgical Agent
+            </span>
+<span class="px-space-xs py-0.5 rounded bg-surface-elevation text-earth-charcoal font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-telemetry-emerald"></span>Haul Fleet Dispatch
+            </span>
+<span class="px-space-xs py-0.5 rounded bg-surface-elevation text-earth-charcoal font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container text-on-primary-container"></span>Milling Kinetic Sim
+            </span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">Execution trace: 342ms • Iteration #4</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Column 1: Multi-Agent Synthesis & Evidence Narrative (7 cols) -->
+<div class="lg:col-span-7 space-y-space-md">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-earth-charcoal mb-1 flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-telemetry-amber text-[20px]">troubleshoot</span>
+                Causal Synthesis: Feed Starvation &amp; Bench Lithology Transition
+              </h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                At 11:28:14 UTC, <strong class="text-earth-charcoal font-medium">Shovel #04</strong> transitioned into the Western boundary of Block PB-302 (high-argillic chalcopyrite zone with <span class="text-copper-accent font-semibold">Moisture +12.4%</span>). Concurrently, <strong class="text-earth-charcoal font-medium">CAT 797F (Hauler #12)</strong> sustained a 7.2-minute queuing delay at Ramp B gradient due to wet traction slips, creating a starvation cascade at Crusher Pocket 2.
+              </p>
+</div>
+<!-- Evidence Ledger Chips -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm pt-space-xs">
+<div class="bg-surface-container p-space-sm rounded">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary block">Confidence Score</span>
+<span class="font-headline-sm text-headline-sm text-earth-charcoal">96.8%</span>
+<span class="font-body-sm text-body-sm text-telemetry-emerald block mt-0.5">High sensor density</span>
+</div>
+<div class="bg-surface-container p-space-sm rounded">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary block">Feed Deficit</span>
+<span class="font-headline-sm text-headline-sm text-telemetry-amber">-392 t/h</span>
+<span class="font-body-sm text-body-sm text-secondary block mt-0.5">Below 2,400 t/h setpoint</span>
+</div>
+<div class="bg-surface-container p-space-sm rounded">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary block">Hauler Delay Surge</span>
+<span class="font-headline-sm text-headline-sm text-telemetry-crimson">+38.2%</span>
+<span class="font-body-sm text-body-sm text-secondary block mt-0.5">Ramp B choke point</span>
+</div>
+</div>
+<!-- Prescriptive Actions (Direct Execution Buttons) -->
+<div class="pt-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-earth-charcoal font-semibold block mb-space-xs">
+                Crucible Prescriptive Countermeasures:
+              </span>
+<div class="flex flex-col sm:flex-row gap-space-sm">
+<button class="flex-1 bg-primary-container text-on-primary-container p-space-sm rounded hover:bg-tertiary transition-colors text-left flex items-center justify-between group shadow-sm">
+<div>
+<div class="font-label-md text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">alt_route</span>
+                      Reroute 3 Haulers to Stockpile 4-C
+                    </div>
+<div class="font-body-sm text-body-sm text-on-primary-container/80 mt-0.5">
+                      Recovers +280t/h coarse ore; bypasses Ramp B choke entirely.
+                    </div>
+</div>
+<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<button class="flex-1 bg-surface-elevation text-earth-charcoal p-space-sm rounded hover:bg-surface-container-high transition-colors text-left flex items-center justify-between group shadow-sm">
+<div>
+<div class="font-label-md text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-copper-accent text-[16px]">speed</span>
+                      Boost Pebble Crusher RPM +6%
+                    </div>
+<div class="font-body-sm text-body-sm text-secondary mt-0.5">
+                      Counteracts high moisture binding; clears SAG load in 14 min.
+                    </div>
+</div>
+<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Column 2: Causal Graph Node Visualization (5 cols) -->
+<div class="lg:col-span-5 bg-canvas-sandstone p-space-md rounded shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Direct Causal DAG Graph</span>
+<span class="font-label-sm text-label-sm text-copper-accent flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-copper-accent"></span>Bayesian Structure
+              </span>
+</div>
+<!-- Visual Graph Schema with SVGs -->
+<div class="space-y-space-sm relative">
+<!-- Node A -->
+<div class="bg-surface-parchment p-space-sm rounded flex items-center justify-between shadow-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-7 h-7 rounded bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-label-sm text-label-sm font-bold">L1</div>
+<div>
+<span class="font-label-md text-label-md text-earth-charcoal block">Pit Bench Moisture (+12%)</span>
+<span class="font-body-sm text-body-sm text-secondary">Shovel #04 Clay Seam Intercept</span>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-telemetry-amber/20 text-telemetry-amber font-label-sm text-label-sm">Origin</span>
+</div>
+<!-- Connector Line -->
+<div class="flex justify-center -my-1 text-outline-variant">
+<span class="material-symbols-outlined text-[18px]">arrow_downward</span>
+</div>
+<!-- Node B (Split Causality) -->
+<div class="grid grid-cols-2 gap-space-xs">
+<div class="bg-surface-parchment p-space-xs rounded text-center shadow-xs">
+<span class="font-label-sm text-label-sm text-telemetry-crimson block font-semibold">Ramp B Slip (+38%)</span>
+<span class="font-body-sm text-body-sm text-secondary">Haul cycle +8.4m</span>
+</div>
+<div class="bg-surface-parchment p-space-xs rounded text-center shadow-xs">
+<span class="font-label-sm text-label-sm text-telemetry-amber block font-semibold">Feeder 2 Bridging (+24%)</span>
+<span class="font-body-sm text-body-sm text-secondary">Chute damp packing</span>
+</div>
+</div>
+<!-- Connector Line -->
+<div class="flex justify-center -my-1 text-outline-variant">
+<span class="material-symbols-outlined text-[18px]">arrow_downward</span>
+</div>
+<!-- Target Node C -->
+<div class="bg-surface-elevation p-space-sm rounded flex items-center justify-between shadow-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-7 h-7 rounded bg-telemetry-crimson text-white flex items-center justify-center font-label-sm text-label-sm font-bold">SAG</div>
+<div>
+<span class="font-label-md text-label-md text-earth-charcoal block">SAG Feed Starvation (-400t/h)</span>
+<span class="font-body-sm text-body-sm text-secondary">Mill bearing pressure 6,240 kPa</span>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-label-sm">Primary Impact</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Deep Reasoning Mode Tabs -->
+<div class="px-gutter-lg py-space-sm">
+<div class="flex flex-wrap items-center justify-between gap-space-sm mb-space-md">
+<!-- Pill Tabs -->
+<div class="inline-flex p-1 bg-surface-container rounded gap-1">
+<button class="px-space-md py-space-xs rounded bg-earth-charcoal text-canvas-sandstone font-label-md text-label-md shadow-sm">
+          Root Cause Explorer (SHAP Values)
+        </button>
+<button class="px-space-md py-space-xs rounded text-on-surface-variant hover:text-earth-charcoal hover:bg-surface-elevation font-label-md text-label-md transition-colors">
+          Mine Replay (Chronological Ledger Timeline)
+        </button>
+<button class="px-space-md py-space-xs rounded text-on-surface-variant hover:text-earth-charcoal hover:bg-surface-elevation font-label-md text-label-md transition-colors">
+          Material Flow Mass-Balance
+        </button>
+</div>
+<div class="flex items-center gap-space-sm text-secondary font-label-sm text-label-sm">
+<span>Target Metric:</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-elevation text-earth-charcoal font-semibold">Mill Starvation Delta (t/h)</span>
+</div>
+</div>
+<!-- Active Tab: Root Cause Explorer (SHAP Values & Correlation) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg pb-space-xl">
+<!-- SHAP Impact Vector Chart (7 cols) -->
+<div class="lg:col-span-7 bg-surface-parchment p-space-lg rounded shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<div>
+<h4 class="font-headline-sm text-headline-sm text-earth-charcoal">Feature Impact Ledger (SHAP Explanations)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                Relative influence of telemetry features on predicted SAG feed deficiency during shift cycle.
+              </p>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-copper-accent bg-surface-elevation px-space-xs py-0.5 rounded">
+              TreeSHAP v2.1
+            </span>
+</div>
+<!-- SHAP Bars Breakdown -->
+<div class="space-y-space-md mt-space-md">
+<!-- Driver 1: Ramp B gradient delay -->
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-md text-label-md text-earth-charcoal flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-telemetry-crimson"></span>
+                  Driver 1: Hauler Ramp B Gradient Queuing
+                </span>
+<span class="font-label-md text-label-md text-telemetry-crimson font-bold">+38% Delay Contribution</span>
+</div>
+<div class="w-full bg-surface-container h-4 rounded overflow-hidden flex">
+<div class="bg-telemetry-crimson h-full rounded" style="width: 78%;"></div>
+</div>
+<div class="flex justify-between text-secondary font-body-sm text-body-sm mt-0.5">
+<span>Mean fleet transit increased from 9.2m to 16.4m</span>
+<span>Base value: +152 t/h loss</span>
+</div>
+</div>
+<!-- Driver 2: Crusher Feeder 2 bridging -->
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-md text-label-md text-earth-charcoal flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-telemetry-amber"></span>
+                  Driver 2: Crusher Feeder 2 Chute Bridging
+                </span>
+<span class="font-label-md text-label-md text-telemetry-amber font-bold">+24% Choke Impact</span>
+</div>
+<div class="w-full bg-surface-container h-4 rounded overflow-hidden flex">
+<div class="bg-telemetry-amber h-full rounded" style="width: 52%;"></div>
+</div>
+<div class="flex justify-between text-secondary font-body-sm text-body-sm mt-0.5">
+<span>Acoustic sensors detected material packing at lip</span>
+<span>Base value: +96 t/h loss</span>
+</div>
+</div>
+<!-- Driver 3: Ore Moisture Content -->
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-md text-label-md text-earth-charcoal flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-copper-accent"></span>
+                  Driver 3: Argillic Ore Moisture Content (+12%)
+                </span>
+<span class="font-label-md text-label-md text-copper-accent font-bold">+12% Viscosity Shift</span>
+</div>
+<div class="w-full bg-surface-container h-4 rounded overflow-hidden flex">
+<div class="bg-copper-accent h-full rounded" style="width: 32%;"></div>
+</div>
+<div class="flex justify-between text-secondary font-body-sm text-body-sm mt-0.5">
+<span>Viscosity index jumped to 1,420 mPa·s</span>
+<span>Base value: +48 t/h loss</span>
+</div>
+</div>
+<!-- Driver 4: Positive Mitigating Driver (Cyclone Pressure) -->
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-md text-label-md text-earth-charcoal flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-telemetry-emerald"></span>
+                  Driver 4: Hydrocyclone Battery C Re-balance (Mitigator)
+                </span>
+<span class="font-label-md text-label-md text-telemetry-emerald font-bold">-16% Recirculating Load</span>
+</div>
+<div class="w-full bg-surface-container h-4 rounded overflow-hidden flex justify-end">
+<div class="bg-telemetry-emerald h-full rounded" style="width: 40%;"></div>
+</div>
+<div class="flex justify-between text-secondary font-body-sm text-body-sm mt-0.5">
+<span>Autonomous valve cutback stabilized mill slimes</span>
+<span>Mitigated: -64 t/h loss</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Inline SVG Multi-variable Scatter/Timeline Visual -->
+<div class="mt-space-md pt-space-md bg-canvas-sandstone p-space-md rounded">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Multi-Variable Telemetry Divergence (11:00 - 12:00)</span>
+<div class="flex items-center gap-space-md text-secondary font-label-sm text-label-sm">
+<span class="flex items-center gap-1"><span class="w-2 h-0.5 bg-telemetry-crimson"></span>Feed Rate</span>
+<span class="flex items-center gap-1"><span class="w-2 h-0.5 bg-telemetry-amber"></span>Ramp Cycle Time</span>
+<span class="flex items-center gap-1"><span class="w-2 h-0.5 bg-copper-accent"></span>Moisture Index</span>
+</div>
+</div>
+<svg class="w-full h-28 text-earth-charcoal" preserveaspectratio="none" viewbox="0 0 500 110">
+<!-- Grid Lines -->
+<line stroke="currentColor" stroke-dasharray="3,3" stroke-opacity="0.06" x1="0" x2="500" y1="20" y2="20"></line>
+<line stroke="currentColor" stroke-dasharray="3,3" stroke-opacity="0.06" x1="0" x2="500" y1="55" y2="55"></line>
+<line stroke="currentColor" stroke-dasharray="3,3" stroke-opacity="0.06" x1="0" x2="500" y1="90" y2="90"></line>
+<!-- Event Highlight Band (11:28 drop) -->
+<rect fill="#A63A2A" fill-opacity="0.08" height="100" rx="2" width="60" x="220" y="5"></rect>
+<text fill="#A63A2A" font-family="Space Grotesk" font-size="8" font-weight="700" x="225" y="16">11:28 INCIDENT</text>
+<!-- Line 1: Feed Rate (Drops at 11:28) -->
+<polyline fill="none" points="
+              0,30 50,28 100,32 150,30 200,35 220,38 250,88 280,82 350,75 400,68 450,55 500,48
+            " stroke="#A63A2A" stroke-width="2.5"></polyline>
+<!-- Line 2: Ramp Cycle Delay (Spikes at 11:28) -->
+<polyline fill="none" points="
+              0,85 50,84 100,82 150,85 200,78 220,40 250,25 280,28 350,45 400,55 450,65 500,70
+            " stroke="#C47C17" stroke-dasharray="4,2" stroke-width="2"></polyline>
+<!-- Line 3: Moisture (Steps up early) -->
+<polyline fill="none" points="
+              0,92 50,90 100,88 150,60 200,45 220,42 250,44 280,45 350,48 400,50 450,52 500,54
+            " stroke="#B46A36" stroke-width="1.8"></polyline>
+</svg>
+<div class="flex justify-between text-secondary font-label-sm text-label-sm pt-1">
+<span>11:00</span>
+<span>11:15</span>
+<span class="text-telemetry-crimson font-semibold">11:30 (Starvation)</span>
+<span>11:45</span>
+<span>12:00 (Nominal Recovered)</span>
+</div>
+</div>
+</div>
+<!-- AI Synthesis Card & Strategic Prescriptions (5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- Synthesis Card -->
+<div class="bg-surface-parchment p-space-lg rounded shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-copper-accent/5 rounded-full -mr-16 -mt-16 pointer-events-none"></div>
+<div class="flex items-center gap-space-xs mb-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-copper-accent animate-pulse"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-earth-charcoal font-semibold">AI Recommendation Synthesis</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-earth-charcoal tracking-tight">Cross-Domain Bottleneck Resolution</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-space-xs leading-relaxed">
+            By coordinating <strong class="text-earth-charcoal">Pit Shovel 04</strong> blending targets with <strong class="text-earth-charcoal">Crusher Pocket 2</strong> feed controls, the autonomous controller can offset the -400t/h drop in 18 minutes while avoiding hauler cycle bottlenecks.
+          </p>
+<!-- Metrics Comparison Table -->
+<div class="mt-space-md bg-surface-container rounded p-space-sm">
+<div class="grid grid-cols-3 gap-space-xs pb-space-xs border-b border-surface-elevation font-label-sm text-label-sm text-secondary uppercase">
+<span>Metric</span>
+<span class="text-right">No Action</span>
+<span class="text-right text-telemetry-emerald font-semibold">Prescribed</span>
+</div>
+<div class="grid grid-cols-3 gap-space-xs py-space-xs font-body-sm text-body-sm text-earth-charcoal">
+<span class="font-medium">Total Shift Loss</span>
+<span class="text-right text-telemetry-crimson">1,820 t</span>
+<span class="text-right text-telemetry-emerald font-semibold">240 t</span>
+</div>
+<div class="grid grid-cols-3 gap-space-xs py-space-xs font-body-sm text-body-sm text-earth-charcoal bg-surface-container-high/40 rounded">
+<span class="font-medium">Haul Fuel Surge</span>
+<span class="text-right">+8.6%</span>
+<span class="text-right text-telemetry-emerald font-semibold">+1.1%</span>
+</div>
+<div class="grid grid-cols-3 gap-space-xs py-space-xs font-body-sm text-body-sm text-earth-charcoal">
+<span class="font-medium">SAG Recovery Time</span>
+<span class="text-right text-telemetry-crimson">58 min</span>
+<span class="text-right text-telemetry-emerald font-semibold">18 min</span>
+</div>
+</div>
+<!-- Execution Trigger -->
+<div class="mt-space-lg flex flex-col gap-space-xs">
+<button class="w-full bg-primary-container text-on-primary-container py-space-sm px-space-md rounded font-label-md text-label-md hover:bg-tertiary transition-colors flex items-center justify-center gap-space-xs shadow-md">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+              Dispatch Multi-Domain Action Plan
+            </button>
+<p class="font-body-sm text-body-sm text-center text-secondary">
+              Requires autonomous authorization from Kansanshi Central Operations.
+            </p>
+</div>
+</div>
+<!-- Geological Context / Core Sample Correlation Photo Card -->
+<div class="bg-surface-parchment p-space-md rounded shadow-sm">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Core Scan Correlation • PB-302</span>
+<span class="font-label-sm text-label-sm text-copper-accent font-semibold">Hyperspectral AI</span>
+</div>
+<div class="relative rounded overflow-hidden h-36 bg-earth-espresso">
+<img class="w-full h-full object-cover" data-alt="Macro cross section of copper sulfide ore core sample displaying crystalline chalcopyrite veins running through weathered sandstone strata with high moisture argillic banding under technical mining laboratory LED lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgmrDhnin4-M6fh-fE6yQDUrM2a2iw1ixiNlZNLGXCteCrOF7AXGAiDwRK84ok8dMH8OkGzz8S1P8wdsEMLXgRNxVf9H6yOtHPKORcILAWav_t6fNKktKFVi4xAJu_PU5ZMZe9IpgDb4zsgXVO7BLg1SBjFjobe01fJa8kxv_t5SrzO8_RI1-S0tTMSTFlC96isSDU7QEftZHj24UvnIebmJrGQ3X0ViUdzJ1Glvr-L2N725AQLWzK"/>
+<div class="absolute inset-0 bg-gradient-to-t from-earth-espresso via-transparent to-transparent opacity-80"></div>
+<div class="absolute bottom-2 left-3 right-3 flex justify-between items-end">
+<div>
+<span class="font-label-sm text-label-sm text-primary-fixed uppercase tracking-wider block">Bench Intercept 1,180m</span>
+<span class="font-label-md text-label-md text-canvas-sandstone font-medium">Argillic Shale + Chalcopyrite</span>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-surface-elevation/90 text-earth-charcoal font-label-sm text-label-sm">
+                Moisture: 12.4%
+              </span>
+</div>
+</div>
+<div class="flex justify-between items-center mt-space-sm pt-space-xs text-secondary font-body-sm text-body-sm">
+<span>Spectral Match: 99.1% with Pit Bench #3</span>
+<a class="text-copper-accent hover:underline font-label-sm text-label-sm font-semibold flex items-center gap-0.5" href="#">
+              Drill Telemetry <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Micro-interaction script for prompt tags & quick testing -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const input = document.getElementById('nl-intelligence-input');
+      if (input) {
+        input.addEventListener('focus', () => {
+          input.parentElement.classList.add('ring-2', 'ring-copper-accent');
+        });
+        input.addEventListener('blur', () => {
+          input.parentElement.classList.remove('ring-2', 'ring-copper-accent');
+        });
+      }
+    });
+  </script>
+</div></main></div></body></html>

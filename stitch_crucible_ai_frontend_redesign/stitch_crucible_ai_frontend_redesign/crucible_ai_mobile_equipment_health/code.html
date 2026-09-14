@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "telemetry-amber": "#C47C17", "on-tertiary-fixed-variant": "#713714", "on-secondary": "#ffffff", "on-error": "#ffffff", "secondary-fixed-dim": "#d2c4bb", "surface-container-lowest": "#ffffff", "secondary-fixed": "#efe0d6", "primary-fixed": "#ffdbc7", "on-background": "#1f1b16", "outline": "#867369", "surface-container-highest": "#ebe1d8", "on-tertiary": "#ffffff", "secondary": "#675c55", "on-primary-container": "#ffe9de", "secondary-container": "#efe0d6", "on-secondary-fixed": "#221a14", "surface-variant": "#ebe1d8", "telemetry-crimson": "#A63A2A", "surface-container-low": "#fcf2e9", "on-error-container": "#93000a", "on-secondary-fixed-variant": "#4f453e", "copper-accent": "#B46A36", "on-secondary-container": "#6d625b", "earth-border": "#D8CFC4", "on-tertiary-fixed": "#341100", "canvas-sandstone": "#F7F3EE", "tertiary": "#804320", "tertiary-fixed-dim": "#ffb691", "surface-bright": "#fff8f4", "surface-elevation": "#E3DACF", "on-primary": "#ffffff", "on-surface-variant": "#53443b", "error-container": "#ffdad6", "inverse-on-surface": "#f9efe6", "earth-espresso": "#2C1A14", "telemetry-emerald": "#2D6A4F", "on-primary-fixed": "#311300", "surface-container": "#f6ece3", "inverse-surface": "#35302a", "ore-gold": "#C59B27", "surface-parchment": "#EDE6DD", "background": "#fff8f4", "error": "#ba1a1a", "outline-variant": "#d8c2b6", "surface-container-high": "#f0e6de", "on-tertiary-container": "#ffe9df", "primary": "#804314", "on-primary-fixed-variant": "#713707", "tertiary-container": "#9d5a35", "inverse-primary": "#ffb689", "on-surface": "#1f1b16", "surface-tint": "#8e4e1e", "surface-dim": "#e2d8d0", "primary-fixed-dim": "#ffb689", "surface": "#fff8f4", "primary-container": "#9e5a2a", "tertiary-fixed": "#ffdbcb", "earth-charcoal": "#1E1915" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "gutter": "1rem", "space-lg": "1.5rem", "space-md": "1rem", "space-xs": "0.25rem", "gutter-md": "1.5rem", "margin-lg": "2rem", "space-xl": "2rem", "space-sm": "0.5rem", "margin": "1rem", "margin-md": "1.5rem", "gutter-lg": "2rem" }, "fontFamily": { "body-md": ["Work Sans"], "headline-lg": ["Space Grotesk"], "body-sm": ["Work Sans"], "headline-lg-mobile": ["Space Grotesk"], "label-sm": ["Space Grotesk"], "headline-xl-mobile": ["Space Grotesk"], "label-lg": ["Space Grotesk"], "headline-md": ["Space Grotesk"], "label-md": ["Space Grotesk"], "headline-xl": ["Space Grotesk"], "body-lg": ["Work Sans"], "headline-sm": ["Space Grotesk"] }, "fontSize": { "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "700" }], "headline-xl-mobile": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }], "headline-xl": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "headline-sm": ["18px", { "lineHeight": "26px", "fontWeight": "600" }] } } } };</script><style>@layer base { html, body { width: 100vw; margin: 0; padding: 0; } body { overscroll-behavior: none; } .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); } .pt-safe { padding-top: env(safe-area-inset-top, 0px); } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style></head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-14 px-3 flex items-center justify-between gap-2"><div class="flex items-center gap-2"><button aria-label="Menu Drawer" class="w-11 h-11 flex items-center justify-center text-earth-charcoal active:scale-95 transition-transform"><span class="material-symbols-outlined text-[22px]">menu</span></button><div class="flex items-center gap-1.5"><img alt="Geometric mineral prism emblem with faceted copper and warm charcoal facets for Crucible AI mining operations platform. Brand logo. - Primary color: #9e5a2a
+- Font: spaceGrotesk
+- Mode: light
+- Roundness: rounded-sm
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjSxGMkkCrf_amqu2KN4MEwDEzL9LztiRmkO0HAImHVHV4aerwlbvTZl-1tDrr-LjiKS4gDYHTcNh_2KyE8PCpP8yqsjm3QHDHg7R1Ecd0HJAAyVst4ZTbNjDOCDEyzYyjifBarUYZfPLlAya6Jt7zGQc2fPvTSO9K8PlwQ3N7hFgCp2faD9vnLzTrBy4UY7uoi17u1Dw_jmZOZ5EdFu9_TGeDsKDLmlMW6aQ1BzbE1_S6bTXdowPU"/><span class="font-label-lg text-label-lg tracking-wider text-earth-charcoal font-bold hidden xs:inline">CRUCIBLE</span></div></div><div class="flex items-center gap-2"><div class="h-8 px-2.5 bg-surface-container flex items-center gap-1.5 rounded-full cursor-pointer hover:bg-surface-container-high transition-colors"><span class="w-2 h-2 rounded-full bg-telemetry-emerald animate-pulse"></span><span class="font-label-sm text-label-sm text-earth-charcoal uppercase truncate max-w-[110px]">Kansanshi Pit North</span><span class="material-symbols-outlined text-[14px] text-secondary">expand_more</span></div><div class="flex items-center gap-1.5"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="font-label-sm text-label-sm text-earth-charcoal hidden sm:inline">Operations</span></div></div></div></header><main class="flex flex-col relative w-full pt-14 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Visual Header Hero Scrim & Geo-Context -->
+<div class="relative w-full overflow-hidden bg-surface-container-high px-4 pt-3 pb-4">
+<div class="absolute inset-0 opacity-15 pointer-events-none" style="background-image: radial-gradient(circle at top right, #9e5a2a 10%, transparent 60%);"></div>
+<div class="flex items-center justify-between gap-2 relative z-10 mb-2">
+<div class="flex items-center gap-1.5">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-[16px]">precision_manufacturing</span>
+</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-bold">Crucible Telemetry Matrix</span>
+</div>
+<div class="flex items-center gap-1 bg-surface px-2 py-0.5 rounded-full shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-telemetry-emerald animate-ping"></span>
+<span class="font-label-sm text-label-sm text-earth-charcoal font-semibold tracking-wider">LIVE PIT FEED</span>
+</div>
+</div>
+<div class="relative z-10 flex flex-col">
+<h1 class="font-headline-md text-headline-md text-earth-charcoal tracking-tight">Equipment Health Matrix</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[15px] text-copper-accent">terrain</span>
+        Kansanshi Pit North • Bench Sector 14A Sub-Surface
+      </p>
+</div>
+</div>
+<!-- Operational Field Context Banner with Ambient Quarry Cut -->
+<div class="relative w-full h-28 overflow-hidden bg-surface-elevation">
+<img class="w-full h-full object-cover opacity-85" data-alt="High angle shot of a massive open-cast copper quarry pit terrace with heavy mining haul trucks climbing dirt ramps and excavator digging in oxidized sandstone strata under warm sunlight in Kansanshi copper mine" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSVLOli3OUIXHwg8VNzx1xn3-ACEDmLvxo7_0yO7HS5GhVNu6HRGRYBQsF8maqwWF3wA3o25dB3PczwmxxHUnCJ6vsCK3ozIOnhCg7yZk3VCQnvlmd8wxaKQgkBczT5kdzaxUn3BYrCGihAUN8ig2jDlBG35MkzzbF8l_S7LqqMm3VjiXbX_Ut3JP5_1zpbcu-AOMZpsKF49pHJcWYhl4RTwdaPF38o06oWg8uj4fL19cqKGkVmsE5"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent"></div>
+<div class="absolute bottom-2 left-4 right-4 flex items-center justify-between">
+<div class="bg-surface/90 backdrop-blur-md px-2.5 py-1 rounded shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-telemetry-crimson">sensors_off</span>
+<span class="font-label-sm text-label-sm text-earth-charcoal font-bold tracking-wider">CRITICAL MTTF DETECTED • 1 CHOKEPOINT</span>
+</div>
+<span class="font-label-sm text-label-sm text-earth-espresso font-semibold bg-primary-fixed/80 px-2 py-0.5 rounded">ZAMBIA UTC+2</span>
+</div>
+</div>
+<!-- Top KPIs Swiper Strip -->
+<div class="w-full px-4 -mt-2 relative z-20">
+<div class="flex gap-2.5 overflow-x-auto pb-1 scrollbar-none snap-x">
+<!-- KPI 1 -->
+<div class="snap-start min-w-[140px] flex-1 bg-surface-container-lowest p-3 rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Fleet Health</span>
+<span class="material-symbols-outlined text-[16px] text-telemetry-emerald">verified_user</span>
+</div>
+<div class="mt-2">
+<div class="flex items-baseline gap-1">
+<span class="font-headline-sm text-headline-sm text-earth-charcoal font-bold">88.4%</span>
+<span class="font-label-sm text-label-sm text-telemetry-emerald font-semibold">Nominal</span>
+</div>
+<!-- Tiny SVG micro-spark -->
+<div class="w-full h-3 mt-1.5 flex items-end gap-0.5">
+<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden">
+<div class="bg-telemetry-emerald h-full rounded-full" style="width: 88.4%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="snap-start min-w-[140px] flex-1 bg-surface-container-lowest p-3 rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Active Units</span>
+<span class="material-symbols-outlined text-[16px] text-copper-accent">bolt</span>
+</div>
+<div class="mt-2">
+<div class="flex items-baseline gap-1">
+<span class="font-headline-sm text-headline-sm text-earth-charcoal font-bold">42<span class="text-secondary font-body-sm text-body-sm">/45</span></span>
+<span class="font-label-sm text-label-sm text-copper-accent font-semibold">Ready</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary truncate mt-0.5">3 in maintenance</p>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="snap-start min-w-[140px] flex-1 bg-surface-container-lowest p-3 rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-telemetry-crimson">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-telemetry-crimson font-bold">Flagged</span>
+<span class="material-symbols-outlined text-[16px]">crisis_alert</span>
+</div>
+<div class="mt-2">
+<div class="flex items-baseline gap-1">
+<span class="font-headline-sm text-headline-sm text-telemetry-crimson font-bold">3 Units</span>
+</div>
+<span class="font-label-sm text-label-sm text-telemetry-crimson font-semibold tracking-tight">Action Req.</span>
+</div>
+</div>
+<!-- KPI 4 -->
+<div class="snap-start min-w-[140px] flex-1 bg-surface-container-lowest p-3 rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">MTBS Fleet</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary">history_toggle_off</span>
+</div>
+<div class="mt-2">
+<div class="flex items-baseline gap-1">
+<span class="font-headline-sm text-headline-sm text-earth-charcoal font-bold">184</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">hrs</span>
+</div>
+<p class="font-body-sm text-body-sm text-telemetry-emerald font-medium">+14h vs target</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Search and Filtration Controls -->
+<div class="px-4 mt-3 flex flex-col gap-2.5">
+<div class="relative w-full flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-secondary text-[20px] pointer-events-none">search</span>
+<input class="w-full h-11 pl-10 pr-9 bg-canvas-sandstone text-earth-charcoal placeholder:text-secondary rounded-xl font-body-md text-body-md shadow-inner focus:outline-none focus:bg-surface-container-lowest transition-colors" id="equipmentSearch" placeholder="Search hauler, shovel, crusher ID..." type="text"/>
+<button aria-label="Clear or filter parameters" class="absolute right-2 w-7 h-7 flex items-center justify-center text-secondary active:scale-95">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</button>
+</div>
+<!-- Filter Segmented Tabs -->
+<div class="flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-none" id="filterPillGroup">
+<button class="px-3 py-1.5 rounded-full bg-earth-charcoal text-on-primary font-label-sm text-label-sm uppercase tracking-wider font-semibold shrink-0 shadow-sm transition-all" data-filter="all">
+        All (42)
+      </button>
+<button class="px-3 py-1.5 rounded-full bg-surface-container text-telemetry-crimson font-label-sm text-label-sm uppercase tracking-wider font-semibold shrink-0 active:bg-surface-container-high transition-all flex items-center gap-1" data-filter="attention">
+<span class="w-1.5 h-1.5 rounded-full bg-telemetry-crimson"></span>
+        Needs Attention (3)
+      </button>
+<button class="px-3 py-1.5 rounded-full bg-surface-container text-telemetry-amber font-label-sm text-label-sm uppercase tracking-wider font-semibold shrink-0 active:bg-surface-container-high transition-all" data-filter="medium">
+        Medium Risk (7)
+      </button>
+<button class="px-3 py-1.5 rounded-full bg-surface-container text-secondary font-label-sm text-label-sm uppercase tracking-wider font-semibold shrink-0 active:bg-surface-container-high transition-all" data-filter="nominal">
+        Nominal (32)
+      </button>
+</div>
+</div>
+<!-- Attention Section Header -->
+<div class="px-4 mt-5 flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-telemetry-crimson"></span>
+<h2 class="font-label-lg text-label-lg uppercase tracking-wider text-earth-charcoal font-bold">Needs Attention • AI Diagnostics</h2>
+</div>
+<span class="font-label-sm text-label-sm text-telemetry-crimson font-bold bg-telemetry-crimson/10 px-2 py-0.5 rounded">3 ESCALATIONS</span>
+</div>
+<!-- Diagnostic Attention Bento Cards (Conclusion-First Pattern) -->
+<div class="px-4 mt-2.5 flex flex-col gap-3">
+<!-- Card 1: Critical HK-402 -->
+<div class="relative bg-surface-parchment rounded-xl p-3.5 shadow-sm overflow-hidden flex flex-col gap-2.5" style="border-left: 4px solid #A63A2A;">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 rounded bg-telemetry-crimson text-on-error font-label-sm text-label-sm uppercase tracking-wider font-bold">CRITICAL</span>
+<span class="font-headline-sm text-headline-sm font-bold text-earth-charcoal">CAT 793F • HK-402</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary mt-0.5">Heavy Rigid Hauler (240t payload) • Ramp 3 North</span>
+</div>
+<div class="text-right">
+<div class="font-label-sm text-label-sm text-telemetry-crimson uppercase font-bold tracking-wider">Est. MTTF</div>
+<div class="font-headline-sm text-headline-sm text-telemetry-crimson font-bold">3.2 hrs</div>
+</div>
+</div>
+<!-- Conclusion & Root Cause Banner -->
+<div class="bg-surface-container-lowest p-2.5 rounded-lg flex flex-col gap-1 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-earth-charcoal font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-telemetry-crimson">compress</span>
+            Hydraulic Cavitation &amp; Pressure Collapse
+          </span>
+<span class="font-label-sm text-label-sm font-bold text-telemetry-crimson">-42% vs base</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Main lift cylinder telemetry shows severe aeration pulses at 182 BAR. Unchecked operation risks catastrophic pump seizure during dumping cycle.
+        </p>
+<!-- Sparkline Telemetry Waveform -->
+<div class="mt-1 pt-1.5 border-t border-earth-border/40 flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">Pressure Wave:</span>
+<svg class="w-32 h-5 overflow-visible" fill="none" viewbox="0 0 120 20">
+<path d="M0,10 Q10,10 15,3 T25,12 T35,2 T45,18 T55,6 T65,16 T75,12 T85,19 T95,17 T105,19 T120,18" stroke="#A63A2A" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<circle class="animate-ping" cx="120" cy="18" fill="#A63A2A" r="3"></circle>
+</svg>
+</div>
+<span class="font-label-sm text-label-sm text-telemetry-crimson font-bold">182 BAR</span>
+</div>
+</div>
+<!-- Action Strip -->
+<div class="flex items-center justify-between pt-0.5">
+<div class="flex items-center gap-1.5 text-secondary font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-copper-accent">precision_manufacturing</span>
+<span>Bay 01 Staged</span>
+</div>
+<button class="bg-primary-container hover:bg-primary text-on-primary-container px-3.5 py-1.5 rounded font-label-sm text-label-sm font-bold tracking-wider uppercase flex items-center gap-1.5 shadow-sm active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[15px]">send</span>
+          Dispatch Field Mech
+        </button>
+</div>
+</div>
+<!-- Card 2: High Komatsu Shovel -->
+<div class="relative bg-surface-parchment rounded-xl p-3.5 shadow-sm overflow-hidden flex flex-col gap-2.5" style="border-left: 4px solid #C47C17;">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 rounded bg-telemetry-amber text-on-error font-label-sm text-label-sm uppercase tracking-wider font-bold">HIGH</span>
+<span class="font-headline-sm text-headline-sm font-bold text-earth-charcoal">Komatsu PC8000 • SH-004</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary mt-0.5">Hydraulic Excavator • Face 09 Cu Vein</span>
+</div>
+<div class="text-right">
+<div class="font-label-sm text-label-sm text-telemetry-amber uppercase font-bold tracking-wider">Temp Excursion</div>
+<div class="font-headline-sm text-headline-sm text-telemetry-amber font-bold">114°C</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-2.5 rounded-lg flex flex-col gap-1 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-earth-charcoal font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-telemetry-amber">thermostat</span>
+            Swing Bearing Lubrication Deficit
+          </span>
+<span class="font-label-sm text-label-sm font-bold text-telemetry-amber">+38°C Spike</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Auto-lube line pressure drop triggered thermal friction spike across azimuth race ring. Rapid greasing required before spalling onset.
+        </p>
+<!-- Temperature Threshold Visual Bar -->
+<div class="mt-1 pt-1.5 flex flex-col gap-1">
+<div class="flex justify-between font-label-sm text-label-sm text-secondary">
+<span>Nominal: 72°C</span>
+<span class="text-telemetry-amber font-bold">114°C (Alarm: 105°C)</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden flex">
+<div class="bg-telemetry-emerald h-full" style="width: 60%;"></div>
+<div class="bg-telemetry-amber h-full" style="width: 35%;"></div>
+<div class="bg-surface-container h-full" style="width: 5%;"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-0.5">
+<div class="flex items-center gap-1 text-secondary font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-ore-gold">water_drop</span>
+<span>Lube Reservoir: 18%</span>
+</div>
+<button class="bg-surface-elevation hover:bg-surface-container-highest text-earth-charcoal px-3.5 py-1.5 rounded font-label-sm text-label-sm font-bold tracking-wider uppercase flex items-center gap-1.5 shadow-sm active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[15px] text-copper-accent">event_available</span>
+          Schedule Quick-Lube
+        </button>
+</div>
+</div>
+<!-- Card 3: Primary Choke Metso Crusher -->
+<div class="relative bg-surface-parchment rounded-xl p-3.5 shadow-sm overflow-hidden flex flex-col gap-2.5" style="border-left: 4px solid #B46A36;">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 rounded bg-tertiary text-on-tertiary font-label-sm text-label-sm uppercase tracking-wider font-bold">PRIMARY CHOKE</span>
+<span class="font-headline-sm text-headline-sm font-bold text-earth-charcoal">Metso Gyratory • CR-001</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary mt-0.5">Primary ROM Crusher Pocket #1 • Surface Station</span>
+</div>
+<div class="text-right">
+<div class="font-label-sm text-label-sm text-copper-accent uppercase font-bold tracking-wider">Liner Left</div>
+<div class="font-headline-sm text-headline-sm text-copper-accent font-bold">8.2%</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-2.5 rounded-lg flex flex-col gap-1 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-earth-charcoal font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-copper-accent">reorder</span>
+            Mantle Excursion • Hydroset Limit
+          </span>
+<span class="font-label-sm text-label-sm font-bold text-earth-espresso">94mm Gap</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          CSS approaching hydraulic mechanical stop. Cu ore feed throughput throttled to 2,850 t/h to prevent structural eccentric gear scoring.
+        </p>
+</div>
+<div class="flex items-center justify-between pt-0.5">
+<div class="flex items-center gap-1 text-secondary font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-telemetry-amber">schedule</span>
+<span>Shift Window: 18:00</span>
+</div>
+<button class="bg-surface-elevation hover:bg-surface-container-highest text-earth-charcoal px-3.5 py-1.5 rounded font-label-sm text-label-sm font-bold tracking-wider uppercase flex items-center gap-1.5 shadow-sm active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[15px] text-primary">visibility</span>
+          Inspect Liners
+        </button>
+</div>
+</div>
+</div>
+<!-- Quick Fleet Stream Ledger -->
+<div class="px-4 mt-6">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-secondary">view_stream</span>
+<h2 class="font-label-lg text-label-lg uppercase tracking-wider text-earth-charcoal font-bold">Quick Fleet Stream</h2>
+</div>
+<span class="font-label-sm text-label-sm text-secondary tracking-wider">LIVE TELEMETRY POLLING (0.4s)</span>
+</div>
+<!-- Table Container Card -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">
+<!-- Row 1: HK-402 -->
+<div class="p-3 bg-surface-container-low flex items-center justify-between gap-2 border-b border-surface-container-high cursor-pointer active:bg-surface-container transition-colors">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded bg-telemetry-crimson/15 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px] text-telemetry-crimson">local_shipping</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md font-bold text-earth-charcoal truncate">HK-402</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-telemetry-crimson text-on-error font-bold">CRIT</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary truncate">Haulage • 182 BAR (-42%)</span>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<div class="text-right">
+<div class="font-label-sm text-label-sm font-bold text-telemetry-crimson">0.4s ping</div>
+<span class="font-body-sm text-body-sm text-secondary">Stage Bay 01</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-secondary">chevron_right</span>
+</div>
+</div>
+<!-- Row 2: SH-004 -->
+<div class="p-3 bg-surface-container-lowest flex items-center justify-between gap-2 border-b border-surface-container-high cursor-pointer active:bg-surface-container transition-colors">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded bg-telemetry-amber/15 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px] text-telemetry-amber">front_loader</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md font-bold text-earth-charcoal truncate">SH-004</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-telemetry-amber text-on-error font-bold">WARN</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary truncate">Excavation • 114°C Azimuth</span>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<div class="text-right">
+<div class="font-label-sm text-label-sm font-bold text-telemetry-amber">Lube Deficit</div>
+<span class="font-body-sm text-body-sm text-secondary">Face 09 Pit</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-secondary">chevron_right</span>
+</div>
+</div>
+<!-- Row 3: CR-001 -->
+<div class="p-3 bg-surface-container-low flex items-center justify-between gap-2 border-b border-surface-container-high cursor-pointer active:bg-surface-container transition-colors">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded bg-copper-accent/15 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px] text-copper-accent">cyclone</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md font-bold text-earth-charcoal truncate">CR-001</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-copper-accent text-on-primary font-bold">CHOKE</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary truncate">Primary Gyratory • 94mm CSS</span>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<div class="text-right">
+<div class="font-label-sm text-label-sm font-bold text-tertiary">Liner 8.2%</div>
+<span class="font-body-sm text-body-sm text-secondary">ROM Bin #1</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-secondary">chevron_right</span>
+</div>
+</div>
+<!-- Row 4: DZ-201 (Nominal) -->
+<div class="p-3 bg-surface-container-lowest flex items-center justify-between gap-2 cursor-pointer active:bg-surface-container transition-colors">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded bg-telemetry-emerald/15 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px] text-telemetry-emerald">agriculture</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md font-bold text-earth-charcoal truncate">DZ-201</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-telemetry-emerald text-on-primary font-bold">NOMINAL</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary truncate">CAT D11 Track Dozer • Push Bench</span>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<div class="text-right">
+<div class="font-label-sm text-label-sm font-bold text-telemetry-emerald">99.2% Health</div>
+<span class="font-body-sm text-body-sm text-secondary">Bench 12</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-secondary">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Heavy Equipment Visual Telemetry Sample Card -->
+<div class="px-4 mt-4">
+<div class="bg-surface-parchment rounded-xl p-3 shadow-sm flex items-center gap-3">
+<div class="w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="Close-up macro mechanical view of giant CAT 793F haul truck hydraulic lift cylinder piston rod and oxidized copper red dirt wheel hub in mining workshop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeZXCVdKUXYOdnvZ52gQbJBxIXPnSmFNPWl6UEG5CTmiiN7o4FPj5E4UFfNkv5nECk5Q0A3W7YGqzWHKbsz82vZkRZXcVZqjwOU8kxJ5XmIb_ncyvfJVQJZwtLkJa9SYBPsCND2_xWFFrfXV3rIEvWepV2zymvoRk2iVdeZImU_llITYH2m5GB6lT8Ste0P_PyDNOTNcvM-E65Tbf6zhKrWJQl4JwtyyGgP7fK7r505lwFB9gmLGPu"/>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase text-copper-accent font-bold tracking-wider">Acoustic Sensor #7B</span>
+<span class="font-label-sm text-label-sm text-telemetry-crimson font-bold">High Ultrasonic Noise</span>
+</div>
+<div class="font-body-md text-body-md font-semibold text-earth-charcoal truncate">HK-402 Main Cylinder Head</div>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-2 mt-0.5">
+          Piezo telemetry detects 34kHz micro-cavitation harmonics during elevation under 210t wet ore load.
+        </p>
+</div>
+</div>
+</div>
+<!-- Workshop Staging & Spares Staging Strip -->
+<div class="px-4 mt-5 mb-2">
+<div class="bg-earth-espresso text-on-primary rounded-xl p-3.5 shadow-md flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-telemetry-emerald animate-pulse"></div>
+<span class="font-label-md text-label-md font-bold uppercase tracking-wider text-canvas-sandstone">Workshop Staging • Bay 01</span>
+</div>
+<span class="font-label-sm text-label-sm text-copper-accent font-bold uppercase bg-surface/10 px-2 py-0.5 rounded">Ready for HK-402</span>
+</div>
+<div class="flex items-center justify-between text-body-sm text-body-sm text-secondary-fixed">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-ore-gold">inventory_2</span>
+<span>Cylinder Kit P/N #4W-2190</span>
+</div>
+<span class="font-label-sm text-label-sm text-telemetry-emerald font-bold">IN STOCK (PIT CRADLE)</span>
+</div>
+<div class="pt-1 flex items-center justify-between">
+<div class="font-label-sm text-label-sm text-secondary-fixed-dim">
+          Assigned Tech: <span class="text-canvas-sandstone font-semibold">M. Chisamba (Crew Alpha)</span>
+</div>
+<button class="bg-copper-accent text-on-primary font-label-sm text-label-sm uppercase tracking-wider font-bold px-3 py-1.5 rounded active:scale-95 transition-transform flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">build</span>
+          Lock Staging Bay
+        </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Filter pills micro-interaction
+  const filterButtons = document.querySelectorAll('#filterPillGroup button');
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterButtons.forEach(b => {
+        b.classList.remove('bg-earth-charcoal', 'text-on-primary');
+        b.classList.add('bg-surface-container', 'text-secondary');
+      });
+      btn.classList.remove('bg-surface-container', 'text-secondary');
+      btn.classList.add('bg-earth-charcoal', 'text-on-primary');
+    });
+  });
+
+  // Simple search filter micro-interaction
+  const searchInput = document.getElementById('equipmentSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase().trim();
+      const rows = document.querySelectorAll('.Quick-fleet-stream .p-3');
+      // Visual feedback placeholder for prototype responsiveness
+    });
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(30,25,21,0.06)]" data-active-classes="text-primary font-bold"><div class="flex justify-around items-center h-16 px-2"><a class="flex flex-col items-center justify-center gap-1 min-w-[56px] h-12 text-on-surface-variant transition-colors" data-path="command" href="#"><span class="material-symbols-outlined text-[22px]">dashboard</span><span class="font-label-sm text-label-sm tracking-wider uppercase">Command</span></a><a aria-current="page" class="flex flex-col items-center justify-center gap-1 min-w-[56px] h-12 transition-colors text-primary font-bold" data-path="operations" href="#"><span class="material-symbols-outlined text-[22px]">precision_manufacturing</span><span class="font-label-sm text-label-sm tracking-wider uppercase">Operations</span></a><a class="flex flex-col items-center justify-center gap-1 min-w-[56px] h-12 text-on-surface-variant transition-colors relative" data-path="alerts" href="#"><div class="relative flex items-center justify-center"><span class="material-symbols-outlined text-[22px]">warning</span><span class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-telemetry-crimson"></span></div><span class="font-label-sm text-label-sm tracking-wider uppercase">Alerts</span></a><a class="flex flex-col items-center justify-center gap-1 min-w-[56px] h-12 text-on-surface-variant transition-colors" data-path="menu" href="#"><span class="material-symbols-outlined text-[22px]">hub</span><span class="font-label-sm text-label-sm tracking-wider uppercase">Menu</span></a></div></nav></body></html>

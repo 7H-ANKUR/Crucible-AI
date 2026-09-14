@@ -15,8 +15,7 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-/** Pre-paint theme init: light is default, `.dark` applied before first render. */
-const themeInit = `try{var t=localStorage.getItem('crucible_theme');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}`;
+// Light-only theme: no dark mode init script needed.
 
 /**
  * Pre-hydration backend wake-up.
@@ -41,7 +40,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
         {/* DNS + TLS to the API established before the wake request needs it. */}
         {API_ORIGIN ? <link rel="preconnect" href={API_ORIGIN} crossOrigin="anonymous" /> : null}
         <script dangerouslySetInnerHTML={{ __html: warmupInit }} />
@@ -52,13 +50,13 @@ export default function RootLayout({
           every route — the no-page-custom-font rule is a Pages-Router heuristic
           (`pages/_document.js`) and is a false positive here. Kept as <link>
           rather than next/font because the families are referenced through
-          Tailwind arbitrary classes (font-['Manrope'], font-['Inter']) in ~27
+          Tailwind arbitrary classes (font-['Space_Grotesk'], font-['Inter']) in ~27
           files, plus the Material Symbols icon font; next/font would hash the
           family names and require rewriting all of them for no visible gain.
         */}
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
@@ -67,7 +65,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-page text-ink antialiased selection:bg-accent selection:text-onaccent">
+      <body className="min-h-screen bg-canvas-sandstone text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
         <BackendWarmup />
         <CrucibleProviders>{children}</CrucibleProviders>
       </body>

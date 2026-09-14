@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "inverse-surface": "#35302a", "earth-charcoal": "#1E1915", "on-primary-container": "#ffe9de", "surface-container": "#f6ece3", "on-primary-fixed": "#311300", "primary-fixed-dim": "#ffb689", "earth-espresso": "#2C1A14", "earth-border": "#D8CFC4", "background": "#fff8f4", "on-error-container": "#93000a", "surface-variant": "#ebe1d8", "error-container": "#ffdad6", "secondary": "#675c55", "surface-tint": "#8e4e1e", "on-secondary": "#ffffff", "on-secondary-container": "#6d625b", "on-tertiary": "#ffffff", "on-primary-fixed-variant": "#713707", "surface-container-low": "#fcf2e9", "telemetry-crimson": "#A63A2A", "surface-container-high": "#f0e6de", "surface-elevation": "#E3DACF", "tertiary-fixed": "#ffdbcb", "on-secondary-fixed-variant": "#4f453e", "telemetry-emerald": "#2D6A4F", "outline-variant": "#d8c2b6", "secondary-fixed": "#efe0d6", "primary": "#804314", "ore-gold": "#C59B27", "inverse-on-surface": "#f9efe6", "copper-accent": "#B46A36", "canvas-sandstone": "#F7F3EE", "surface-container-lowest": "#ffffff", "on-tertiary-fixed-variant": "#713714", "surface-bright": "#fff8f4", "on-primary": "#ffffff", "on-tertiary-fixed": "#341100", "surface-dim": "#e2d8d0", "surface": "#fff8f4", "inverse-primary": "#ffb689", "outline": "#867369", "on-error": "#ffffff", "tertiary": "#804320", "primary-container": "#9e5a2a", "on-tertiary-container": "#ffe9df", "on-surface-variant": "#53443b", "surface-container-highest": "#ebe1d8", "primary-fixed": "#ffdbc7", "on-background": "#1f1b16", "surface-parchment": "#EDE6DD", "secondary-fixed-dim": "#d2c4bb", "on-secondary-fixed": "#221a14", "on-surface": "#1f1b16", "tertiary-fixed-dim": "#ffb691", "tertiary-container": "#9d5a35", "secondary-container": "#efe0d6", "telemetry-amber": "#C47C17", "error": "#ba1a1a" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "gutter-lg": "2rem", "space-md": "1rem", "space-sm": "0.5rem", "margin": "1rem", "space-lg": "1.5rem", "gutter": "1rem", "margin-md": "1.5rem", "margin-lg": "2rem", "gutter-md": "1.5rem", "space-xl": "2rem", "space-xs": "0.25rem" }, "fontFamily": { "headline-lg": [ "Space Grotesk" ], "headline-md": [ "Space Grotesk" ], "headline-xl": [ "Space Grotesk" ], "label-md": [ "Space Grotesk" ], "body-sm": [ "Work Sans" ], "label-lg": [ "Space Grotesk" ], "headline-xl-mobile": [ "Space Grotesk" ], "label-sm": [ "Space Grotesk" ], "headline-lg-mobile": [ "Space Grotesk" ], "headline-sm": [ "Space Grotesk" ], "body-md": [ "Work Sans" ], "body-lg": [ "Work Sans" ] }, "fontSize": { "headline-lg": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "headline-md": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-xl": [ "44px", { "lineHeight": "52px", "letterSpacing": "-0.03em", "fontWeight": "700" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" } ], "body-sm": [ "12px", { "lineHeight": "18px", "fontWeight": "400" } ], "label-lg": [ "14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600" } ], "headline-xl-mobile": [ "32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "label-sm": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "700" } ], "headline-lg-mobile": [ "26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-sm": [ "18px", { "lineHeight": "26px", "fontWeight": "600" } ], "body-md": [ "14px", { "lineHeight": "22px", "fontWeight": "400" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-parchment border-r border-earth-border z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col h-full"><div class="h-16 px-space-md flex items-center gap-space-sm border-b border-earth-border bg-surface-container-high"><img alt="Crucible AI Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XKURaUWBxRvJ7PerWT4jwanheS9Cgsk9ahJads6JJOIlk3KMXvRbsIjhZIt1hzwHQQKUlpOcSju173XRm_W-m3gRM7au31gYibmvXkFDvniGPVkh2PHqVXIVPmkOoIO1HTVFiYu7sHYyxYlqiRVvKyWodaKq0PUa85F0jClmZzBlrK1SvnD0e11vO03zTXgenJEH0KbFkpcKqL6iOtuBMRKsUCEhhpBCBb_u7IKMpxl6E8KWDWO6u9koY"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-earth-charcoal tracking-tight">CRUCIBLE AI</span><span class="font-label-sm text-label-sm text-copper-accent uppercase tracking-wider">Mineral Core v4.2</span></div></div><div class="flex-1 overflow-y-auto py-space-sm px-space-sm"><nav class="space-y-space-md" data-active-classes="bg-primary-container text-on-primary-container font-label-md rounded"><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Command</div><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-space-xs transition-colors bg-primary-container text-on-primary-container font-label-md rounded" data-path="command-center" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span class="font-label-md text-label-md">Command Center</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Operations</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="production" href="#"><span class="material-symbols-outlined text-[18px]">precision_manufacturing</span><span class="font-label-md text-label-md">Production</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="equipment" href="#"><span class="material-symbols-outlined text-[18px]">construction</span><span class="font-label-md text-label-md">Equipment</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="haul-routing" href="#"><span class="material-symbols-outlined text-[18px]">alt_route</span><span class="font-label-md text-label-md">Haul Routing</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Explore</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="exploration" href="#"><span class="material-symbols-outlined text-[18px]">explore</span><span class="font-label-md text-label-md">Exploration</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Decide</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="scenarios" href="#"><span class="material-symbols-outlined text-[18px]">neurology</span><span class="font-label-md text-label-md">Scenarios</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="intelligence" href="#"><span class="material-symbols-outlined text-[18px]">analytics</span><span class="font-label-md text-label-md">Intelligence</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="alerts" href="#"><span class="material-symbols-outlined text-[18px]">warning</span><span class="font-label-md text-label-md">Alerts</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Data</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="data-hub" href="#"><span class="material-symbols-outlined text-[18px]">database</span><span class="font-label-md text-label-md">Data Hub</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ml-lab" href="#"><span class="material-symbols-outlined text-[18px]">science</span><span class="font-label-md text-label-md">ML Lab</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Trust</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="governance" href="#"><span class="material-symbols-outlined text-[18px]">verified_user</span><span class="font-label-md text-label-md">Governance</span></a></div></nav></div><div class="p-space-sm border-t border-earth-border bg-surface-container-low"><div class="flex items-center justify-between px-space-xs py-space-xs rounded bg-surface-container border border-earth-border"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-telemetry-emerald animate-pulse"></span><span class="font-label-sm text-label-sm text-earth-charcoal">TELEMETRY LIVE</span></div><span class="font-label-sm text-label-sm text-copper-accent font-semibold">14ms</span></div></div></div></aside><div class="pl-64 flex flex-col min-h-screen bg-canvas-sandstone"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-parchment/95 backdrop-blur-md border-b border-earth-border z-40 px-space-lg flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-space-xs rounded border border-earth-border text-on-surface"><span class="material-symbols-outlined text-copper-accent text-[18px]">terrain</span><select class="bg-transparent font-label-md text-label-md text-on-surface outline-none cursor-pointer pr-space-xs"><option value="kansanshi">Kansanshi Pit North</option><option value="tenke">Tenke Fungurume</option><option value="lumwana">Lumwana East</option></select></div><div class="h-4 w-px bg-earth-border"></div><div class="flex items-center gap-space-xs text-on-surface-variant font-label-md text-label-md"><span class="text-secondary">Crucible</span><span class="material-symbols-outlined text-[14px] text-outline">chevron_right</span><span class="text-earth-charcoal font-semibold uppercase tracking-wider">Telemetry Feed</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-space-xs rounded bg-surface-container-high border border-earth-border"><span class="material-symbols-outlined text-telemetry-emerald text-[16px]">sync</span><span class="font-label-sm text-label-sm text-on-surface-variant">SYNC: 100% NOMINAL</span></div><button class="flex items-center justify-center w-8 h-8 rounded border border-earth-border bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" title="Toggle Telemetry Palette"><span class="material-symbols-outlined text-[18px]">contrast</span></button><a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors flex items-center gap-space-xs" data-path="admin-portal" href="#"><span class="material-symbols-outlined text-[18px]">settings</span>Admin</a><div class="h-4 w-px bg-earth-border"></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-16 bg-canvas-sandstone flex-1"><div class="flex flex-col w-full">
+<!-- Governance Top Bar & Compliance Header -->
+<div class="p-space-lg bg-surface-container-high shadow-sm">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1.5 px-space-sm py-0.5 rounded-full bg-surface-container font-label-sm text-label-sm text-copper-accent uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-telemetry-emerald"></span>
+            Kansanshi Pit North • Mine Sector 4
+          </span>
+<span class="font-label-sm text-label-sm text-secondary tracking-widest uppercase">REGULATORY PROTOCOL M-491</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-earth-charcoal tracking-tight">Trust &amp; Model Governance</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+          Formal assurance infrastructure enforcing machine-learning verifiability, hard safety envelopes, and dual-authorization promotion protocols across active extraction nodes.
+        </p>
+</div>
+<!-- Compliance Indicator Pill Mosaic -->
+<div class="flex items-stretch gap-space-sm flex-wrap">
+<div class="bg-surface-parchment p-space-sm rounded shadow-sm flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-telemetry-emerald">
+<span class="material-symbols-outlined text-[24px]">verified</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase">Safety Standard</span>
+<span class="font-headline-sm text-headline-sm text-earth-charcoal">ISO-13849 PL-d</span>
+<span class="font-label-sm text-label-sm text-telemetry-emerald font-semibold">100% Nominal</span>
+</div>
+</div>
+<div class="bg-surface-parchment p-space-sm rounded shadow-sm flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-copper-accent">
+<span class="material-symbols-outlined text-[24px]">gavel</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase">Mine Code Compliance</span>
+<span class="font-headline-sm text-headline-sm text-earth-charcoal">ZMK-2024-C</span>
+<span class="font-label-sm text-label-sm text-telemetry-emerald font-semibold">Audited • 0 Drift</span>
+</div>
+</div>
+<button class="bg-surface-container hover:bg-surface-elevation p-space-sm rounded shadow-sm flex flex-col justify-center items-center px-space-md text-earth-charcoal transition-all">
+<span class="material-symbols-outlined text-[20px] text-copper-accent">file_download</span>
+<span class="font-label-sm text-label-sm uppercase mt-1">Export SOC2</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Primary Governance Tabs Navigation -->
+<div class="bg-surface-parchment shadow-sm">
+<div class="max-w-7xl mx-auto px-space-lg">
+<nav aria-label="Governance Subsections" class="flex items-center gap-space-xs overflow-x-auto py-space-xs">
+<button class="px-space-md py-space-sm rounded font-label-md text-label-md text-on-surface-variant hover:text-earth-charcoal hover:bg-surface-container transition-colors flex items-center gap-space-xs whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]">vital_signs</span>
+          Data Health
+        </button>
+<button class="px-space-md py-space-sm rounded bg-primary-container text-on-primary-container font-label-md text-label-md flex items-center gap-space-xs whitespace-nowrap shadow-sm">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+          Model Registry
+          <span class="px-1.5 py-0.2 rounded-full bg-primary text-on-primary font-label-sm text-label-sm">1 Action</span>
+</button>
+<button class="px-space-md py-space-sm rounded font-label-md text-label-md text-on-surface-variant hover:text-earth-charcoal hover:bg-surface-container transition-colors flex items-center gap-space-xs whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]">model_training</span>
+          Training Runs
+        </button>
+<button class="px-space-md py-space-sm rounded font-label-md text-label-md text-on-surface-variant hover:text-earth-charcoal hover:bg-surface-container transition-colors flex items-center gap-space-xs whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]">rule</span>
+          Approvals
+          <span class="w-2 h-2 rounded-full bg-telemetry-amber"></span>
+</button>
+<button class="px-space-md py-space-sm rounded font-label-md text-label-md text-on-surface-variant hover:text-earth-charcoal hover:bg-surface-container transition-colors flex items-center gap-space-xs whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]">enhanced_encryption</span>
+          Immutable Ledger
+        </button>
+</nav>
+</div>
+</div>
+<!-- Content Canopy -->
+<div class="max-w-7xl mx-auto px-space-lg py-space-xl w-full flex flex-col gap-space-xl">
+<!-- Section 1: Promotion Review Modal/Card (Human Gate) -->
+<div class="relative overflow-hidden rounded bg-surface-parchment shadow-md p-space-lg flex flex-col gap-space-md">
+<!-- Decorative Terracotta Accent Strip -->
+<div class="absolute top-0 left-0 bottom-0 w-1.5 bg-copper-accent"></div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-surface-container-high font-label-sm text-label-sm text-telemetry-amber uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock_clock</span>
+              Awaiting Second Tier Signature
+            </span>
+<span class="font-label-sm text-label-sm text-secondary uppercase">GATE ID: PR-2024-0988-SAG</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-earth-charcoal">Promotion Review: Crucible-Transformer-v4.2-Surrogate</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Requesting elevation to Production Champion for Autonomous SAG Mill Feed &amp; Throughput Controller. Candidate model demonstrates <span class="font-label-md text-copper-accent">+3.3% accuracy</span> lift and reduced specific energy consumption under high pyritic variance.
+          </p>
+</div>
+<!-- Metric Comparative Quick-Chip -->
+<div class="bg-surface-container p-space-sm rounded flex items-center gap-space-lg">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase">Inference Speed</span>
+<span class="font-headline-sm text-headline-sm text-earth-charcoal">8.4ms</span>
+<span class="font-label-sm text-label-sm text-telemetry-emerald font-semibold">-42% latency</span>
+</div>
+<div class="w-px h-8 bg-earth-border"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase">Verification Score</span>
+<span class="font-headline-sm text-headline-sm text-earth-charcoal">99.1%</span>
+<span class="font-label-sm text-label-sm text-telemetry-emerald font-semibold">Boundary Valid</span>
+</div>
+</div>
+</div>
+<!-- Interactive Verification Detail Bento -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md">
+<!-- Physical Safety Envelopes -->
+<div class="bg-surface-container-low p-space-md rounded shadow-sm flex flex-col justify-between gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Safety Envelope Verification</span>
+<span class="material-symbols-outlined text-telemetry-emerald text-[20px]">format_image_left</span>
+</div>
+<div class="flex flex-col gap-space-xs text-body-sm text-on-surface">
+<div class="flex items-center justify-between bg-surface-container p-space-xs rounded">
+<span class="text-secondary">Crusher Chute Fill Capacity</span>
+<span class="font-label-md text-telemetry-emerald">Under Limit (≤ 82%)</span>
+</div>
+<div class="flex items-center justify-between bg-surface-container p-space-xs rounded">
+<span class="text-secondary">CAT 793F Brake Retarding Ramp</span>
+<span class="font-label-md text-telemetry-emerald">Verified Safe (≤ 24.5 m/s²)</span>
+</div>
+<div class="flex items-center justify-between bg-surface-container p-space-xs rounded">
+<span class="text-secondary">Mill Bearing Temp Gradient</span>
+<span class="font-label-md text-telemetry-emerald">Bounded (≤ 68°C)</span>
+</div>
+</div>
+<div class="font-label-sm text-label-sm text-secondary">
+            Simulated over 12,000 extreme edge-case injection states.
+          </div>
+</div>
+<!-- Dual Signature Verification Track -->
+<div class="bg-surface-container-low p-space-md rounded shadow-sm flex flex-col justify-between gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Dual-Signature Mandate</span>
+<span class="font-label-sm text-label-sm text-copper-accent font-semibold">1 OF 2 SIGNED</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Signature 1 (Approved) -->
+<div class="p-space-xs rounded bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-telemetry-emerald text-[20px]">check_circle</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-earth-charcoal">Marcus Vance</span>
+<span class="font-label-sm text-label-sm text-secondary">Operations Superintendent</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">10:14 UTC</span>
+</div>
+<!-- Signature 2 (Pending Action) -->
+<div class="p-space-xs rounded bg-surface-container-high flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-telemetry-amber text-[20px]">pending</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-earth-charcoal">Elena Rostova, Ph.D.</span>
+<span class="font-label-sm text-label-sm text-secondary">Chief Geotechnical &amp; Safety Officer</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-telemetry-amber font-semibold uppercase">Pending</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[14px]">info</span>
+            Requires multi-factor cryptographic key approval.
+          </div>
+</div>
+<!-- Dynamic Visual Telemetry Spark / Accuracy Curve -->
+<div class="bg-surface-container-low p-space-md rounded shadow-sm flex flex-col justify-between gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">ROC-AUC Comparison</span>
+<span class="font-label-sm text-label-sm text-copper-accent">Challenger vs Champion</span>
+</div>
+<div class="w-full h-24 flex items-end">
+<!-- Inline SVG Curve chart -->
+<svg class="w-full h-full overflow-visible text-copper-accent" preserveaspectratio="none" viewbox="0 0 240 70">
+<!-- Grid lines -->
+<line stroke="currentColor" stroke-dasharray="2 2" stroke-opacity="0.1" x1="0" x2="240" y1="10" y2="10"></line>
+<line stroke="currentColor" stroke-dasharray="2 2" stroke-opacity="0.1" x1="0" x2="240" y1="40" y2="40"></line>
+<line stroke="currentColor" stroke-opacity="0.15" x1="0" x2="240" y1="69" y2="69"></line>
+<!-- Baseline Champion Curve (Dotted Secondary) -->
+<path d="M0,68 C40,55 80,30 140,24 C180,20 220,16 240,14" fill="none" stroke="#867369" stroke-dasharray="3 3" stroke-width="2"></path>
+<!-- Challenger High-Precision Curve (Solid Copper Accent) -->
+<path d="M0,68 C30,45 60,18 120,12 C170,8 210,6 240,4" fill="none" stroke="#9e5a2a" stroke-width="2.5"></path>
+<!-- Data callout circle at apex -->
+<circle cx="240" cy="4" fill="#9e5a2a" r="4"></circle>
+</svg>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<div class="flex items-center gap-1">
+<span class="w-2 h-0.5 bg-secondary"></span>
+<span class="text-secondary">PINN (0.962)</span>
+</div>
+<div class="flex items-center gap-1 font-semibold text-primary">
+<span class="w-2 h-0.5 bg-primary-container"></span>
+<span>Surrogate (0.984 ROC)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Authorization Bar -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pt-space-sm">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-telemetry-emerald">lock</span>
+          Enclave Verified: Hardware Security Module (HSM-09-AF) Validated
+        </div>
+<div class="flex items-center gap-space-sm justify-end">
+<button class="px-space-md py-space-sm rounded bg-surface-container hover:bg-surface-container-high text-earth-charcoal font-label-md text-label-md transition-colors flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px]">close</span>
+            Reject with Feedback
+          </button>
+<button class="px-space-lg py-space-sm rounded bg-primary-container hover:bg-tertiary text-on-primary-container font-label-md text-label-md transition-all flex items-center gap-space-xs shadow-md" id="auth-promote-btn">
+<span class="material-symbols-outlined text-[18px]">how_to_reg</span>
+            Authorize Model Promotion to Live Control
+          </button>
+</div>
+</div>
+</div>
+<!-- Section 2: Champion vs Challenger Model Registry Table -->
+<div class="flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">Active Fleet Architectures</span>
+<span class="font-label-sm text-label-sm text-copper-accent uppercase tracking-wider font-semibold">2 Active Nodes</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-earth-charcoal">Champion vs. Challenger Registry</h2>
+</div>
+<div class="flex items-center gap-space-xs">
+<div class="bg-surface-parchment rounded px-space-sm py-space-xs flex items-center gap-space-xs text-secondary shadow-sm">
+<span class="material-symbols-outlined text-[18px]">search</span>
+<input class="bg-transparent font-body-sm text-body-sm text-earth-charcoal outline-none placeholder:text-outline w-48 sm:w-64" placeholder="Filter weights, models, commit..." type="text"/>
+</div>
+<button class="p-space-xs rounded bg-surface-parchment hover:bg-surface-container text-earth-charcoal shadow-sm" title="Refresh Telemetry">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+</button>
+</div>
+</div>
+<!-- Bento-Styled Comparative Model Families -->
+<div class="flex flex-col gap-space-lg">
+<!-- Model Family 1: SAG Mill Optimizer -->
+<div class="bg-surface-parchment rounded shadow-sm overflow-hidden flex flex-col">
+<!-- Family Header Banner -->
+<div class="bg-surface-container-high px-space-lg py-space-sm flex items-center justify-between flex-wrap gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="p-1.5 rounded bg-surface-container text-copper-accent">
+<span class="material-symbols-outlined text-[20px]">settings_input_component</span>
+</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-earth-charcoal">SAG Mill Feed &amp; Throughput Optimizer</span>
+<span class="font-label-sm text-label-sm text-secondary">Crucible Core Process Mill-01 through Mill-04 • Kansanshi Beneficiation Plant</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="px-space-sm py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-telemetry-amber uppercase font-semibold">
+                Gate: Awaiting Sign-off from Senior Metallurgist
+              </span>
+</div>
+</div>
+<!-- Table-styled Pair Ledger -->
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-elevation font-label-sm text-label-sm text-secondary uppercase tracking-wider">
+<tr>
+<th class="py-space-sm px-space-md">Role &amp; Deployment</th>
+<th class="py-space-sm px-space-md">Model ID &amp; Architecture</th>
+<th class="py-space-sm px-space-md">Accuracy</th>
+<th class="py-space-sm px-space-md">ROC-AUC</th>
+<th class="py-space-sm px-space-md">Training Base / Runtime</th>
+<th class="py-space-sm px-space-md">MTBF &amp; Resilience</th>
+<th class="py-space-sm px-space-md text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y-0">
+<!-- Champion Row -->
+<tr class="bg-surface-parchment hover:bg-surface-container transition-colors">
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-sm py-0.5 rounded bg-surface-container-highest font-label-sm text-label-sm text-earth-charcoal font-semibold uppercase">
+                        Champion
+                      </span>
+<span class="inline-block w-2 h-2 rounded-full bg-telemetry-emerald" title="Live Inference"></span>
+</div>
+</td>
+<td class="py-space-md px-space-md font-medium text-earth-charcoal">
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-lg text-earth-charcoal font-semibold">PINN-Milling-v3.8</span>
+<span class="font-label-sm text-label-sm text-secondary">Physics-Informed Neural Network • Commit 7b81c2</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="font-headline-sm text-body-lg text-earth-charcoal font-semibold">93.1%</span>
+<span class="block font-label-sm text-label-sm text-secondary">Baseline nominal</span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="font-headline-sm text-body-lg text-earth-charcoal font-semibold">0.962</span>
+</td>
+<td class="py-space-md px-space-md text-on-surface-variant">
+<div class="flex flex-col">
+<span>42 Days in Production</span>
+<span class="font-label-sm text-label-sm text-secondary">620k Sensor Windows</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="font-label-md text-label-md text-earth-charcoal">1,200 hrs MTBF</span>
+<span class="block font-label-sm text-label-sm text-telemetry-emerald font-semibold">Zero Failures</span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-container-high font-label-sm text-label-sm text-earth-charcoal">
+                      Telemetry Stream
+                    </button>
+</td>
+</tr>
+<!-- Challenger Row -->
+<tr class="bg-surface-container-low hover:bg-surface-container transition-colors">
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-sm py-0.5 rounded bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold uppercase">
+                        Challenger
+                      </span>
+<span class="inline-block w-2 h-2 rounded-full bg-telemetry-amber animate-pulse" title="Candidate Review"></span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-lg text-earth-charcoal font-semibold">Crucible-Transformer-v4.2-Surrogate</span>
+<span class="font-label-sm text-label-sm text-copper-accent font-semibold">Self-Attention Grinding Dynamics • Commit f809d4</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="font-headline-sm text-body-lg text-telemetry-emerald font-bold">96.4%</span>
+<span class="block font-label-sm text-label-sm text-telemetry-emerald font-semibold">+3.3% Precision</span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="font-headline-sm text-body-lg text-telemetry-emerald font-bold">0.984</span>
+</td>
+<td class="py-space-md px-space-md text-on-surface-variant">
+<div class="flex flex-col">
+<span>Trained on 1.4M cycles</span>
+<span class="font-label-sm text-label-sm text-secondary">Synthetic Pyrite Injections</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="font-label-md text-label-md text-earth-charcoal">1,850 hrs (Proj.)</span>
+<span class="block font-label-sm text-label-sm text-telemetry-emerald font-semibold">Enhanced Envelopes</span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="px-space-sm py-1 rounded bg-primary text-on-primary font-label-sm text-label-sm font-semibold hover:bg-primary-container transition-colors">
+                      Review Gate
+                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Model Family 2: Hauler Fleet Dynamic Routing -->
+<div class="bg-surface-parchment rounded shadow-sm overflow-hidden flex flex-col">
+<div class="bg-surface-container-high px-space-lg py-space-sm flex items-center justify-between flex-wrap gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="p-1.5 rounded bg-surface-container text-copper-accent">
+<span class="material-symbols-outlined text-[20px]">alt_route</span>
+</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-earth-charcoal">Hauler Dynamic Routing &amp; Anti-Congestion</span>
+<span class="font-label-sm text-label-sm text-secondary">Autonomous Fleet Network • 48 Units (CAT 793F / Komatsu 930E)</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="px-space-sm py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-telemetry-emerald uppercase font-semibold">
+                Status: Champion Operating Nominally
+              </span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-elevation font-label-sm text-label-sm text-secondary uppercase tracking-wider">
+<tr>
+<th class="py-space-sm px-space-md">Role &amp; Deployment</th>
+<th class="py-space-sm px-space-md">Model ID &amp; Architecture</th>
+<th class="py-space-sm px-space-md">Accuracy / Fleet Efficiency</th>
+<th class="py-space-sm px-space-md">Collision Variance</th>
+<th class="py-space-sm px-space-md">Training Base / Runtime</th>
+<th class="py-space-sm px-space-md">MTBF &amp; Safety Proof</th>
+<th class="py-space-sm px-space-md text-right">Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="bg-surface-parchment hover:bg-surface-container transition-colors">
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-sm py-0.5 rounded bg-surface-container-highest font-label-sm text-label-sm text-earth-charcoal font-semibold uppercase">
+                        Champion
+                      </span>
+<span class="inline-block w-2 h-2 rounded-full bg-telemetry-emerald"></span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-lg text-earth-charcoal font-semibold">MARL-Fleet-v2.1</span>
+<span class="font-label-sm text-label-sm text-secondary">Multi-Agent Reinforcement Learning • Graph Neural Net</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="font-headline-sm text-body-lg text-earth-charcoal font-semibold">97.8%</span>
+<span class="block font-label-sm text-label-sm text-telemetry-emerald font-semibold">Ton/Km Peak Optimized</span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="font-headline-sm text-body-lg text-earth-charcoal font-semibold">0.0001%</span>
+</td>
+<td class="py-space-md px-space-md text-on-surface-variant">
+<div class="flex flex-col">
+<span>180 Days Continuous</span>
+<span class="font-label-sm text-label-sm text-secondary">8.9M Telemetry Nodes</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="font-label-md text-label-md text-earth-charcoal">4,400 hrs Clean</span>
+<span class="block font-label-sm text-label-sm text-telemetry-emerald font-semibold">Zero Critical E-Stops</span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-container-high font-label-sm text-label-sm text-earth-charcoal">
+                      View Topology
+                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Visual Audit Context & Model Inspection Card Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-lg">
+<!-- Operational Drift Visualizer -->
+<div class="bg-surface-parchment rounded shadow-sm p-space-md flex flex-col justify-between gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-copper-accent text-[20px]">ssid_chart</span>
+<span class="font-headline-sm text-headline-sm text-earth-charcoal">Concept Drift Tracking</span>
+</div>
+<span class="font-label-sm text-label-sm text-telemetry-emerald font-semibold">P-VALUE: 0.89</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Statistical distribution divergence between real-time ore density feeds and surrogate model training vectors.
+        </p>
+<!-- Inline SVG Sparkline for Kolmogorov-Smirnov drift -->
+<div class="h-28 w-full bg-surface-container-low rounded p-space-xs flex flex-col justify-between">
+<div class="flex justify-between font-label-sm text-label-sm text-secondary">
+<span>Ore Hardness (Bond Work Index)</span>
+<span>Current: 14.8 kWh/t</span>
+</div>
+<svg class="w-full h-16 overflow-visible" viewbox="0 0 200 40">
+<path d="M0,25 C30,22 50,30 80,15 C110,5 140,28 170,18 L200,20" fill="none" stroke="#2D6A4F" stroke-width="2"></path>
+<path d="M0,25 C30,22 50,30 80,15 C110,5 140,28 170,18 L200,20 L200,40 L0,40 Z" fill="#2D6A4F" fill-opacity="0.08"></path>
+<line stroke="#ba1a1a" stroke-dasharray="2 2" stroke-width="1" x1="0" x2="200" y1="8" y2="8"></line>
+</svg>
+<div class="flex justify-between font-label-sm text-label-sm text-secondary">
+<span>Safe Threshold (0.15 Drift Max)</span>
+<span class="text-telemetry-emerald">0.038 Deviation (Safe)</span>
+</div>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-secondary">
+<span>Drift algorithm: Wasserstein-1D</span>
+<span class="text-earth-charcoal font-semibold">Updated 3m ago</span>
+</div>
+</div>
+<!-- Real-World Field Hardware Context Photo -->
+<div class="bg-surface-parchment rounded shadow-sm overflow-hidden flex flex-col justify-between">
+<div class="relative h-40 w-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="High-angle cinematic photography of an open-pit copper mining processing facility with massive SAG grinding mills and conveyor lines under dramatic industrial daylight, sandstone and oxidized copper tones with sharp machinery edges." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7Iw24mT_3kjI2DRoxQmMcaGZ3VNEa8W56u-3fU0cP174dgSFRA2PXFffpJdrz2bfOY-7IqH0E_bS_PcsZoyEFd-xhwKoLIjQmV3alxFhHipYLXF_lT0zBQnIGKhJszrlvyWam3gL_JAK9BxZLZi6HleG7Oc0Yl3iuGtTJeIfI4O0lVhEzeN-xBjr_fIMgpnNOrWIDw9bR6Y_HEXzMXeFOFrnTbH3DBltfm105HTASTMq_9KTz_BJs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-earth-espresso/80 via-earth-espresso/20 to-transparent"></div>
+<div class="absolute bottom-2 left-3 right-3 flex items-center justify-between text-on-primary">
+<span class="font-label-sm text-label-sm uppercase tracking-wider bg-earth-espresso/60 px-2 py-0.5 rounded backdrop-blur-sm">Beneficiation Train 02</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim">Telemetry Connected</span>
+</div>
+</div>
+<div class="p-space-md flex flex-col gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-earth-charcoal">Edge Inferencing Node EN-401</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            NVIDIA Jetson AGX Orin industrial enclosure mounted directly at the trunnion bearing assembly. Hardware-level watchdog guarantees automated fallback to deterministic PID control in &lt; 20ms.
+          </p>
+<div class="mt-2 pt-2 flex items-center justify-between font-label-sm text-label-sm text-secondary bg-surface-container p-space-xs rounded">
+<span>Fallback State: Deterministic PID</span>
+<span class="text-telemetry-emerald font-semibold">Ready</span>
+</div>
+</div>
+</div>
+<!-- Compliance Certification Card -->
+<div class="bg-surface-parchment rounded shadow-sm p-space-md flex flex-col justify-between gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-copper-accent text-[20px]">badge</span>
+<span class="font-headline-sm text-headline-sm text-earth-charcoal">Audit Certification</span>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-secondary">ACTIVE</span>
+</div>
+<div class="flex flex-col gap-space-xs text-body-sm text-on-surface">
+<div class="p-space-xs rounded bg-surface-container flex items-center justify-between">
+<span class="text-secondary">Auditor Firm</span>
+<span class="font-label-md text-earth-charcoal font-semibold">Bureau Veritas Mining Assurance</span>
+</div>
+<div class="p-space-xs rounded bg-surface-container flex items-center justify-between">
+<span class="text-secondary">Model License Tier</span>
+<span class="font-label-md text-earth-charcoal font-semibold">Autonomy Level 3 (Unsupervised)</span>
+</div>
+<div class="p-space-xs rounded bg-surface-container flex items-center justify-between">
+<span class="text-secondary">Next Regulatory Review</span>
+<span class="font-label-md text-copper-accent font-semibold">28 Days Remaining</span>
+</div>
+<div class="p-space-xs rounded bg-surface-container flex items-center justify-between">
+<span class="text-secondary">Hash Digest Verification</span>
+<span class="font-label-sm text-telemetry-emerald font-mono">SHA256: VALIDATED</span>
+</div>
+</div>
+<button class="w-full py-space-xs rounded bg-surface-container hover:bg-surface-container-high text-earth-charcoal font-label-md text-label-md transition-colors flex items-center justify-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px]">download</span>
+          Download Compliance Package (PDF/JSON)
+        </button>
+</div>
+</div>
+<!-- Section 4: Immutable Audit Ledger & AI Human Decision Log -->
+<div class="bg-surface-parchment rounded shadow-sm overflow-hidden flex flex-col gap-space-sm">
+<div class="p-space-lg pb-space-sm flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-copper-accent text-[18px]">history_edu</span>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Cryptographic Record</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-earth-charcoal">Immutable Audit Ledger &amp; Decision Log</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Tamper-proof chronological trail registering autonomous agent setpoint updates, safety intervention overrides, and human operator authorizations.
+          </p>
+</div>
+<div class="flex items-center gap-space-xs flex-wrap">
+<div class="px-space-sm py-1 rounded bg-surface-container font-label-sm text-label-sm text-secondary flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-telemetry-emerald"></span>
+            Ledger Sync: Block #1,492,810
+          </div>
+<button class="px-space-md py-1.5 rounded bg-surface-container hover:bg-surface-container-high text-earth-charcoal font-label-sm text-label-sm uppercase tracking-wider flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+            Export Audit Trail (CSV)
+          </button>
+</div>
+</div>
+<!-- Ledger Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-elevation font-label-sm text-label-sm text-secondary uppercase tracking-wider">
+<tr>
+<th class="py-space-sm px-space-md">Hash Identifier</th>
+<th class="py-space-sm px-space-md">Timestamp (UTC)</th>
+<th class="py-space-sm px-space-md">Event Type</th>
+<th class="py-space-sm px-space-md">Triggered By</th>
+<th class="py-space-sm px-space-md">Context &amp; Parameter Shift</th>
+<th class="py-space-sm px-space-md">Integrity Status</th>
+</tr>
+</thead>
+<tbody class="divide-y-0">
+<!-- Ledger Item 1 -->
+<tr class="bg-surface-parchment hover:bg-surface-container transition-colors">
+<td class="py-space-sm px-space-md font-mono text-label-sm text-copper-accent font-semibold">
+                0x7c9a...e31b
+              </td>
+<td class="py-space-sm px-space-md text-secondary whitespace-nowrap">
+                2024-10-24 10:14:22
+              </td>
+<td class="py-space-sm px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-earth-charcoal uppercase font-semibold">
+                  Dual-Signature Partial
+                </span>
+</td>
+<td class="py-space-sm px-space-md font-medium text-earth-charcoal">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-[16px]">person</span>
+                  Marcus Vance (Superintendent)
+                </div>
+</td>
+<td class="py-space-sm px-space-md text-on-surface">
+                Signed promotion token for <span class="font-mono text-xs">Crucible-Transformer-v4.2-Surrogate</span>.
+              </td>
+<td class="py-space-sm px-space-md whitespace-nowrap">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-telemetry-emerald font-semibold">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                  SHA-256 OK
+                </span>
+</td>
+</tr>
+<!-- Ledger Item 2 -->
+<tr class="bg-surface-container-low hover:bg-surface-container transition-colors">
+<td class="py-space-sm px-space-md font-mono text-label-sm text-copper-accent font-semibold">
+                0x4f12...89bb
+              </td>
+<td class="py-space-sm px-space-md text-secondary whitespace-nowrap">
+                2024-10-24 09:48:10
+              </td>
+<td class="py-space-sm px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-telemetry-emerald uppercase font-semibold">
+                  Dynamic Setpoint
+                </span>
+</td>
+<td class="py-space-sm px-space-md font-medium text-earth-charcoal">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-copper-accent text-[16px]">smart_toy</span>
+                  PINN-Milling-v3.8 (AI Agent)
+                </div>
+</td>
+<td class="py-space-sm px-space-md text-on-surface">
+                Adjusted water-to-ore ratio to 0.72 due to increased pyritic density at Chute 2B.
+              </td>
+<td class="py-space-sm px-space-md whitespace-nowrap">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-telemetry-emerald font-semibold">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                  SHA-256 OK
+                </span>
+</td>
+</tr>
+<!-- Ledger Item 3 -->
+<tr class="bg-surface-parchment hover:bg-surface-container transition-colors">
+<td class="py-space-sm px-space-md font-mono text-label-sm text-copper-accent font-semibold">
+                0x91d3...aa70
+              </td>
+<td class="py-space-sm px-space-md text-secondary whitespace-nowrap">
+                2024-10-24 08:30:05
+              </td>
+<td class="py-space-sm px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-telemetry-amber uppercase font-semibold">
+                  Boundary Override
+                </span>
+</td>
+<td class="py-space-sm px-space-md font-medium text-earth-charcoal">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-[16px]">person</span>
+                  Field Engineer K. Nyirenda
+                </div>
+</td>
+<td class="py-space-sm px-space-md text-on-surface">
+                Manual bypass during CAT 793F Unit #14 routine oil telemetry check. Duration: 12m.
+              </td>
+<td class="py-space-sm px-space-md whitespace-nowrap">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-telemetry-emerald font-semibold">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                  SHA-256 OK
+                </span>
+</td>
+</tr>
+<!-- Ledger Item 4 -->
+<tr class="bg-surface-container-low hover:bg-surface-container transition-colors">
+<td class="py-space-sm px-space-md font-mono text-label-sm text-copper-accent font-semibold">
+                0x3e88...cc02
+              </td>
+<td class="py-space-sm px-space-md text-secondary whitespace-nowrap">
+                2024-10-24 06:12:44
+              </td>
+<td class="py-space-sm px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-earth-charcoal uppercase font-semibold">
+                  Fleet Re-routing
+                </span>
+</td>
+<td class="py-space-sm px-space-md font-medium text-earth-charcoal">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-copper-accent text-[16px]">smart_toy</span>
+                  MARL-Fleet-v2.1 (AI Agent)
+                </div>
+</td>
+<td class="py-space-sm px-space-md text-on-surface">
+                Diverted 6 haul trucks from Ramp 4 due to micro-seismic alert MS-119. Zero delay cost.
+              </td>
+<td class="py-space-sm px-space-md whitespace-nowrap">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-telemetry-emerald font-semibold">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                  SHA-256 OK
+                </span>
+</td>
+</tr>
+<!-- Ledger Item 5 -->
+<tr class="bg-surface-parchment hover:bg-surface-container transition-colors">
+<td class="py-space-sm px-space-md font-mono text-label-sm text-copper-accent font-semibold">
+                0x110a...55f9
+              </td>
+<td class="py-space-sm px-space-md text-secondary whitespace-nowrap">
+                2024-10-24 02:00:00
+              </td>
+<td class="py-space-sm px-space-md">
+<span class="px-space-xs py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-secondary uppercase font-semibold">
+                  Scheduled Check
+                </span>
+</td>
+<td class="py-space-sm px-space-md font-medium text-earth-charcoal">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-[16px]">shield</span>
+                  Automated ISO Enforcer
+                </div>
+</td>
+<td class="py-space-sm px-space-md text-on-surface">
+                Cryptographic state integrity checkpoint passed for 44 running machine weight instances.
+              </td>
+<td class="py-space-sm px-space-md whitespace-nowrap">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-telemetry-emerald font-semibold">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                  SHA-256 OK
+                </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Ledger Footer Strip -->
+<div class="p-space-md bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-space-sm text-secondary font-label-sm text-label-sm">
+<div class="flex items-center gap-space-sm">
+<span>Showing 5 of 14,812 Immutable Events</span>
+<span>•</span>
+<span class="text-earth-charcoal font-semibold">Merkle Root: 0x88f2ba019ec41103</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-sm py-1 rounded bg-surface-container text-earth-charcoal hover:bg-surface-container-high transition-colors">Previous</button>
+<button class="px-space-sm py-1 rounded bg-primary text-on-primary font-bold">1</button>
+<button class="px-space-sm py-1 rounded bg-surface-container text-earth-charcoal hover:bg-surface-container-high transition-colors">2</button>
+<button class="px-space-sm py-1 rounded bg-surface-container text-earth-charcoal hover:bg-surface-container-high transition-colors">3</button>
+<button class="px-space-sm py-1 rounded bg-surface-container text-earth-charcoal hover:bg-surface-container-high transition-colors">Next</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Micro-interaction Script for Modal Prompts & Dynamic Feedback -->
+<script>
+    (function() {
+      const authBtn = document.getElementById('auth-promote-btn');
+      if (authBtn) {
+        authBtn.addEventListener('click', function() {
+          const originalHTML = authBtn.innerHTML;
+          authBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">sync</span> Verifying HSM Signature...';
+          authBtn.classList.add('opacity-75');
+          
+          setTimeout(function() {
+            authBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">done_all</span> Dual-Signature Validated';
+            authBtn.classList.remove('opacity-75', 'bg-primary-container');
+            authBtn.classList.add('bg-telemetry-emerald', 'text-white');
+            
+            // Notify user
+            const notice = document.createElement('div');
+            notice.className = 'fixed bottom-6 right-6 bg-earth-charcoal text-on-primary px-space-md py-space-sm rounded shadow-xl font-label-md text-label-md flex items-center gap-space-xs z-50 animate-bounce';
+            notice.innerHTML = '<span class="material-symbols-outlined text-telemetry-emerald">verified</span> Challenger Model promoted to Staging Champion in node EN-401.';
+            document.body.appendChild(notice);
+            
+            setTimeout(() => {
+              notice.remove();
+            }, 5000);
+          }, 1200);
+        });
+      }
+    })();
+  </script>
+</div></main></div></body></html>

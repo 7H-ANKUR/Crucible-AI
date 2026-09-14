@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "telemetry-amber": "#C47C17", "on-tertiary-fixed-variant": "#713714", "on-secondary": "#ffffff", "on-error": "#ffffff", "secondary-fixed-dim": "#d2c4bb", "surface-container-lowest": "#ffffff", "secondary-fixed": "#efe0d6", "primary-fixed": "#ffdbc7", "on-background": "#1f1b16", "outline": "#867369", "surface-container-highest": "#ebe1d8", "on-tertiary": "#ffffff", "secondary": "#675c55", "on-primary-container": "#ffe9de", "secondary-container": "#efe0d6", "on-secondary-fixed": "#221a14", "surface-variant": "#ebe1d8", "telemetry-crimson": "#A63A2A", "surface-container-low": "#fcf2e9", "on-error-container": "#93000a", "on-secondary-fixed-variant": "#4f453e", "copper-accent": "#B46A36", "on-secondary-container": "#6d625b", "earth-border": "#D8CFC4", "on-tertiary-fixed": "#341100", "canvas-sandstone": "#F7F3EE", "tertiary": "#804320", "tertiary-fixed-dim": "#ffb691", "surface-bright": "#fff8f4", "surface-elevation": "#E3DACF", "on-primary": "#ffffff", "on-surface-variant": "#53443b", "error-container": "#ffdad6", "inverse-on-surface": "#f9efe6", "earth-espresso": "#2C1A14", "telemetry-emerald": "#2D6A4F", "on-primary-fixed": "#311300", "surface-container": "#f6ece3", "inverse-surface": "#35302a", "ore-gold": "#C59B27", "surface-parchment": "#EDE6DD", "background": "#fff8f4", "error": "#ba1a1a", "outline-variant": "#d8c2b6", "surface-container-high": "#f0e6de", "on-tertiary-container": "#ffe9df", "primary": "#804314", "on-primary-fixed-variant": "#713707", "tertiary-container": "#9d5a35", "inverse-primary": "#ffb689", "on-surface": "#1f1b16", "surface-tint": "#8e4e1e", "surface-dim": "#e2d8d0", "primary-fixed-dim": "#ffb689", "surface": "#fff8f4", "primary-container": "#9e5a2a", "tertiary-fixed": "#ffdbcb", "earth-charcoal": "#1E1915" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "gutter": "1rem", "space-lg": "1.5rem", "space-md": "1rem", "space-xs": "0.25rem", "gutter-md": "1.5rem", "margin-lg": "2rem", "space-xl": "2rem", "space-sm": "0.5rem", "margin": "1rem", "margin-md": "1.5rem", "gutter-lg": "2rem" }, "fontFamily": { "body-md": ["Work Sans"], "headline-lg": ["Space Grotesk"], "body-sm": ["Work Sans"], "headline-lg-mobile": ["Space Grotesk"], "label-sm": ["Space Grotesk"], "headline-xl-mobile": ["Space Grotesk"], "label-lg": ["Space Grotesk"], "headline-md": ["Space Grotesk"], "label-md": ["Space Grotesk"], "headline-xl": ["Space Grotesk"], "body-lg": ["Work Sans"], "headline-sm": ["Space Grotesk"] }, "fontSize": { "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "700" }], "headline-xl-mobile": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }], "headline-xl": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "headline-sm": ["18px", { "lineHeight": "26px", "fontWeight": "600" }] } } } };</script><style>@layer base { html, body { width: 100vw; margin: 0; padding: 0; } body { overscroll-behavior: none; } .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); } .pt-safe { padding-top: env(safe-area-inset-top, 0px); } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style></head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-14 px-3 flex items-center justify-between gap-2"><div class="flex items-center gap-2"><button aria-label="Menu Drawer" class="w-11 h-11 flex items-center justify-center text-earth-charcoal active:scale-95 transition-transform"><span class="material-symbols-outlined text-[22px]">menu</span></button><div class="flex items-center gap-1.5"><img alt="Geometric mineral prism emblem with faceted copper and warm charcoal facets for Crucible AI mining operations platform. Brand logo. - Primary color: #9e5a2a
+- Font: spaceGrotesk
+- Mode: light
+- Roundness: rounded-sm
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiKIKlAO2ZfH9KXdlE8XHo_2yceBxJNZYYoFgbzE9TkGeCX1azXogjPvNNUu7rzQr84WPksKjm-aBr3n1ZTLjVuffXXZOKJVqxFGbCXeFYBF_8Jsnw80fiIGNlnhc84qNZnnz9Ab5XMkbDE1nJCGkJpc55nu9ksHtWk3yXuGgcu56bssuGJZefx-b8M8yeWRUJ-AZwnR5djNnMdlWxlqftifu-tZIbop039OYxmt3fzIxenWYtY28S"/><span class="font-label-lg text-label-lg tracking-wider text-earth-charcoal font-bold hidden xs:inline">CRUCIBLE</span></div></div><div class="flex items-center gap-2"><div class="h-8 px-2.5 bg-surface-container flex items-center gap-1.5 rounded-full cursor-pointer hover:bg-surface-container-high transition-colors"><span class="w-2 h-2 rounded-full bg-telemetry-emerald animate-pulse"></span><span class="font-label-sm text-label-sm text-earth-charcoal uppercase truncate max-w-[110px]">Kansanshi Pit North</span><span class="material-symbols-outlined text-[14px] text-secondary">expand_more</span></div><div class="flex items-center gap-1.5"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="font-label-sm text-label-sm text-earth-charcoal hidden sm:inline">Command</span></div></div></div></header><main class="flex flex-col relative w-full pt-14 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full px-3 pb-8 space-y-3 font-body-md text-on-surface">
+<!-- Sub-Header / Pit & Telemetry Meta Strip -->
+<div class="flex items-center justify-between bg-surface-container px-3 py-2 rounded-xl shadow-sm">
+<div class="flex items-center space-x-2 min-w-0">
+<span class="material-symbols-outlined text-copper-accent text-[18px]">terrain</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-earth-charcoal font-bold truncate">Kansanshi Pit 4 • Cu-Au</span>
+<span class="font-label-sm text-label-sm text-secondary truncate">Bench 1420-W Horizon</span>
+</div>
+</div>
+<div class="flex items-center space-x-1.5 bg-surface-container-low px-2 py-1 rounded-lg shrink-0">
+<span class="w-1.5 h-1.5 rounded-full bg-telemetry-emerald animate-ping"></span>
+<span class="font-label-sm text-label-sm text-telemetry-emerald font-bold tracking-tight">42ms SYNC</span>
+</div>
+</div>
+<!-- Shift & Supervisor Card -->
+<div class="flex items-center justify-between bg-surface-container-low px-3 py-2 rounded-xl">
+<div class="flex items-center space-x-2.5">
+<div class="w-7 h-7 rounded-full bg-surface-container-high flex items-center justify-center text-earth-charcoal">
+<span class="material-symbols-outlined text-[16px]">badge</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase">Shift A • Production Supt.</span>
+<span class="font-label-md text-label-md text-earth-espresso font-bold">Marcus Vance</span>
+</div>
+</div>
+<div class="flex items-center space-x-1 text-secondary font-label-md text-label-md font-semibold bg-surface-container px-2.5 py-1 rounded-lg">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span id="utc-clock">13:40:46 UTC</span>
+</div>
+</div>
+<!-- Operational Alert Banner (Urgent Prediction) -->
+<div class="bg-surface-container-highest rounded-xl p-3.5 shadow-sm space-y-3 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-telemetry-crimson"></div>
+<div class="flex items-start justify-between pl-1">
+<div class="flex items-start space-x-2">
+<div class="w-6 h-6 rounded-lg bg-telemetry-crimson/15 text-telemetry-crimson flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">crisis_alert</span>
+</div>
+<div>
+<div class="flex items-center space-x-2">
+<span class="font-label-sm text-label-sm bg-telemetry-crimson text-on-error px-1.5 py-0.5 rounded font-bold uppercase">CRU-992</span>
+<span class="font-label-sm text-label-sm text-telemetry-crimson font-bold uppercase tracking-wider">Projected Drop</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-earth-charcoal font-bold mt-1 leading-snug">
+            Mill throughput drop projected at 14:00
+          </p>
+</div>
+</div>
+</div>
+<!-- Active Hauler Field Imagery Context -->
+<div class="relative w-full h-24 rounded-lg overflow-hidden mt-1 shadow-inner">
+<img class="w-full h-full object-cover brightness-90" data-alt="Heavy open-pit mining dump trucks hauling copper ore through rocky terraced sandstone pit with excavators and dust clouds in Kansanshi mine, warm earth tones under dramatic overcast lighting, realistic industrial telemetry perspective" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3FTwwq5sXWbhTFZtYnz86BZ-Ez9vzLsZYjyw7bRaAjyr1X3dBSq9TN1LLFQF4eXsOsW5chxjqBSW_i0hDd7qH3GNg-j7RvoZCkswG4vq6kgWfCCl4vRjfG1VNn656bDu7qCErr0KXsG8HDhMLL5vQ1jwWdyatSkZRIXSvB2rYFlFXstc7wu2toFpcyGKwuqrH0aRaHzRqq_jXesZU2U-AAEW_jN79EqLN93hZTyLtr7QFwqubT8KQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-earth-espresso/80 via-earth-espresso/20 to-transparent flex items-end p-2.5">
+<div class="flex items-center justify-between w-full text-on-error">
+<span class="font-label-sm text-label-sm uppercase tracking-wide text-primary-fixed font-bold">Pit Sector North Ingress</span>
+<span class="font-label-sm text-label-sm bg-earth-espresso/90 text-primary-fixed-dim px-2 py-0.5 rounded font-mono">CAM-04 FEED</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-2 pt-0.5 pl-1">
+<button class="flex-1 h-9 bg-primary-container hover:bg-primary active:scale-[0.98] transition-all text-on-primary font-label-md text-label-md rounded-lg flex items-center justify-center space-x-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+<span>Deploy Mitigations</span>
+</button>
+<button class="h-9 px-3 bg-surface-container hover:bg-surface-container-high active:scale-[0.98] transition-all text-earth-charcoal font-label-md text-label-md rounded-lg flex items-center justify-center space-x-1">
+<span class="material-symbols-outlined text-[16px]">refresh</span>
+</button>
+</div>
+</div>
+<!-- Autonomous Recommendation Spotlight Card -->
+<div class="bg-surface-container-high rounded-xl p-3.5 shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center space-x-1.5">
+<span class="w-2 h-2 rounded-full bg-copper-accent animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-copper-accent font-bold uppercase tracking-widest">Crucible AI Co-Pilot</span>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container text-earth-charcoal font-bold px-2 py-0.5 rounded-full">
+        94% Confidence
+      </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-earth-charcoal font-bold">
+      Reroute 4 Komatsu 930E Trucks to Crusher 2 In-Pit Bin
+    </h3>
+<div class="grid grid-cols-2 gap-2 my-3">
+<div class="bg-surface-container-low p-2 rounded-lg">
+<span class="font-label-sm text-label-sm text-secondary uppercase block">Yield Gain</span>
+<span class="font-label-lg text-label-lg text-telemetry-emerald font-bold">+1,240t recovery</span>
+</div>
+<div class="bg-surface-container-low p-2 rounded-lg">
+<span class="font-label-sm text-label-sm text-secondary uppercase block">Time to Impact</span>
+<span class="font-label-lg text-label-lg text-earth-charcoal font-bold">8.4 mins</span>
+</div>
+</div>
+<button class="w-full h-11 bg-primary text-on-primary font-label-md text-label-md rounded-lg flex items-center justify-center space-x-2 active:scale-[0.98] transition-all shadow-md" id="btn-execute">
+<span class="material-symbols-outlined text-[18px]">alt_route</span>
+<span class="tracking-wide uppercase font-bold">Execute Reroute Plan</span>
+</button>
+</div>
+<!-- "Do Nothing" Consequence Impact Matrix -->
+<div class="bg-surface-container rounded-xl p-3.5 shadow-sm">
+<div class="flex items-center justify-between mb-2.5">
+<div class="flex items-center space-x-1.5 text-telemetry-crimson">
+<span class="material-symbols-outlined text-[18px]">trending_down</span>
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-wider">Unmitigated Exposure (Do Nothing)</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-mono">T+60m projection</span>
+</div>
+<div class="grid grid-cols-2 gap-2.5">
+<div class="bg-surface-container-highest p-2.5 rounded-lg flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-secondary uppercase font-semibold">EBITDA Burn Rate</span>
+<div class="flex items-baseline space-x-1 mt-1">
+<span class="font-headline-sm text-headline-sm font-bold text-telemetry-crimson">-$142.5k</span>
+<span class="font-label-sm text-label-sm text-secondary font-mono">/hr</span>
+</div>
+</div>
+<div class="bg-surface-container-highest p-2.5 rounded-lg flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-secondary uppercase font-semibold">Tonnage Shortfall</span>
+<div class="flex items-baseline space-x-1 mt-1">
+<span class="font-headline-sm text-headline-sm font-bold text-earth-espresso">-3,850</span>
+<span class="font-label-sm text-label-sm text-secondary font-mono">dry tonnes</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Ranked Attention Queue -->
+<div class="space-y-2 pt-1">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center space-x-1.5">
+<span class="font-label-lg text-label-lg font-bold text-earth-charcoal uppercase tracking-wider">Ranked Attention</span>
+<span class="w-5 h-5 rounded-full bg-telemetry-crimson text-on-error font-label-sm text-label-sm flex items-center justify-center font-bold">3</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">Ordered by financial severity</span>
+</div>
+<!-- Incident 1: Critical -->
+<div class="bg-surface-container rounded-xl p-3 shadow-sm relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-telemetry-crimson"></div>
+<div class="pl-1.5 space-y-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-1.5">
+<span class="w-2 h-2 rounded-full bg-telemetry-crimson"></span>
+<span class="font-label-sm text-label-sm font-bold text-telemetry-crimson uppercase tracking-wider">#1 Critical Feed Deficit</span>
+</div>
+<span class="font-label-sm text-label-sm text-telemetry-crimson font-mono font-bold">-$118,000/hr</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-earth-charcoal font-bold leading-tight">
+            Primary Crusher 1 Feed Starvation
+          </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Haul cycle bottleneck at Bench 1420 ramp. 7 haulers idling at haul junction switch. Average hauler queue time 14.8 min.
+          </p>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center space-x-1 text-secondary font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+<span>Avg Wait: <strong class="text-earth-charcoal">14.8 min</strong></span>
+</div>
+<button class="h-8 px-3 bg-surface-container-high hover:bg-primary hover:text-on-primary text-earth-charcoal font-label-sm text-label-sm rounded-lg flex items-center space-x-1 transition-all active:scale-95 font-semibold" id="btn-open-plan">
+<span>View Plan</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Incident 2: Warning -->
+<div class="bg-surface-container rounded-xl p-3 shadow-sm relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-telemetry-amber"></div>
+<div class="pl-1.5 space-y-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-1.5">
+<span class="w-2 h-2 rounded-full bg-telemetry-amber"></span>
+<span class="font-label-sm text-label-sm font-bold text-telemetry-amber uppercase tracking-wider">#2 Fuel Depletion</span>
+</div>
+<span class="font-label-sm text-label-sm text-telemetry-amber font-mono font-bold">3 Trucks At Risk</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-earth-charcoal font-bold leading-tight">
+            Sector 3 Fleet Fuel Starvation
+          </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Mobile Bowser 04 injection pump failure. Heavy Haulers HT-204, HT-209, HT-211 reporting &lt;12% diesel fuel reserve.
+          </p>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-sm text-label-sm text-secondary">Dispatch: Mobile Tanker 02 rerouted</span>
+<button class="h-8 px-3 bg-surface-container-high text-earth-charcoal font-label-sm text-label-sm rounded-lg flex items-center space-x-1 font-semibold">
+<span>Details</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Incident 3: Moderate -->
+<div class="bg-surface-container rounded-xl p-3 shadow-sm relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-secondary"></div>
+<div class="pl-1.5 space-y-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm font-bold text-secondary uppercase tracking-wider">#3 Geometry Deviation</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-mono font-bold">Blast Block 18</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-earth-charcoal font-bold leading-tight">
+            Autonomous Drill Rig 08 Pattern Dispersion
+          </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Collar position drift on blast pattern row 4 (+28cm variance over pyritic shale seam).
+          </p>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-sm text-label-sm text-secondary">AI Geo-correction pending</span>
+<button class="h-8 px-3 bg-surface-container-high text-earth-charcoal font-label-sm text-label-sm rounded-lg flex items-center space-x-1 font-semibold">
+<span>Calibrate</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Mobile Material Flow Pipeline (Vertical Stepper) -->
+<div class="bg-surface-container rounded-xl p-3.5 shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-bold text-earth-charcoal uppercase tracking-wider">Material Flow Live Chain</span>
+<span class="font-label-sm text-label-sm bg-surface-container-high px-2 py-0.5 rounded text-secondary font-mono font-bold">5 NODES</span>
+</div>
+<!-- Stepper Container -->
+<div class="relative pl-6 space-y-4 before:absolute before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-surface-container-highest">
+<!-- Node 1 -->
+<div class="relative flex items-start justify-between">
+<div class="absolute -left-6 top-1 w-3.5 h-3.5 rounded-full bg-telemetry-emerald ring-4 ring-surface-container"></div>
+<div class="min-w-0 pr-2">
+<div class="font-label-md text-label-md font-bold text-earth-charcoal">1. Blast Blocks (Bench 1420)</div>
+<div class="font-body-sm text-body-sm text-secondary">Sulfide fragmentation verified • 88% passing 250mm</div>
+</div>
+<span class="font-label-sm text-label-sm text-telemetry-emerald bg-telemetry-emerald/10 px-2 py-0.5 rounded shrink-0 font-bold">Nominal</span>
+</div>
+<!-- Node 2 -->
+<div class="relative flex items-start justify-between">
+<div class="absolute -left-6 top-1 w-3.5 h-3.5 rounded-full bg-telemetry-emerald ring-4 ring-surface-container"></div>
+<div class="min-w-0 pr-2">
+<div class="font-label-md text-label-md font-bold text-earth-charcoal">2. Loading Units (EX-01, EX-04)</div>
+<div class="font-body-sm text-body-sm text-secondary">Electric rope shovel rate steady • 92% fill factor</div>
+</div>
+<span class="font-label-sm text-label-sm text-telemetry-emerald bg-telemetry-emerald/10 px-2 py-0.5 rounded shrink-0 font-mono font-bold">1,820 tph</span>
+</div>
+<!-- Node 3: Slagged -->
+<div class="relative flex items-start justify-between">
+<div class="absolute -left-6 top-1 w-3.5 h-3.5 rounded-full bg-telemetry-amber ring-4 ring-surface-container"></div>
+<div class="min-w-0 pr-2">
+<div class="font-label-md text-label-md font-bold text-earth-charcoal">3. Haul Routing (14 Trucks)</div>
+<div class="font-body-sm text-body-sm text-telemetry-amber">Switchback hairpin congestion • +4.2m cycle delay</div>
+</div>
+<span class="font-label-sm text-label-sm text-telemetry-amber bg-telemetry-amber/15 px-2 py-0.5 rounded shrink-0 font-bold">SLAGGED</span>
+</div>
+<!-- Node 4: Active Bottleneck -->
+<div class="relative flex items-start justify-between">
+<div class="absolute -left-6 top-1 w-3.5 h-3.5 rounded-full bg-telemetry-crimson animate-pulse ring-4 ring-surface-container"></div>
+<div class="min-w-0 pr-2">
+<div class="font-label-md text-label-md font-bold text-telemetry-crimson">4. Primary Gyratory Crusher 1</div>
+<div class="font-body-sm text-body-sm text-telemetry-crimson font-medium">Feed pocket level 14% • Cavity under-utilization</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-error bg-telemetry-crimson px-2 py-0.5 rounded shrink-0 font-bold">BOTTLENECK</span>
+</div>
+<!-- Node 5 -->
+<div class="relative flex items-start justify-between">
+<div class="absolute -left-6 top-1 w-3.5 h-3.5 rounded-full bg-telemetry-amber ring-4 ring-surface-container"></div>
+<div class="min-w-0 pr-2">
+<div class="font-label-md text-label-md font-bold text-earth-charcoal">5. Coarse Ore Stockpile</div>
+<div class="font-body-sm text-body-sm text-secondary">Surge inventory drawdown • 2.4h remaining buffer</div>
+</div>
+<span class="font-label-sm text-label-sm text-telemetry-amber bg-telemetry-amber/10 px-2 py-0.5 rounded shrink-0 font-bold">Draining</span>
+</div>
+</div>
+</div>
+<!-- Geological Cross-Section Visual Insight -->
+<div class="bg-surface-container-high rounded-xl p-3 shadow-sm space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-bold text-earth-charcoal uppercase tracking-wider">Pit Strata Telemetry Scan</span>
+<span class="font-label-sm text-label-sm text-copper-accent font-semibold font-mono">SECTOR 4-B RADAR</span>
+</div>
+<div class="relative h-28 w-full rounded-lg overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Cross-section geological earth strata layers with copper ore mineral veins and oxidized limestone geological formation in high precision technical visualization" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7BQw3-t9JU43n-z3a71bIb4ES_5gl3HIrd2rhElKU0x2hW4KmlwOgnLlDAQufhFK0PcK5h6GirFkvEI3nf9nBxQxBIe5UgX3p7pWwRrU1ZiCzzSeIP4BT4UenClbN1sQLZsKkx-noMctjpUVMEGJXQdrcv34RUaYQx8ONH0TbiiUBItSHeSkTnHl2NsVV8N7Luil3kQ8UhlDZsoIo2PawDuRyi6W5jDVSBlY7XK-CpXHk61-d8N4M"/>
+<div class="absolute inset-0 bg-earth-espresso/20 flex flex-col justify-between p-2">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm bg-earth-espresso/80 text-primary-fixed px-1.5 py-0.5 rounded font-mono">Cu Grade: 2.14%</span>
+<span class="font-label-sm text-label-sm bg-telemetry-emerald/90 text-on-tertiary px-1.5 py-0.5 rounded font-bold">STABLE SLOPE</span>
+</div>
+<div class="bg-surface-container-highest/90 p-1.5 rounded text-earth-charcoal flex justify-between items-center text-[11px] font-mono">
+<span>Seismic Micro-vibration: 0.04 mm/s</span>
+<span class="text-copper-accent font-bold">LIDAR VERIFIED</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Drawer Modal Backdrop & Sheet (Response Plan CRU-992) -->
+<div class="fixed inset-0 z-50 bg-earth-espresso/60 backdrop-blur-sm hidden flex-col justify-end transition-opacity" id="response-drawer">
+<div class="bg-surface-container-low rounded-t-2xl p-4 max-h-[85vh] overflow-y-auto space-y-4 shadow-2xl">
+<div class="w-12 h-1.5 bg-secondary/30 rounded-full mx-auto"></div>
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center space-x-2">
+<span class="font-label-sm text-label-sm bg-telemetry-crimson text-on-error px-1.5 py-0.5 rounded font-bold uppercase">ACTION PLAN</span>
+<span class="font-label-sm text-label-sm text-secondary font-mono">CRU-992-MITIGATION</span>
+</div>
+<h2 class="font-headline-md-mobile text-headline-md-mobile text-earth-charcoal font-bold mt-1">Crusher 1 Surge Protocol</h2>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-earth-charcoal" id="btn-close-plan">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+        This automated response plan balances haul dispatch routing by diverting non-critical overburden movements and priority-routing primary copper concentrate directly to the secondary in-pit gyratory hopper.
+      </p>
+<!-- Checklist -->
+<div class="space-y-2 bg-surface-container p-3 rounded-xl">
+<label class="flex items-start space-x-3 text-earth-charcoal cursor-pointer">
+<input checked="" class="mt-1 accent-primary rounded" type="checkbox"/>
+<span class="font-body-sm text-body-sm font-medium">Signal automated speed limiter increase on West Haul Ramp (+5 km/h)</span>
+</label>
+<label class="flex items-start space-x-3 text-earth-charcoal cursor-pointer">
+<input checked="" class="mt-1 accent-primary rounded" type="checkbox"/>
+<span class="font-body-sm text-body-sm font-medium">Re-task Hauler KT-930 #12, #15, #19 to Bench 1420 pocket</span>
+</label>
+<label class="flex items-start space-x-3 text-earth-charcoal cursor-pointer">
+<input checked="" class="mt-1 accent-primary rounded" type="checkbox"/>
+<span class="font-body-sm text-body-sm font-medium">Notify Crusher Ops Shift Foreman of incoming surge batch</span>
+</label>
+</div>
+<div class="flex items-center space-x-2 pt-2">
+<button class="flex-1 h-12 bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md rounded-xl font-bold uppercase tracking-wider flex items-center justify-center space-x-2 shadow-lg active:scale-95 transition-all" id="btn-authorize">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Authorize Dispatch</span>
+</button>
+<button class="h-12 px-4 bg-surface-container text-earth-charcoal font-label-md text-label-md rounded-xl font-bold" id="btn-cancel-drawer">
+          Cancel
+        </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Clock update simulation
+  function updateClock() {
+    const clockEl = document.getElementById('utc-clock');
+    if (!clockEl) return;
+    const now = new Date();
+    const h = String(now.getUTCHours()).padStart(2, '0');
+    const m = String(now.getUTCMinutes()).padStart(2, '0');
+    const s = String(now.getUTCSeconds()).padStart(2, '0');
+    clockEl.textContent = `${h}:${m}:${s} UTC`;
+  }
+  setInterval(updateClock, 1000);
+
+  // Drawer modal interactions
+  const openPlanBtn = document.getElementById('btn-open-plan');
+  const closePlanBtn = document.getElementById('btn-close-plan');
+  const cancelDrawerBtn = document.getElementById('btn-cancel-drawer');
+  const drawer = document.getElementById('response-drawer');
+  const executeBtn = document.getElementById('btn-execute');
+  const authorizeBtn = document.getElementById('btn-authorize');
+
+  function openDrawer() {
+    if (drawer) drawer.classList.remove('hidden');
+    if (drawer) drawer.classList.add('flex');
+  }
+
+  function closeDrawer() {
+    if (drawer) drawer.classList.add('hidden');
+    if (drawer) drawer.classList.remove('flex');
+  }
+
+  if (openPlanBtn) openPlanBtn.addEventListener('click', openDrawer);
+  if (closePlanBtn) closePlanBtn.addEventListener('click', closeDrawer);
+  if (cancelDrawerBtn) cancelDrawerBtn.addEventListener('click', closeDrawer);
+
+  if (executeBtn) {
+    executeBtn.addEventListener('click', () => {
+      executeBtn.disabled = true;
+      executeBtn.classList.replace('bg-primary', 'bg-telemetry-emerald');
+      executeBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">done</span><span>4 TRUCKS REROUTED</span>';
+      setTimeout(() => {
+        executeBtn.disabled = false;
+        executeBtn.classList.replace('bg-telemetry-emerald', 'bg-primary');
+        executeBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">alt_route</span><span class="tracking-wide uppercase font-bold">Execute Reroute Plan</span>';
+      }, 4000);
+    });
+  }
+
+  if (authorizeBtn) {
+    authorizeBtn.addEventListener('click', () => {
+      authorizeBtn.classList.replace('bg-primary', 'bg-telemetry-emerald');
+      authorizeBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check_circle</span><span>AUTHORIZED</span>';
+      setTimeout(() => {
+        closeDrawer();
+        authorizeBtn.classList.replace('bg-telemetry-emerald', 'bg-primary');
+        authorizeBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">verified</span><span>Authorize Dispatch</span>';
+      }, 1200);
+    });
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(30,25,21,0.06)]" data-active-classes="text-primary font-bold"><div class="flex justify-around items-center h-16 px-2"><a aria-current="page" class="flex flex-col items-center justify-center gap-1 min-w-[56px] h-12 transition-colors text-primary font-bold" data-path="command" href="#"><span class="material-symbols-outlined text-[22px]">dashboard</span><span class="font-label-sm text-label-sm tracking-wider uppercase">Command</span></a><a class="flex flex-col items-center justify-center gap-1 min-w-[56px] h-12 text-on-surface-variant transition-colors" data-path="operations" href="#"><span class="material-symbols-outlined text-[22px]">precision_manufacturing</span><span class="font-label-sm text-label-sm tracking-wider uppercase">Operations</span></a><a class="flex flex-col items-center justify-center gap-1 min-w-[56px] h-12 text-on-surface-variant transition-colors relative" data-path="alerts" href="#"><div class="relative flex items-center justify-center"><span class="material-symbols-outlined text-[22px]">warning</span><span class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-telemetry-crimson"></span></div><span class="font-label-sm text-label-sm tracking-wider uppercase">Alerts</span></a><a class="flex flex-col items-center justify-center gap-1 min-w-[56px] h-12 text-on-surface-variant transition-colors" data-path="menu" href="#"><span class="material-symbols-outlined text-[22px]">hub</span><span class="font-label-sm text-label-sm tracking-wider uppercase">Menu</span></a></div></nav></body></html>

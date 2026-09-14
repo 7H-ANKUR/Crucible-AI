@@ -33,7 +33,7 @@ export function Avatar({
       <span
         role="img"
         aria-label={name ?? 'Profile'}
-        className={`inline-flex items-center justify-center bg-panel3 text-ink2 font-bold ${className}`}
+        className={`inline-flex items-center justify-center bg-surface-container text-secondary font-bold ${className}`}
       >
         {initials}
       </span>

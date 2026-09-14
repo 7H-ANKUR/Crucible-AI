@@ -9,6 +9,8 @@
  *   - Root Cause Explorer: SHAP model drivers + observed events + unmeasured factors
  *   - Mine Replay: Chronological operational ledger timeline
  *   - Material Flow: Mass balance throughput & bottleneck analysis
+ * 
+ * Reskinned to Earthy Industrial.
  */
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -172,447 +174,535 @@ export default function IntelligencePage() {
     }
   };
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'HEALTHY':
-      case 'NOMINAL':
-        return 'bg-ok/20 text-okt border-ok/30';
-      case 'WATCH':
-      case 'HIGH_LOAD':
-        return 'bg-warn/20 text-warnt border-warn/30';
-      case 'CONGESTED':
-        return 'bg-warn/25 text-warnt border-warn/40';
-      case 'CRITICAL':
-      case 'BOTTLENECK':
-      case 'AT_RISK':
-        return 'bg-danger/20 text-dangert border-danger/30';
-      default:
-        return 'bg-panel3 text-ink2 border-line';
-    }
-  };
 
   return (
-    <main className="flex-1 bg-deep min-h-screen p-4 md:p-6 lg:p-8 pb-20">
-      {/* Demo Mode / Synthetic Benchmark Banner */}
-      <div className="mb-6 p-3 rounded-xl bg-accentt/10 border border-accentt/25 flex items-center justify-between">
-        <div className="flex items-center gap-2 text-xs text-ink">
-          <span className="w-2.5 h-2.5 rounded-full bg-accentt animate-pulse"></span>
-          <span className="font-bold uppercase tracking-wider text-accentt">Synthetic Operational Benchmark</span>
-          <span className="text-ink3 hidden sm:inline">· Real ML inference pipelines operating on Indian mineral baseline (21.95°N, 79.25°E)</span>
-        </div>
-        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-panel3 border border-line text-ink2">
-          DGMS BENCHMARK
-        </span>
-      </div>
-
-      {/* Header */}
-      <header className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-[11px] font-bold text-ink3 tracking-widest uppercase">Platform</span>
-            <span className="text-ink3">/</span>
-            <span className="text-[11px] font-bold text-accentt tracking-widest uppercase">Intelligence Center</span>
+    <main className="w-full pt-16 bg-canvas-sandstone flex-1">
+      <div className="flex flex-col w-full">
+        {/* Top Intelligence Summary & Action Header */}
+        <div className="px-gutter-lg pt-space-lg pb-space-md flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+          <div>
+            <div className="flex items-center gap-space-xs mb-1">
+              <span className="px-space-xs py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm uppercase tracking-widest">Crucible Neural Engine</span>
+              <span className="text-secondary font-label-sm text-label-sm uppercase tracking-wider">• DECIDE COGNITIVE CORE</span>
+            </div>
+            <h1 className="font-headline-lg text-headline-lg text-earth-charcoal tracking-tight">Intelligence &amp; Multi-Agent Causal Reasoning</h1>
+            <p className="font-body-md text-body-md text-on-surface-variant max-w-3xl mt-1">
+              Deep multi-physics mineral intelligence connecting blasting fragmentation, haul cycle telemetry, and real-time mill hydrocyclone kinetics.
+            </p>
           </div>
-          <h1 className="font-['Manrope'] text-3xl md:text-4xl font-bold text-ink tracking-tight">
-            Cross-Domain Operations Intelligence
-          </h1>
-          <p className="text-sm text-ink2 mt-1 max-w-2xl">
-            Unified reasoning workspace connecting production variances, fleet health, exploration targets, and throughput flow.
-          </p>
-          {/* Mine Selector */}
-          <div className="mt-3 flex items-center gap-2">
-            <span className="material-symbols-outlined text-accentt text-[18px]">location_on</span>
-            <label className="text-[11px] font-bold text-ink3 uppercase tracking-wider">Active Mine</label>
-            <select
-              id="mine-selector"
-              value={selectedMine}
-              onChange={(e) => setSelectedMine(e.target.value)}
-              className="ml-1 bg-deep2 border border-accentt/40 rounded-lg px-3 py-1.5 text-xs font-semibold text-ink focus:outline-none focus:border-accentt transition-all cursor-pointer"
-            >
-              {mines.length > 0
-                ? mines.map((m) => (
+          <div className="flex flex-wrap items-center gap-space-sm self-start md:self-auto mt-4 md:mt-0">
+            {/* Mine Selector */}
+            <div className="flex items-center gap-space-xs px-space-sm py-space-xs rounded bg-surface-elevation shadow-sm text-earth-charcoal">
+              <span className="material-symbols-outlined text-[18px] text-copper-accent">location_on</span>
+              <select
+                value={selectedMine}
+                onChange={(e) => setSelectedMine(e.target.value)}
+                className="bg-transparent font-label-md text-label-md text-earth-charcoal focus:outline-none cursor-pointer max-w-[150px] truncate"
+              >
+                {mines.length > 0
+                  ? mines.map((m) => (
                     <option key={m.mine_id} value={m.mine_id}>
                       {m.mine_id}{m.mine_name ? ` — ${m.mine_name}` : ''}{m.state ? ` (${m.state})` : ''}
                     </option>
                   ))
-                : [
+                  : [
                     'KA-TUMKUR-01', 'MH-BHANDARA-01', 'MII-NAGPUR-01',
                     'MP-BALAGHAT-01', 'OD-KFONIHAR-01',
                   ].map((id) => <option key={id} value={id}>{id}</option>)
-              }
-            </select>
-          </div>
-        </div>
-
-        {pulse && (
-          <div className="liquid-glass-dark rounded-2xl p-4 border border-line flex items-center gap-4 shrink-0 shadow-lg">
-            <div className="relative flex items-center justify-center w-14 h-14 rounded-xl bg-panel3 border border-line2/40">
-              <span className="font-['Space_Grotesk'] text-2xl font-bold text-accentt">
-                {pulse.overall_score}
-              </span>
+                }
+              </select>
             </div>
-            <div>
-              <div className="text-[10px] font-bold text-ink3 uppercase tracking-wider">Unified Mine Pulse</div>
-              <div className="flex items-center gap-2 mt-0.5">
-                <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${getStatusBadge(pulse.overall_status)}`}>
-                  {pulse.overall_status}
-                </span>
-                <span className="text-[11px] font-mono text-ink2">Overall</span>
-              </div>
+            <div className="flex items-center gap-space-xs px-space-sm py-space-xs rounded bg-surface-elevation shadow-sm text-earth-charcoal hidden sm:flex">
+              <span className="material-symbols-outlined text-[18px] text-copper-accent">auto_graph</span>
+              <span className="font-label-md text-label-md">Model Drift: 0.04%</span>
             </div>
-          </div>
-        )}
-      </header>
-
-      {/* Pillar Breakdown Grid */}
-      {pulse?.pillars && (
-        <section className="mb-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-          {Object.entries(pulse.pillars).map(([key, p]) => (
-            <div key={key} className="liquid-glass-dark rounded-xl p-3.5 border border-line flex flex-col justify-between">
-              <div>
-                <div className="text-[10px] font-bold text-ink3 uppercase tracking-wider">{p.label}</div>
-                <div className="flex items-baseline gap-2 mt-1">
-                  <span className="font-['Space_Grotesk'] text-2xl font-bold text-ink">{p.score}</span>
-                  <span className="text-[10px] text-ink3">/100</span>
-                </div>
-              </div>
-              <div className="mt-2 flex items-center justify-between text-[10px]">
-                <span className={`px-1.5 py-0.2 rounded font-bold uppercase border ${getStatusBadge(p.status)}`}>
-                  {p.status}
-                </span>
-                <span className="text-ink3 font-mono">{p.weight}</span>
-              </div>
-            </div>
-          ))}
-        </section>
-      )}
-
-      {/* Natural Language Query Box */}
-      <section className="mb-8 liquid-glass-dark rounded-2xl p-6 border border-line shadow-xl">
-        <h2 className="text-xs font-bold uppercase tracking-wider text-ink mb-3 flex items-center gap-2">
-          <span className="material-symbols-outlined text-accentt">chat_bubble</span>
-          Ask Crucible AI Intelligence (Natural Language Reasoning)
-        </h2>
-
-        <div className="flex flex-col sm:flex-row gap-2">
-          <input
-            type="text"
-            placeholder="Ask a question (e.g. 'What is our production shortfall risk?' or 'Which truck is most likely to fail?')"
-            value={queryInput}
-            onChange={(e) => setQueryInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleQuery()}
-            className="flex-1 bg-deep2 border border-line rounded-xl px-4 py-3 text-sm text-ink placeholder-ink3 focus:outline-none focus:border-accentt transition-all shadow-inner"
-          />
-          <button
-            onClick={() => handleQuery()}
-            disabled={queryLoading}
-            className="py-3 px-6 rounded-xl bg-accentt text-inkb text-xs font-bold flex items-center justify-center gap-2 hover:opacity-90 disabled:opacity-50 transition-all shadow-md shrink-0"
-          >
-            {queryLoading ? (
-              <>
-                <span className="material-symbols-outlined text-[16px] animate-spin">sync</span>
-                Reasoning...
-              </>
-            ) : (
-              <>
-                <span className="material-symbols-outlined text-[16px]">psychology</span>
-                Ask Intelligence
-              </>
-            )}
-          </button>
-        </div>
-
-        {/* Quick prompt chips */}
-        <div className="mt-3 flex flex-wrap gap-2 text-[11px]">
-          {[
-            'What is our production shortfall risk?',
-            'Which equipment needs immediate PM?',
-            'Explain Target 4920 prospectivity',
-            'Where is the throughput bottleneck?',
-          ].map((prompt) => (
-            <button
-              key={prompt}
-              onClick={() => {
-                setQueryInput(prompt);
-                handleQuery(prompt);
-              }}
-              className="px-2.5 py-1 rounded-lg bg-panel3 hover:bg-panel4 border border-line2/40 text-ink2 hover:text-accentt transition-all"
-            >
-              {prompt}
-            </button>
-          ))}
-        </div>
-
-        {/* Query Result Card */}
-        {queryResult && (
-          <div className="mt-5 p-5 rounded-xl bg-deep2/90 border border-accentt/30 shadow-md">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-accentt/20 text-accentt border border-accentt/30">
-                Intent: {queryResult.intent}
-              </span>
-              <span className="text-[10px] font-mono text-ink3">{queryResult.data_origin}</span>
-            </div>
-            <h3 className="font-semibold text-sm text-ink mb-3">{queryResult.headline}</h3>
-
-            <div className="space-y-1.5 mb-4">
-              {queryResult.evidence.map((ev, idx) => (
-                <div key={idx} className="flex items-start gap-2 text-xs text-ink2">
-                  <span className="material-symbols-outlined text-okt text-[14px] mt-0.5">check_circle</span>
-                  <span>{ev}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="pt-3 border-t border-line flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="text-xs text-ink">
-                <strong>Recommended Action:</strong> <span className="text-accentt">{queryResult.recommendation}</span>
-              </div>
-              {queryResult.relevant_link && (
-                <Link
-                  href={queryResult.relevant_link}
-                  className="text-xs font-bold text-inkb bg-accentt px-3 py-1.5 rounded-lg hover:opacity-90 transition-all flex items-center gap-1 shrink-0"
-                >
-                  Inspect in Domain
-                  <span className="material-symbols-outlined text-[13px]">arrow_forward</span>
-                </Link>
-              )}
-            </div>
-          </div>
-        )}
-      </section>
-
-      {/* Top Cross-Domain Issues */}
-      <section className="mb-8">
-        <h2 className="text-xs font-bold uppercase tracking-wider text-ink mb-3 flex items-center gap-2">
-          <span className="material-symbols-outlined text-dangert">warning</span>
-          Top Cross-Domain Operational Risks (Prioritized)
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {issues.map((iss) => (
-            <div key={iss.id} className="liquid-glass-dark rounded-xl p-5 border border-line flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${getStatusBadge(iss.severity)}`}>
-                    {iss.severity} · {iss.domain}
-                  </span>
-                  <span className="text-[10px] font-mono text-ink3">ID: {iss.id}</span>
-                </div>
-                <h3 className="text-sm font-bold text-ink mb-1">{iss.title}</h3>
-                <p className="text-xs text-ink2 leading-relaxed">{iss.description}</p>
-              </div>
-
-              <div className="mt-4 pt-3 border-t border-line flex justify-end">
-                <Link
-                  href={iss.deep_link}
-                  className="text-xs font-bold text-accentt hover:underline flex items-center gap-1"
-                >
-                  {iss.action_label}
-                  <span className="material-symbols-outlined text-[14px]">open_in_new</span>
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Deep Reasoning Tabs */}
-      <section>
-        <div className="flex flex-wrap gap-1.5 mb-4 text-xs font-semibold">
-          {[
-            ['root_cause', 'Root Cause Explorer', 'account_tree'],
-            ['replay', 'Mine Replay Timeline', 'history'],
-            ['material_flow', 'Material Flow & Bottlenecks', 'alt_route'],
-          ].map(([key, label, icon]) => (
-            <button
-              key={key}
-              onClick={() => setActiveTab(key as any)}
-              className={`px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5 border ${
-                activeTab === key
-                  ? 'bg-chipon text-inkb font-bold border-chipon shadow-sm'
-                  : 'border-line text-ink2 hover:text-ink hover:bg-frost/5'
-              }`}
-            >
-              <span className="material-symbols-outlined !text-[15px]">{icon}</span>
-              {label}
-            </button>
-          ))}
-        </div>
-
-        {/* Tab 1: Root Cause Explorer */}
-        {activeTab === 'root_cause' && (
-          <div className="liquid-glass-dark rounded-2xl p-6 border border-line">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-              <div>
-                <h3 className="text-sm font-bold text-ink flex items-center gap-2">
-                  <span className="material-symbols-outlined text-accentt">manage_search</span>
-                  Multi-Factor Root Cause Analysis
-                </h3>
-                <p className="text-xs text-ink3 mt-0.5">
-                  Combines model SHAP attributions, real operational events, and unmeasured factors.
-                </p>
-              </div>
-              <div className="flex gap-2">
-                <select
-                  value={rcDomain}
-                  onChange={(e) => setRcDomain(e.target.value)}
-                  className="bg-deep2 border border-line rounded-lg px-2.5 py-1.5 text-xs text-ink"
-                >
-                  <option value="production">Production Forecast</option>
-                  <option value="equipment">Equipment Telemetry</option>
-                </select>
-                <select
-                  value={rcEntity}
-                  onChange={(e) => setRcEntity(e.target.value)}
-                  className="bg-deep2 border border-line rounded-lg px-2.5 py-1.5 text-xs text-ink"
-                >
-                  <option value="mine-01">Mine 01 (Sausar)</option>
-                  <option value="HD-04">Haul Truck HD-04</option>
-                </select>
-              </div>
-            </div>
-
-            {rcData && (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {/* 1. Model SHAP Drivers */}
-                <div className="p-4 rounded-xl bg-deep2/80 border border-line2/30">
-                  <div className="text-[10px] font-bold text-accentt uppercase tracking-wider mb-2 flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[14px]">psychology</span>
-                    Model Drivers (SHAP)
-                  </div>
-                  <div className="space-y-2">
-                    {rcData.model_drivers?.map((d: any, i: number) => (
-                      <div key={i} className="p-2 rounded bg-panel3/70 flex items-center justify-between text-xs">
-                        <span className="text-ink">{d.factor}</span>
-                        <span className="font-mono font-bold text-accentt">{d.impact}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 2. Observed Operational Events */}
-                <div className="p-4 rounded-xl bg-deep2/80 border border-line2/30">
-                  <div className="text-[10px] font-bold text-infot uppercase tracking-wider mb-2 flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[14px]">fact_check</span>
-                    Observed Operational Events
-                  </div>
-                  <div className="space-y-2">
-                    {rcData.observed_events?.map((ev: any, i: number) => (
-                      <div key={i} className="p-2 rounded bg-panel3/70 text-xs">
-                        <div className="text-[10px] font-mono text-ink3">{ev.timestamp}</div>
-                        <div className="text-ink mt-0.5">{ev.event}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 3. Unknown Contributors */}
-                <div className="p-4 rounded-xl bg-deep2/80 border border-line2/30">
-                  <div className="text-[10px] font-bold text-warnt uppercase tracking-wider mb-2 flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[14px]">help_outline</span>
-                    Unmeasured / Latent Factors
-                  </div>
-                  <div className="space-y-2">
-                    {rcData.unknown_contributors?.map((un: any, i: number) => (
-                      <div key={i} className="p-2 rounded bg-panel3/70 text-xs">
-                        <div className="text-ink">{un.factor}</div>
-                        <div className="text-[10px] font-mono text-warnt uppercase mt-0.5">{un.status}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+            {pulse && (
+              <div className="flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary-container text-on-primary-container font-label-md text-label-md shadow-sm">
+                <span className="font-bold text-lg leading-none">{pulse.overall_score}</span>
+                <span>Mine Pulse</span>
               </div>
             )}
           </div>
+        </div>
+
+        {/* Section 1: Mine Pulse Scorecards (1-100 Pillar Scale) */}
+        {pulse?.pillars && (
+          <div className="px-gutter-lg py-space-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-md">
+              {Object.entries(pulse.pillars).map(([key, p]) => {
+                const getColors = (status: string) => {
+                  switch (status) {
+                    case 'HEALTHY':
+                    case 'NOMINAL':
+                      return { text: 'text-telemetry-emerald', bg: 'bg-telemetry-emerald' };
+                    case 'WATCH':
+                    case 'HIGH_LOAD':
+                      return { text: 'text-telemetry-amber', bg: 'bg-telemetry-amber' };
+                    case 'CONGESTED':
+                      return { text: 'text-telemetry-amber', bg: 'bg-telemetry-amber' };
+                    case 'CRITICAL':
+                    case 'BOTTLENECK':
+                    case 'AT_RISK':
+                      return { text: 'text-telemetry-crimson', bg: 'bg-telemetry-crimson' };
+                    default:
+                      return { text: 'text-secondary', bg: 'bg-secondary' };
+                  }
+                };
+                const colors = getColors(p.status);
+                
+                return (
+                  <div key={key} className="bg-surface-parchment p-space-md rounded shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+                    <div className="flex justify-between items-start mb-space-sm">
+                      <span className="font-label-sm text-label-sm uppercase tracking-wider text-secondary">{p.label}</span>
+                      <span className={`w-2 h-2 rounded-full ${colors.bg}`}></span>
+                    </div>
+                    <div className="flex items-baseline gap-space-xs">
+                      <span className={`font-headline-xl text-headline-xl ${colors.text} tracking-tight`}>{p.score}</span>
+                      <span className="font-label-md text-label-md text-secondary">/100</span>
+                    </div>
+                    <div className="w-full bg-surface-elevation h-1.5 rounded mt-space-sm overflow-hidden">
+                      <div className={`${colors.bg} h-full rounded`} style={{ width: `${p.score}%` }}></div>
+                    </div>
+                    <div className="flex justify-between items-center mt-space-xs">
+                      <span className="font-body-sm text-body-sm text-on-surface-variant font-mono">{p.weight}</span>
+                      <span className={`font-label-sm text-label-sm ${colors.text} font-semibold uppercase`}>{p.status}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         )}
 
-        {/* Tab 2: Mine Replay */}
-        {activeTab === 'replay' && (
-          <div className="liquid-glass-dark rounded-2xl p-6 border border-line">
-            <h3 className="text-sm font-bold text-ink mb-4 flex items-center gap-2">
-              <span className="material-symbols-outlined text-infot">history</span>
-              Immutable Operational Audit Timeline
-            </h3>
-            <div className="relative pl-6 border-l border-line2/50 space-y-6">
-              {timeline.map((ev) => (
-                <div key={ev.id} className="relative group">
-                  <div className="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-deep2 border-2 border-accentt flex items-center justify-center"></div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-mono text-ink3">{ev.timestamp.slice(0, 16)}</span>
-                    <span className="px-1.5 py-0.2 rounded text-[9px] font-bold uppercase bg-panel3 border border-line text-ink2">
-                      {ev.category}
+        {/* Section 2: Natural Language Query & Multi-Agent Causal Reasoning Bar */}
+        <div className="px-gutter-lg py-space-md">
+          <div className="bg-surface-elevation rounded-xl p-space-lg shadow-md">
+            {/* Query Bar Header & Input */}
+            <div className="flex flex-col gap-space-xs mb-space-md">
+              <div className="flex items-center justify-between">
+                <label className="font-label-md text-label-md uppercase tracking-wider text-copper-accent flex items-center gap-space-xs" htmlFor="nl-intelligence-input">
+                  <span className="material-symbols-outlined text-[18px]">neurology</span>
+                  Natural Language Operational Reasoning Engine
+                </label>
+                <div className="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm hidden sm:flex">
+                  <span className="material-symbols-outlined text-[14px]">psychology</span>
+                  <span>Agent Consensus: 98.4% Confidence</span>
+                </div>
+              </div>
+              <div className="relative flex items-center">
+                <span className="material-symbols-outlined absolute left-space-md text-copper-accent text-[24px]">psychology_alt</span>
+                <input
+                  id="nl-intelligence-input"
+                  type="text"
+                  placeholder="Ask intelligence (e.g. 'What is our production shortfall risk?')"
+                  value={queryInput}
+                  onChange={(e) => setQueryInput(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleQuery()}
+                  className="w-full bg-canvas-sandstone py-space-md pl-14 pr-32 rounded font-body-md text-body-md text-earth-charcoal placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-copper-accent shadow-sm"
+                />
+                <button
+                  onClick={() => handleQuery()}
+                  disabled={queryLoading}
+                  className="absolute right-space-sm px-space-md py-space-xs rounded bg-primary-container text-on-primary-container font-label-md text-label-md flex items-center gap-space-xs hover:bg-tertiary transition-colors shadow-sm disabled:opacity-50"
+                >
+                  {queryLoading ? (
+                    <>
+                      <span className="material-symbols-outlined text-[16px] animate-spin">sync</span>
+                      <span className="hidden sm:inline">Reasoning</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="material-symbols-outlined text-[16px]">bolt</span>
+                      <span className="hidden sm:inline">Reason</span>
+                    </>
+                  )}
+                </button>
+              </div>
+              
+              {/* Quick prompt chips */}
+              <div className="mt-2 flex flex-wrap gap-2">
+                {[
+                  'What is our production shortfall risk?',
+                  'Which equipment needs immediate PM?',
+                  'Explain Target 4920 prospectivity',
+                  'Where is the throughput bottleneck?',
+                ].map((prompt) => (
+                  <button
+                    key={prompt}
+                    onClick={() => {
+                      setQueryInput(prompt);
+                      handleQuery(prompt);
+                    }}
+                    className="font-label-sm text-label-sm px-2 py-1 rounded bg-surface-container-low hover:bg-surface-container border border-earth-border text-secondary hover:text-copper-accent transition-all text-left"
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* AI-Generated NLQueryResult Display Box */}
+            {queryResult && (
+              <div className="bg-surface-parchment rounded p-space-lg shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm bg-surface-container-high px-space-md py-space-xs rounded mb-space-md">
+                  <div className="flex flex-wrap items-center gap-space-sm">
+                    <span className="font-label-sm text-label-sm uppercase tracking-wider text-earth-charcoal font-semibold">Active Agent Threads:</span>
+                    <span className="px-space-xs py-0.5 rounded bg-surface-elevation text-earth-charcoal font-label-sm text-label-sm flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-copper-accent"></span>Geometallurgical Agent
+                    </span>
+                    <span className="px-space-xs py-0.5 rounded bg-surface-elevation text-earth-charcoal font-label-sm text-label-sm flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-telemetry-emerald"></span>Haul Fleet Dispatch
+                    </span>
+                    <span className="px-space-xs py-0.5 rounded bg-surface-elevation text-earth-charcoal font-label-sm text-label-sm flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary-container text-on-primary-container"></span>Milling Kinetic Sim
                     </span>
                   </div>
-                  <h4 className="text-xs font-bold text-ink mt-0.5">{ev.title}</h4>
-                  <p className="text-xs text-ink2 mt-0.5">{ev.detail}</p>
+                  <span className="font-label-sm text-label-sm text-secondary hidden sm:block">Execution trace: 342ms • Iteration #4</span>
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Tab 3: Material Flow */}
-        {activeTab === 'material_flow' && (
-          <div className="liquid-glass-dark rounded-2xl p-6 border border-line">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-              <div>
-                <h3 className="text-sm font-bold text-ink flex items-center gap-2">
-                  <span className="material-symbols-outlined text-accentt">alt_route</span>
-                  End-to-End Material Flow &amp; Mass Balance
-                </h3>
-                <p className="text-xs text-ink3 mt-0.5">
-                  Real-time throughput capacity across pit extraction, haulage, crushing, beneficiation, and dispatch.
-                </p>
-              </div>
-              {flowBottleneck && (
-                <div className="p-2 rounded-lg bg-danger/10 border border-danger/30 text-dangert text-xs font-bold flex items-center gap-1.5">
-                  <span className="material-symbols-outlined text-[15px]">priority_high</span>
-                  <span>Primary Bottleneck: {flowBottleneck}</span>
-                </div>
-              )}
-            </div>
-
-            {/* Stage Cards Flow */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
-              {flowStages.map((stage, idx) => (
-                <div key={stage.id} className="relative p-3.5 rounded-xl bg-deep2/90 border border-line2/30 flex flex-col justify-between">
-                  <div>
-                    <div className="text-[10px] font-mono text-ink3">Stage 0{idx + 1}</div>
-                    <div className="text-xs font-bold text-ink mt-0.5">{stage.name}</div>
-                    <div className="mt-2 font-['Space_Grotesk'] text-lg font-bold text-accentt">
-                      {stage.current_tph} <span className="text-[10px] text-ink3">t/h</span>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+                  {/* Column 1: Multi-Agent Synthesis & Evidence Narrative (7 cols) */}
+                  <div className="lg:col-span-7 space-y-space-md">
+                    <div>
+                      <h3 className="font-headline-sm text-headline-sm text-earth-charcoal mb-2 flex items-start gap-space-xs">
+                        <span className="material-symbols-outlined text-telemetry-amber text-[20px] mt-1">troubleshoot</span>
+                        {queryResult.headline}
+                      </h3>
+                      <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                        <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-copper-accent/20 text-copper-accent border border-copper-accent/30 mr-2">
+                          Intent: {queryResult.intent}
+                        </span>
+                        {queryResult.data_origin}
+                      </p>
                     </div>
-                    <div className="text-[10px] text-ink3">Cap: {stage.capacity_tph} t/h</div>
+
+                    {/* Evidence Ledger Chips */}
+                    <div className="space-y-2 mb-4">
+                      {queryResult.evidence.map((ev, idx) => (
+                        <div key={idx} className="flex items-start gap-2 text-sm text-secondary bg-surface-container-low p-2 rounded border border-earth-border">
+                          <span className="material-symbols-outlined text-telemetry-emerald text-[18px] mt-0.5 shrink-0">check_circle</span>
+                          <span>{ev}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Prescriptive Actions */}
+                    <div className="pt-space-xs">
+                      <span className="font-label-sm text-label-sm uppercase tracking-wider text-earth-charcoal font-semibold block mb-space-xs">
+                        Crucible Prescriptive Countermeasures:
+                      </span>
+                      <div className="flex flex-col sm:flex-row gap-space-sm">
+                        <button className="flex-1 bg-primary-container text-on-primary-container p-space-sm rounded hover:bg-tertiary transition-colors text-left flex items-center justify-between group shadow-sm">
+                          <div>
+                            <div className="font-label-md text-label-md flex items-center gap-1">
+                              <span className="material-symbols-outlined text-[16px]">alt_route</span>
+                              Recommended Action
+                            </div>
+                            <div className="font-body-sm text-body-sm text-on-primary-container/80 mt-0.5">
+                              {queryResult.recommendation}
+                            </div>
+                          </div>
+                          <span className="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </button>
+                        
+                        {queryResult.relevant_link && (
+                          <Link href={queryResult.relevant_link} className="flex-1 bg-surface-elevation text-earth-charcoal p-space-sm rounded hover:bg-surface-container-high transition-colors text-left flex items-center justify-between group shadow-sm">
+                            <div>
+                              <div className="font-label-md text-label-md flex items-center gap-1">
+                                <span className="material-symbols-outlined text-copper-accent text-[16px]">open_in_new</span>
+                                Inspect in Domain
+                              </div>
+                              <div className="font-body-sm text-body-sm text-secondary mt-0.5">
+                                Drill down into specific module
+                              </div>
+                            </div>
+                            <span className="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                          </Link>
+                        )}
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="mt-3">
-                    <div className="w-full h-1.5 bg-panel3 rounded-full overflow-hidden mb-1">
-                      <div
-                        className={`h-full ${stage.utilization_pct >= 95 ? 'bg-danger' : stage.utilization_pct >= 85 ? 'bg-warn' : 'bg-ok'}`}
-                        style={{ width: `${Math.min(stage.utilization_pct, 100)}%` }}
-                      ></div>
-                    </div>
-                    <div className="flex items-center justify-between text-[9px] font-bold">
-                      <span className="text-ink2">{stage.utilization_pct}%</span>
-                      <span className={`px-1 py-0.2 rounded uppercase ${getStatusBadge(stage.status)}`}>
-                        {stage.status}
+                  {/* Column 2: Causal Graph Node Visualization replaced by Top Issues */}
+                  <div className="lg:col-span-5 bg-canvas-sandstone p-space-md rounded shadow-sm">
+                    <div className="flex items-center justify-between mb-space-sm">
+                      <span className="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Cross-Domain Issues Context</span>
+                      <span className="font-label-sm text-label-sm text-copper-accent flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-copper-accent"></span>Bayesian Structure
                       </span>
                     </div>
+                    <div className="space-y-space-sm relative">
+                      {issues.length > 0 ? (
+                        issues.slice(0, 3).map((iss) => {
+                           const badgeColor = iss.severity === 'CRITICAL' ? 'bg-telemetry-crimson/20 text-telemetry-crimson' : 
+                                              iss.severity === 'HIGH_LOAD' ? 'bg-telemetry-amber/20 text-telemetry-amber' : 
+                                              'bg-surface-container text-earth-charcoal';
+                           const borderColor = iss.severity === 'CRITICAL' ? 'border-telemetry-crimson' : 
+                                               iss.severity === 'HIGH_LOAD' ? 'border-telemetry-amber' : 
+                                               'border-surface-elevation';
+                           return (
+                             <div key={iss.id} className={`bg-surface-parchment p-space-sm rounded flex flex-col shadow-xs border-l-2 ${borderColor}`}>
+                               <div className="flex items-center justify-between mb-1">
+                                 <span className="font-label-sm text-label-sm font-semibold uppercase text-secondary">{iss.domain}</span>
+                                 <span className={`px-space-xs py-0.5 rounded font-label-sm text-label-sm ${badgeColor}`}>{iss.severity}</span>
+                               </div>
+                               <span className="font-label-md text-label-md text-earth-charcoal block">{iss.title}</span>
+                               <span className="font-body-sm text-body-sm text-secondary mt-1 line-clamp-2">{iss.description}</span>
+                             </div>
+                           );
+                        })
+                      ) : (
+                        <div className="text-secondary font-body-sm text-body-sm py-4 text-center">No immediate cross-domain issues detected for this scope.</div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-
-            {flowRecommendation && (
-              <div className="p-4 rounded-xl bg-deep2/80 border border-line2/30 text-xs text-ink flex items-start gap-2">
-                <span className="material-symbols-outlined text-accentt text-[16px] mt-0.5">tips_and_updates</span>
-                <div>
-                  <strong>Optimizer Recommendation:</strong> {flowRecommendation}
                 </div>
               </div>
             )}
           </div>
-        )}
-      </section>
+        </div>
+
+        {/* Section 3: Deep Reasoning Mode Tabs */}
+        <div className="px-gutter-lg py-space-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+            {/* Pill Tabs */}
+            <div className="inline-flex p-1 bg-surface-container rounded gap-1 overflow-x-auto whitespace-nowrap max-w-full">
+              {[
+                ['root_cause', 'Root Cause Explorer'],
+                ['replay', 'Mine Replay'],
+                ['material_flow', 'Material Flow'],
+              ].map(([key, label]) => (
+                <button
+                  key={key}
+                  onClick={() => setActiveTab(key as any)}
+                  className={`px-space-md py-space-xs rounded font-label-md text-label-md transition-colors ${
+                    activeTab === key
+                      ? 'bg-earth-charcoal text-canvas-sandstone shadow-sm'
+                      : 'text-on-surface-variant hover:text-earth-charcoal hover:bg-surface-elevation'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-space-sm text-secondary font-label-sm text-label-sm shrink-0">
+              <span>Target Metric:</span>
+              <span className="px-space-xs py-0.5 rounded bg-surface-elevation text-earth-charcoal font-semibold">Mill Starvation Delta (t/h)</span>
+            </div>
+          </div>
+
+          {/* Active Tab: Root Cause Explorer */}
+          {activeTab === 'root_cause' && (
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-lg pb-space-xl">
+              {/* SHAP Impact Vector Chart (7 cols) */}
+              <div className="lg:col-span-7 bg-surface-parchment p-space-lg rounded shadow-sm flex flex-col justify-between">
+                <div>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-space-sm gap-2">
+                    <div>
+                      <h4 className="font-headline-sm text-headline-sm text-earth-charcoal">Feature Impact Ledger (SHAP)</h4>
+                      <p className="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                        Relative influence of telemetry features on predicted target divergence.
+                      </p>
+                    </div>
+                    <span className="font-label-sm text-label-sm uppercase tracking-wider text-copper-accent bg-surface-elevation px-space-xs py-0.5 rounded self-start sm:self-auto">
+                      TreeSHAP v2.1
+                    </span>
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-2 my-4 bg-surface-container-low p-2 rounded border border-earth-border">
+                    <select
+                      value={rcDomain}
+                      onChange={(e) => setRcDomain(e.target.value)}
+                      className="bg-surface-container border border-earth-border rounded px-2.5 py-1.5 text-xs text-earth-charcoal focus:outline-none focus:border-copper-accent"
+                    >
+                      <option value="production">Production Forecast</option>
+                      <option value="equipment">Equipment Telemetry</option>
+                    </select>
+                    <select
+                      value={rcEntity}
+                      onChange={(e) => setRcEntity(e.target.value)}
+                      className="bg-surface-container border border-earth-border rounded px-2.5 py-1.5 text-xs text-earth-charcoal focus:outline-none focus:border-copper-accent"
+                    >
+                      <option value="mine-01">Mine 01 (Sausar)</option>
+                      <option value="HD-04">Haul Truck HD-04</option>
+                    </select>
+                  </div>
+
+                  {rcData && (
+                    <div className="space-y-space-md mt-space-md">
+                      {rcData.model_drivers?.map((d: any, i: number) => {
+                        const isPositive = d.impact.startsWith('+');
+                        const colorClass = isPositive ? 'bg-telemetry-crimson' : 'bg-telemetry-emerald';
+                        const textClass = isPositive ? 'text-telemetry-crimson' : 'text-telemetry-emerald';
+                        const widthPct = Math.max(20, 80 - (i * 20));
+                        return (
+                          <div key={i}>
+                            <div className="flex justify-between items-center mb-1">
+                              <span className="font-label-md text-label-md text-earth-charcoal flex items-center gap-space-xs">
+                                <span className={`w-2 h-2 rounded-full ${colorClass}`}></span>
+                                {d.factor}
+                              </span>
+                              <span className={`font-label-md text-label-md ${textClass} font-bold`}>{d.impact}</span>
+                            </div>
+                            <div className={`w-full bg-surface-container h-4 rounded overflow-hidden flex ${isPositive ? 'justify-start' : 'justify-end'}`}>
+                              <div className={`${colorClass} h-full rounded`} style={{ width: `${widthPct}%` }}></div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+              
+              {/* AI Synthesis Card & Strategic Prescriptions (5 cols) */}
+              <div className="lg:col-span-5 flex flex-col gap-space-md">
+                <div className="bg-surface-parchment p-space-lg rounded shadow-sm relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-copper-accent/5 rounded-full -mr-16 -mt-16 pointer-events-none"></div>
+                  <div className="flex items-center gap-space-xs mb-space-md">
+                    <span className="w-2.5 h-2.5 rounded-full bg-copper-accent animate-pulse"></span>
+                    <span className="font-label-sm text-label-sm uppercase tracking-wider text-earth-charcoal font-semibold">Observed & Unmeasured Events</span>
+                  </div>
+                  
+                  {rcData && (
+                    <div className="space-y-6 relative z-10">
+                      {/* 2. Observed Operational Events */}
+                      <div>
+                        <div className="font-label-sm text-label-sm text-primary uppercase tracking-wider mb-2 flex items-center gap-1">
+                          <span className="material-symbols-outlined text-[16px]">fact_check</span>
+                          Observed Operational Events
+                        </div>
+                        <div className="space-y-2">
+                          {rcData.observed_events?.map((ev: any, i: number) => (
+                            <div key={i} className="p-3 rounded bg-surface-container-high text-xs border border-earth-border/50">
+                              <div className="font-label-sm text-label-sm font-mono text-secondary">{ev.timestamp}</div>
+                              <div className="font-body-sm text-body-sm text-earth-charcoal mt-1">{ev.event}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* 3. Unknown Contributors */}
+                      <div>
+                        <div className="font-label-sm text-label-sm text-telemetry-amber uppercase tracking-wider mb-2 flex items-center gap-1">
+                          <span className="material-symbols-outlined text-[16px]">help_outline</span>
+                          Unmeasured / Latent Factors
+                        </div>
+                        <div className="space-y-2">
+                          {rcData.unknown_contributors?.map((un: any, i: number) => (
+                            <div key={i} className="p-3 rounded bg-surface-container-high text-xs border border-earth-border/50 flex justify-between items-center">
+                              <div className="font-body-sm text-body-sm text-earth-charcoal">{un.factor}</div>
+                              <div className="font-label-sm text-label-sm font-mono text-telemetry-amber uppercase bg-telemetry-amber/10 px-1.5 py-0.5 rounded border border-telemetry-amber/20">{un.status}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="mt-space-lg flex flex-col gap-space-xs relative z-10">
+                    <button className="w-full bg-primary-container text-on-primary-container py-space-sm px-space-md rounded font-label-md text-label-md hover:bg-tertiary transition-colors flex items-center justify-center gap-space-xs shadow-md">
+                      <span className="material-symbols-outlined text-[18px]">verified</span>
+                      Acknowledge Factors
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Tab 2: Mine Replay */}
+          {activeTab === 'replay' && (
+            <div className="bg-surface-parchment rounded-xl p-space-lg border border-earth-border shadow-sm max-w-4xl">
+              <h3 className="font-headline-sm text-headline-sm text-earth-charcoal mb-space-md flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary">history</span>
+                Immutable Operational Audit Timeline
+              </h3>
+              <div className="relative pl-space-md border-l-2 border-earth-border space-y-space-md ml-2">
+                {timeline.map((ev) => (
+                  <div key={ev.id} className="relative group">
+                    <div className="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-surface-parchment border-2 border-copper-accent flex items-center justify-center"></div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-body-sm text-body-sm font-mono text-secondary">{ev.timestamp.slice(0, 16)}</span>
+                      <span className="px-space-xs py-0.5 rounded font-label-sm text-label-sm uppercase bg-surface-container border border-earth-border text-secondary">
+                        {ev.category}
+                      </span>
+                    </div>
+                    <h4 className="font-label-md text-label-md text-earth-charcoal">{ev.title}</h4>
+                    <p className="font-body-sm text-body-sm text-secondary mt-0.5">{ev.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Tab 3: Material Flow */}
+          {activeTab === 'material_flow' && (
+            <div className="bg-surface-parchment rounded-xl p-space-lg border border-earth-border shadow-sm">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-space-lg">
+                <div>
+                  <h3 className="font-headline-sm text-headline-sm text-earth-charcoal flex items-center gap-2 mb-1">
+                    <span className="material-symbols-outlined text-copper-accent">alt_route</span>
+                    End-to-End Material Flow &amp; Mass Balance
+                  </h3>
+                  <p className="font-body-sm text-body-sm text-secondary">
+                    Real-time throughput capacity across pit extraction, haulage, crushing, beneficiation, and dispatch.
+                  </p>
+                </div>
+                {flowBottleneck && (
+                  <div className="px-space-md py-space-sm rounded bg-telemetry-crimson/10 border border-telemetry-crimson/30 text-telemetry-crimson font-label-md text-label-md flex items-center gap-2">
+                    <span className="material-symbols-outlined text-[20px]">priority_high</span>
+                    <span>Primary Bottleneck: {flowBottleneck}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Stage Cards Flow */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-space-sm mb-space-lg">
+                {flowStages.map((stage, idx) => (
+                  <div key={stage.id} className="relative p-space-md rounded bg-surface-container border border-earth-border flex flex-col justify-between shadow-sm">
+                    <div>
+                      <div className="font-label-sm text-label-sm font-mono text-secondary mb-1">Stage 0{idx + 1}</div>
+                      <div className="font-label-md text-label-md font-bold text-earth-charcoal leading-tight">{stage.name}</div>
+                      <div className="mt-3 font-headline-md text-headline-md font-bold text-copper-accent">
+                        {stage.current_tph} <span className="font-body-sm text-body-sm text-secondary font-normal">t/h</span>
+                      </div>
+                      <div className="font-label-sm text-label-sm text-secondary mt-1">Cap: {stage.capacity_tph} t/h</div>
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-earth-border/50">
+                      <div className="w-full h-1.5 bg-surface-elevation rounded-full overflow-hidden mb-2">
+                        <div
+                          className={`h-full ${stage.utilization_pct >= 95 ? 'bg-telemetry-crimson' : stage.utilization_pct >= 85 ? 'bg-telemetry-amber' : 'bg-telemetry-emerald'}`}
+                          style={{ width: `${Math.min(stage.utilization_pct, 100)}%` }}
+                        ></div>
+                      </div>
+                      <div className="flex items-center justify-between font-label-sm text-label-sm font-bold">
+                        <span className="text-secondary">{stage.utilization_pct}%</span>
+                        <span className={`uppercase ${
+                          stage.utilization_pct >= 95 ? 'text-telemetry-crimson' : stage.utilization_pct >= 85 ? 'text-telemetry-amber' : 'text-telemetry-emerald'
+                        }`}>
+                          {stage.status}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {flowRecommendation && (
+                <div className="p-space-md rounded bg-surface-container border border-earth-border font-body-sm text-body-sm text-earth-charcoal flex items-start gap-3 shadow-sm">
+                  <span className="material-symbols-outlined text-copper-accent text-[24px]">tips_and_updates</span>
+                  <div className="pt-0.5">
+                    <strong className="block mb-1 text-copper-accent font-label-md">Optimizer Recommendation</strong>
+                    {flowRecommendation}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
     </main>
   );
 }

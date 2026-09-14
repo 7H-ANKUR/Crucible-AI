@@ -3,6 +3,8 @@
 /**
  * Exploration Intelligence — GIS rebuild.
  *
+ * Reskinned to Earthy Industrial.
+ *
  * UI unchanged: Data Strata panel (left), target detail panel (right), quick
  * target chips, Drill Review modal. Map internals rebuilt:
  *   - basemap via the MapProvider abstraction (OpenFreeMap, no API key)
@@ -24,12 +26,10 @@ import {
 import {
   resolveMapStyle,
   applyMapTheme,
-  MAP_RASTER_ATTRIBUTION,
   assertIndiaOnly,
   prospectivityBand,
   PROB_COLOR,
 } from '@/lib/mapConfig';
-import { getTheme } from '@/lib/theme';
 
 const SAUSAR_CENTER: [number, number] = [79.25, 21.95]; // [lng, lat]
 
@@ -68,9 +68,6 @@ export default function ExplorationPage() {
   const [locCtx, setLocCtx] = useState<LocationContext | null>(null);
   const [brief, setBrief] = useState<{ text: string; source: string } | null>(null);
   const [briefLoading, setBriefLoading] = useState(false);
-  const [compareWith, setCompareWith] = useState<string | null>(null);
-  const [leftCollapsed, setLeftCollapsed] = useState(false);
-  const [rightCollapsed, setRightCollapsed] = useState(false);
 
   const [strataLayers, setStrataLayers] = useState({
     geological: true,      // radial geological overlay
@@ -81,7 +78,6 @@ export default function ExplorationPage() {
   });
 
   const selectedTarget = targets.find((t) => t.id === selectedId) ?? targets[0];
-  const compareTarget = compareWith ? targets.find((t) => t.id === compareWith) ?? null : null;
 
   // ---------------------------------------------------------------- data
   useEffect(() => {
@@ -167,17 +163,10 @@ export default function ExplorationPage() {
     return () => {
       alive = false;
     };
-    // Mount-only data load, intentionally. `addGridSource` and `pushTargets` are
-    // useCallback(..., []) so their identity never changes, and both are declared
-    // further down the component body — naming them here would evaluate them in
-    // their TDZ during render and throw.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Location context for the selected target (cached server-side).
-  // Keyed on the coordinates actually read inside the effect, not just the id:
-  // the target list is swapped from fallback data to API data after mount, so an
-  // id-only key could keep stale coordinates for a re-used id.
   const selLat = selectedTarget?.lat;
   const selLng = selectedTarget?.lng;
   useEffect(() => {
@@ -287,7 +276,7 @@ export default function ExplorationPage() {
       if (cancelled || !mapContainer.current) return;
       const map = new maplibregl.Map({
         container: mapContainer.current,
-        style: resolveMapStyle(getTheme()),
+        style: resolveMapStyle('light'),
         center: SAUSAR_CENTER,
         zoom: 8,
         attributionControl: false,
@@ -472,273 +461,420 @@ export default function ExplorationPage() {
   const ev = evidenceOf(selectedTarget, cell);
 
   return (
-    <main id="exploration-view-root" className="flex-1 flex flex-col relative h-[calc(100vh-56px)] overflow-hidden bg-deep2">
-      {/* Real map canvas (provider from mapConfig — no CARTO, no API key) */}
-      <div className="absolute inset-0 z-0 overflow-hidden select-none">
-        <div ref={mapContainer} className="w-full h-full" />
-        {gridLoading && (
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-deep2/90 px-3 py-1.5 rounded-full border border-line text-[11px] text-inkb z-10">
-            Loading scored grid…
-          </div>
-        )}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:90px_90px] pointer-events-none" />
-        {strataLayers.geological && (
-          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% 45%, rgba(255,197,111,0.08), transparent 60%)' }} />
-        )}
-        {strataLayers.historicalDrills && (
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-[45%] left-[42%] flex items-center gap-1 text-[10px] text-infot bg-deep2/90 px-1.5 py-0.5 rounded border border-info/40">
-              <span className="w-1.5 h-1.5 bg-info rounded-full"></span> DH-041 (41.2% Mn)
-            </div>
-            <div className="absolute top-[58%] left-[51%] flex items-center gap-1 text-[10px] text-infot bg-deep2/90 px-1.5 py-0.5 rounded border border-info/40">
-              <span className="w-1.5 h-1.5 bg-info rounded-full"></span> DH-038 (38.9% Mn)
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Overlay panels — unchanged layout */}
-      <div className="absolute inset-0 z-10 p-4 md:p-6 lg:p-8 flex flex-col md:flex-row justify-between pointer-events-none gap-6">
-        {/* Left: Data Strata */}
-        <div className="w-full md:w-80 flex flex-col gap-4 pointer-events-auto overflow-y-auto max-h-full">
-          <div className="liquid-glass-dark rounded-xl ambient-shadow border border-line backdrop-blur-xl overflow-hidden">
-            {/* Collapsible header */}
-            <div
-              className="flex items-center justify-between px-5 py-3 cursor-pointer select-none hover:bg-white/5 transition-colors border-b border-line/50"
-              onClick={() => setLeftCollapsed((v) => !v)}
-            >
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-accentt text-base">layers</span>
-                <span className="text-xs font-bold uppercase tracking-wider text-ink">Data Strata</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] text-okt font-bold bg-ok/10 px-2 py-0.5 rounded border border-ok/30">ACTIVE</span>
-                <span
-                  className="material-symbols-outlined text-ink3 text-base transition-transform duration-300"
-                  style={{ transform: leftCollapsed ? 'rotate(180deg)' : 'rotate(0deg)' }}
-                >expand_less</span>
-              </div>
-            </div>
-            {!leftCollapsed && (
-              <div className="p-5 pt-4">
-                <div className="space-y-3 text-xs">
-              {(
-                [
-                  ['geological', 'Geological Structures'],
-                  ['electromagnetic', 'Electromagnetic Anomalies'],
-                  ['historicalDrills', 'Historical Drill Collars'],
-                  ['gravityFaults', 'Scored Grid Cells'],
-                  ['heatmap', 'Prospectivity Heatmap'],
-                ] as const
-              ).map(([key, label]) => (
-                <label key={key} className="flex items-center gap-3 cursor-pointer group select-none">
-                  <input
-                    type="checkbox"
-                    checked={strataLayers[key]}
-                    onChange={() => handleToggleStrata(key)}
-                    className="h-4 w-4 accent-accent cursor-pointer"
-                  />
-                  <span className="text-ink2 group-hover:text-ink transition-colors font-medium">{label}</span>
-                </label>
-              ))}
-                </div>
-                <div className="mt-4 pt-3 border-t border-line flex items-center justify-between text-[11px] text-ink3">
-                  <span>Sausar Belt</span>
-                  <span>{MAP_RASTER_ATTRIBUTION.split('·')[0]?.trim() ?? 'Esri'}</span>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Quick target selector + compare mode */}
-          <div className="liquid-glass-dark rounded-xl p-3 border border-line flex flex-wrap items-center gap-2">
-            <span className="text-[10px] font-bold text-inkb uppercase tracking-wider px-1">
-              {compareWith ? 'Compare B:' : 'Targets:'}
-            </span>
-            {targets.slice(0, 6).map((t) => (
-              <button
-                key={t.id}
-                onClick={() => {
-                  if (compareWith === t.id) {
-                    setCompareWith(null);
-                    return;
-                  }
-                  if (compareWith === '__pending__') {
-                    setCompareWith(t.id);
-                    return;
-                  }
-                  setSelectedId(t.id);
-                  mapRef.current?.easeTo({ center: [t.lng, t.lat], zoom: 11, duration: 600 });
-                }}
-                className={`px-2.5 py-1 rounded text-xs font-semibold transition-all ${
-                  t.id === selectedId || t.id === compareWith
-                    ? 'bg-accent text-onaccent shadow-md font-bold'
-                    : 'bg-panel2 text-ink2 hover:bg-panel4'
-                }`}
+    <main className="w-full bg-canvas-sandstone flex-1 flex flex-col min-h-[calc(100vh-64px)] overflow-y-auto overflow-x-hidden">
+      <div className="flex flex-col w-full h-full">
+        {/* Strata Filter Bar & Telemetry Matrix */}
+        <section className="w-full bg-surface-parchment px-space-lg py-space-md shadow-sm border-b border-earth-border flex-shrink-0 z-20">
+          <div className="flex flex-wrap items-center justify-between gap-space-md">
+            {/* Left: Survey Layers Pills */}
+            <div className="flex flex-wrap items-center gap-space-xs">
+              <span className="font-label-sm text-label-sm text-secondary uppercase tracking-widest mr-space-xs">Sensor Strata</span>
+              
+              <button 
+                className={`px-space-sm py-1.5 rounded-lg font-label-md text-label-md flex items-center gap-1.5 shadow-sm transition-all ${strataLayers.geological ? 'bg-earth-charcoal text-canvas-sandstone' : 'bg-surface-container-high text-on-surface-variant hover:bg-surface-container'}`}
+                onClick={() => handleToggleStrata('geological')}
               >
-                {t.name.replace('Target ', '')}
+                <span className="w-2 h-2 rounded-full bg-copper-accent"></span>
+                Hyperspectral (EMIT)
               </button>
-            ))}
-            <button
-              onClick={() => setCompareWith(compareWith ? null : '__pending__')}
-              className={`px-2.5 py-1 rounded text-[11px] font-bold transition-all border ${
-                compareWith
-                  ? 'bg-chipon text-inkb border-chipon'
-                  : 'border-line3 text-inkb hover:border-accent hover:text-accentt'
-              }`}
-            >
-              ⇄ Compare
-            </button>
-          </div>
-        </div>
-
-        {/* Right: target detail (existing panel, enriched) */}
-        {selectedTarget && (
-          <div className="w-full md:w-[420px] pointer-events-auto flex flex-col justify-end md:justify-start overflow-y-auto max-h-full">
-            <div className="liquid-glass-dark rounded-[24px] ambient-shadow border border-line backdrop-blur-2xl shadow-2xl overflow-hidden">
-              {/* Collapsible header — always visible */}
-              <div
-                className="flex items-center justify-between px-6 py-4 cursor-pointer select-none hover:bg-white/5 transition-colors"
-                onClick={() => setRightCollapsed((v) => !v)}
+              
+              <button 
+                className={`px-space-sm py-1.5 rounded-lg font-label-md text-label-md flex items-center gap-1.5 shadow-sm transition-all ${strataLayers.electromagnetic ? 'bg-earth-charcoal text-canvas-sandstone' : 'bg-surface-container-high text-on-surface-variant hover:bg-surface-container'}`}
+                onClick={() => handleToggleStrata('electromagnetic')}
               >
+                <span className="w-2 h-2 rounded-full bg-telemetry-emerald"></span>
+                Electromagnetic (VTEM)
+              </button>
+              
+              <button 
+                className={`px-space-sm py-1.5 rounded-lg font-label-md text-label-md flex items-center gap-1.5 shadow-sm transition-all ${strataLayers.heatmap ? 'bg-earth-charcoal text-canvas-sandstone' : 'bg-surface-container-high text-on-surface-variant hover:bg-surface-container'}`}
+                onClick={() => handleToggleStrata('heatmap')}
+              >
+                <span className="w-2 h-2 rounded-full bg-telemetry-amber"></span>
+                Prospectivity Heatmap
+              </button>
+              
+              <button 
+                className={`px-space-sm py-1.5 rounded-lg font-label-md text-label-md flex items-center gap-1.5 shadow-sm transition-all ${strataLayers.gravityFaults ? 'bg-earth-charcoal text-canvas-sandstone' : 'bg-surface-container-high text-on-surface-variant hover:bg-surface-container'}`}
+                onClick={() => handleToggleStrata('gravityFaults')}
+              >
+                <span className="w-2 h-2 rounded-full bg-tertiary"></span>
+                Gravimetric Gradient
+              </button>
+              
+              <button 
+                className={`px-space-sm py-1.5 rounded-lg font-label-md text-label-md flex items-center gap-1.5 shadow-sm transition-all ${strataLayers.historicalDrills ? 'bg-earth-charcoal text-canvas-sandstone' : 'bg-surface-container-high text-on-surface-variant hover:bg-surface-container'}`}
+                onClick={() => handleToggleStrata('historicalDrills')}
+              >
+                <span className="w-2 h-2 rounded-full bg-telemetry-crimson"></span>
+                Historical Drills
+              </button>
+            </div>
+            
+            {/* Right: Coordinate Projection & Resolution Multi-segment */}
+            <div className="flex items-center gap-space-md">
+              <div className="hidden xl:flex items-center gap-space-xs bg-surface-container px-space-sm py-1.5 rounded-lg text-on-surface-variant font-label-sm text-label-sm shadow-inner">
+                <span className="material-symbols-outlined text-copper-accent text-[16px]">public</span>
+                <span>WGS84 UTM 35S</span>
+                <span className="text-outline mx-1">•</span>
+                <span className="font-semibold text-earth-charcoal">
+                  {locCtx && !locCtx.unavailable ? [locCtx.district, locCtx.state, locCtx.country].filter(Boolean).join(', ') || 'Locating…' : 'E 412,840.12 N 8,642,109.80'}
+                </span>
+              </div>
+              <div className="flex items-center bg-surface-container p-0.5 rounded-lg shadow-inner">
+                <span className="px-space-xs font-label-sm text-label-sm text-secondary uppercase">Mesh Res</span>
+                <button className="px-2 py-1 rounded font-label-sm text-label-sm bg-earth-charcoal text-canvas-sandstone transition-colors shadow-sm">1m</button>
+                <button className="px-2 py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-earth-charcoal transition-colors">5m</button>
+                <button className="px-2 py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-earth-charcoal transition-colors">10m</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Exploration Workbench Core: 3-Column Split */}
+        <div className="flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-space-md p-space-md lg:p-space-lg">
+          
+          {/* LEFT PANEL: Data Strata & Inversion Models (Col 1-3) */}
+          <div className="lg:col-span-3 flex flex-col gap-space-md">
+            
+            {/* Section Header Card */}
+            <div className="bg-surface-parchment rounded-xl p-space-md shadow-sm border border-earth-border flex flex-col gap-space-sm">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-space-xs">
+                  <span className="material-symbols-outlined text-copper-accent text-[20px]">layers</span>
+                  <span className="font-headline-sm text-headline-sm text-earth-charcoal">Strata Inversion</span>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-primary-container/20 border border-primary-container/30 text-primary font-label-sm text-label-sm">Live Model</span>
+              </div>
+              <p className="font-body-sm text-body-sm text-secondary">Multi-physics geophysical fusion inverted down to -650m sub-surface RL datum.</p>
+            </div>
+            
+            {/* Layer Opacity & Inversion Sliders */}
+            <div className="bg-surface-parchment rounded-xl p-space-md shadow-sm border border-earth-border flex flex-col gap-space-md">
+              <div className="flex items-center justify-between">
+                <span className="font-label-md text-label-md text-earth-charcoal uppercase tracking-wider">Depth Slice RL</span>
+                <span className="font-label-sm text-label-sm text-copper-accent font-semibold">-320m Sub-surface</span>
+              </div>
+              <div className="space-y-1">
+                <input type="range" min="0" max="650" defaultValue="320" className="w-full accent-primary cursor-pointer h-1.5 bg-surface-container-high rounded shadow-inner" />
+                <div className="flex justify-between font-label-sm text-label-sm text-secondary">
+                  <span>0m (Surface)</span>
+                  <span>-300m</span>
+                  <span>-650m (Sill)</span>
+                </div>
+              </div>
+              <div className="space-y-space-sm pt-space-xs">
+                <div className="flex justify-between items-center">
+                  <span className="font-label-sm text-label-sm text-on-surface-variant">VTEM Resistivity Opacity</span>
+                  <span className="font-label-sm text-label-sm text-earth-charcoal font-medium">85%</span>
+                </div>
+                <input type="range" min="0" max="100" defaultValue="85" className="w-full accent-copper-accent cursor-pointer h-1.5 bg-surface-container-high rounded shadow-inner" />
+              </div>
+              <div className="space-y-space-sm">
+                <div className="flex justify-between items-center">
+                  <span className="font-label-sm text-label-sm text-on-surface-variant">Hyperspectral Ferric Index</span>
+                  <span className="font-label-sm text-label-sm text-earth-charcoal font-medium">62%</span>
+                </div>
+                <input type="range" min="0" max="100" defaultValue="62" className="w-full accent-copper-accent cursor-pointer h-1.5 bg-surface-container-high rounded shadow-inner" />
+              </div>
+            </div>
+            
+            {/* Lithology Vector Classification */}
+            <div className="bg-surface-parchment rounded-xl p-space-md shadow-sm border border-earth-border flex flex-col gap-space-sm">
+              <div className="flex items-center justify-between">
+                <span className="font-label-md text-label-md text-earth-charcoal uppercase tracking-wider">Target Selector</span>
+                <span className="font-label-sm text-label-sm text-secondary">{targets.length} AI Classes</span>
+              </div>
+              <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+                {targets.map((t, idx) => {
+                  const colors = ['bg-copper-accent', 'bg-ore-gold', 'bg-telemetry-emerald', 'bg-secondary', 'bg-tertiary'];
+                  const dotColor = colors[idx % colors.length];
+                  return (
+                    <label key={t.id} className={`flex items-center justify-between p-2 rounded-lg cursor-pointer transition-colors ${selectedId === t.id ? 'bg-surface-container-high border border-earth-border shadow-sm' : 'bg-surface-container hover:bg-surface-container-high border border-transparent'}`}>
+                      <div className="flex items-center gap-space-xs">
+                        <span className={`w-3 h-3 rounded-full ${dotColor}`}></span>
+                        <span className="font-label-md text-label-md text-earth-charcoal truncate max-w-[150px]" title={t.name}>{t.name}</span>
+                      </div>
+                      <input 
+                        type="radio" 
+                        name="target-selector" 
+                        checked={selectedId === t.id} 
+                        onChange={() => {
+                          setSelectedId(t.id);
+                          mapRef.current?.easeTo({ center: [t.lng, t.lat], zoom: 11, duration: 600 });
+                        }} 
+                        className="accent-primary w-4 h-4 rounded cursor-pointer" 
+                      />
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+            
+            {/* Sensor Satellites & Passes Tracker */}
+            <div className="bg-surface-parchment rounded-xl p-space-md shadow-sm border border-earth-border flex flex-col gap-space-xs">
+              <div className="flex items-center justify-between">
+                <span className="font-label-md text-label-md text-earth-charcoal uppercase tracking-wider">Remote Passes</span>
+                <span className="material-symbols-outlined text-copper-accent text-[18px]">satellite_alt</span>
+              </div>
+              <div className="divide-y divide-earth-border/50 space-y-2 mt-1">
+                <div className="flex justify-between items-center text-on-surface-variant font-body-sm text-body-sm pt-2 first:pt-0 border-t-0">
+                  <span>NASA EMIT (Hyperspectral)</span>
+                  <span className="font-label-sm text-label-sm text-telemetry-emerald font-semibold">T-3h 12m</span>
+                </div>
+                <div className="flex justify-between items-center text-on-surface-variant font-body-sm text-body-sm pt-2">
+                  <span>Sentinel-2 L2A Multispectral</span>
+                  <span className="font-label-sm text-label-sm text-earth-charcoal">Yesterday</span>
+                </div>
+                <div className="flex justify-between items-center text-on-surface-variant font-body-sm text-body-sm pt-2">
+                  <span>ASTER SWIR Quartz Index</span>
+                  <span className="font-label-sm text-label-sm text-earth-charcoal">3 days ago</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* CENTRAL VIEWPORT: GIS Prospectivity Map Canvas (Col 4-8) */}
+          <div className="lg:col-span-5 flex flex-col gap-space-md h-[800px] lg:h-auto">
+            
+            {/* Main GIS Prospectivity Viewer */}
+            <div className="relative bg-earth-espresso rounded-xl overflow-hidden shadow-md border border-earth-border flex flex-col flex-1 min-h-[500px]">
+              {/* Map Canvas */}
+              <div className="absolute inset-0 z-0">
+                <div ref={mapContainer} className="w-full h-full" />
+                
+                {/* Layers mimicking the visual overlays inside the map */}
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:90px_90px] pointer-events-none" />
+                {strataLayers.geological && (
+                  <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% 45%, rgba(180,106,54,0.05), transparent 60%)' }} />
+                )}
+                {strataLayers.historicalDrills && (
+                  <div className="absolute inset-0 pointer-events-none">
+                    <div className="absolute top-[45%] left-[42%] flex items-center gap-1 text-[10px] text-earth-charcoal font-medium bg-surface-parchment/90 px-1.5 py-0.5 rounded border border-earth-border shadow-sm">
+                      <span className="w-1.5 h-1.5 bg-copper-accent rounded-full"></span> DH-041 (41.2% Mn)
+                    </div>
+                    <div className="absolute top-[58%] left-[51%] flex items-center gap-1 text-[10px] text-earth-charcoal font-medium bg-surface-parchment/90 px-1.5 py-0.5 rounded border border-earth-border shadow-sm">
+                      <span className="w-1.5 h-1.5 bg-copper-accent rounded-full"></span> DH-038 (38.9% Mn)
+                    </div>
+                  </div>
+                )}
+                {gridLoading && (
+                  <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-surface-parchment/90 px-4 py-1.5 rounded-full border border-earth-border text-xs text-earth-charcoal font-semibold shadow-sm z-10">
+                    Loading scored grid…
+                  </div>
+                )}
+              </div>
+
+              {/* Overlaid Map Telemetry HUD (Top Controls) */}
+              <div className="relative z-10 flex items-center justify-between p-space-md bg-gradient-to-b from-earth-espresso/80 to-transparent pointer-events-none">
+                <div className="flex items-center gap-space-xs">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-earth-charcoal/90 text-canvas-sandstone font-label-sm text-label-sm backdrop-blur-sm shadow-sm pointer-events-auto border border-white/10">
+                    <span className="w-2 h-2 rounded-full bg-telemetry-emerald animate-ping"></span>
+                    <span>AI PROSPECTIVITY ENGINE v4.2</span>
+                  </span>
+                  <span className="px-2 py-1 rounded bg-earth-charcoal/80 text-copper-accent font-label-sm text-label-sm backdrop-blur-sm pointer-events-auto border border-white/10">
+                    RL: 1,328m ASL
+                  </span>
+                </div>
+                <div className="flex items-center gap-1 pointer-events-auto">
+                  <button className="w-8 h-8 rounded bg-earth-charcoal/80 text-canvas-sandstone hover:bg-copper-accent flex items-center justify-center transition-colors border border-white/10" title="Zoom In" onClick={() => mapRef.current?.zoomIn()}>
+                    <span className="material-symbols-outlined text-[18px]">add</span>
+                  </button>
+                  <button className="w-8 h-8 rounded bg-earth-charcoal/80 text-canvas-sandstone hover:bg-copper-accent flex items-center justify-center transition-colors border border-white/10" title="Zoom Out" onClick={() => mapRef.current?.zoomOut()}>
+                    <span className="material-symbols-outlined text-[18px]">remove</span>
+                  </button>
+                  <button className="w-8 h-8 rounded bg-earth-charcoal/80 text-canvas-sandstone hover:bg-copper-accent flex items-center justify-center transition-colors border border-white/10" title="Layer Reset" onClick={() => mapRef.current?.resetNorth()}>
+                    <span className="material-symbols-outlined text-[18px]">restart_alt</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Bottom Compass, Scale Bar & Coordinate Telemetry */}
+              <div className="relative z-10 mt-auto p-space-md bg-gradient-to-t from-earth-espresso/95 via-earth-espresso/80 to-transparent flex items-end justify-between pointer-events-none">
+                <div className="flex items-center gap-space-sm bg-earth-charcoal/90 px-space-sm py-1.5 rounded-lg text-canvas-sandstone pointer-events-auto border border-white/10 shadow-lg">
+                  <div className="flex flex-col">
+                    <span className="font-label-sm text-label-sm text-copper-accent uppercase tracking-widest">Ground Scale</span>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <div className="h-1 w-16 bg-copper-accent rounded-sm"></div>
+                      <span className="font-label-sm text-label-sm">250 Meters</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-space-xs bg-earth-charcoal/90 px-space-sm py-1 rounded-lg text-canvas-sandstone pointer-events-auto border border-white/10 shadow-lg">
+                  <span className="font-label-md text-label-md text-copper-accent font-bold">N</span>
+                  <span className="material-symbols-outlined text-copper-accent text-[18px] transform -rotate-45">navigation</span>
+                  <span className="font-label-sm text-label-sm text-secondary">315° NW</span>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Live Geological Sample & Thin-section Preview Bento Strip */}
+            <div className="grid grid-cols-2 gap-space-md shrink-0">
+              <div className="bg-surface-parchment rounded-xl p-space-sm flex gap-space-sm items-center shadow-sm border border-earth-border">
+                <img className="w-16 h-16 rounded-lg object-cover flex-shrink-0 shadow-inner" alt="Core sample" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDc4yXI9SM_1Yv6fOrS8CF5MAOyzRkQhzjummQvtHlqVtHctvZTbxDsmPTeYniiQdr_p713s5tYWPEqc9rjIZPFaCi5Fa0KDdWeRi_Lhn6VUf8r-CG67mlsTwB17-y7ORl-1jMSPTP7m6V4SLzSQ-RT2akq1x6KPWzmJ4t3eJap9MfRfrKUl5JBtljZnCttO9vdlrX2xmod04aRi9orlyGSBczqSQXp8Qo00_6zCJwbhQXS0Iq_pHhT"/>
+                <div className="flex flex-col min-w-0">
+                  <span className="font-label-sm text-label-sm text-copper-accent uppercase tracking-wider">Thin Section DH-204</span>
+                  <span className="font-headline-sm text-headline-sm text-earth-charcoal truncate">Bornite-Chalcocite</span>
+                  <span className="font-body-sm text-body-sm text-secondary">Cu Grade eq: 3.42%</span>
+                </div>
+              </div>
+              <div className="bg-surface-parchment rounded-xl p-space-sm flex items-center justify-between shadow-sm px-space-md border border-earth-border">
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-bold text-infot uppercase tracking-widest">AI Exploration Target</span>
-                  <span className="font-['Manrope'] text-lg font-bold text-ink leading-tight">{selectedTarget.name}</span>
+                  <span className="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Trap Continuity</span>
+                  <span className="font-headline-sm text-headline-sm text-telemetry-emerald font-semibold">High Confidence</span>
+                  <span className="font-body-sm text-body-sm text-on-surface-variant">Strike length: 780m</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-bold text-warnt bg-warn/10 border border-warn/40 px-2 py-0.5 rounded">SYNTHETIC</span>
-                  <span
-                    className="material-symbols-outlined text-ink3 text-base transition-transform duration-300"
-                    style={{ transform: rightCollapsed ? 'rotate(180deg)' : 'rotate(0deg)' }}
-                  >expand_less</span>
-                </div>
+                <span className="material-symbols-outlined text-telemetry-emerald text-[28px]">trending_up</span>
               </div>
-              {!rightCollapsed && (
-              <div className="px-6 lg:px-7 pb-6 lg:pb-7 flex flex-col gap-4">
-                <div>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[10px] font-bold text-infot uppercase tracking-widest">AI Exploration Target</span>
-                  <span className="text-[10px] font-bold text-warnt bg-warn/10 border border-warn/40 px-2 py-0.5 rounded">
-                    SYNTHETIC
+            </div>
+            
+          </div>
+
+          {/* RIGHT PANEL: Target Details & Prospectivity Brief (Col 9-12) */}
+          {selectedTarget && (
+            <div className="lg:col-span-4 flex flex-col gap-space-md">
+              
+              {/* Active Target Title Card */}
+              <div className="bg-surface-parchment rounded-xl p-space-md shadow-sm border border-earth-border flex flex-col gap-space-sm">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-space-xs">
+                    <span className="w-3 h-3 rounded-full bg-copper-accent animate-pulse"></span>
+                    <span className="font-label-sm text-label-sm text-copper-accent uppercase tracking-widest">Active Discovery Target</span>
+                  </div>
+                  <span className="px-2 py-0.5 rounded bg-surface-container text-earth-charcoal font-label-sm text-label-sm font-semibold border border-earth-border/50">
+                    ID: {selectedTarget.name.replace('Target ', 'T-')}
                   </span>
                 </div>
-                <div className="flex items-center justify-between mb-2">
-                  <h2 className="font-['Manrope'] text-3xl font-bold text-ink">{selectedTarget.name}</h2>
-                  <span className="px-3 py-1 bg-warn/20 border border-warn text-warnt text-xs font-bold rounded-full">
-                    {selectedTarget.status}
-                  </span>
+                <div className="flex items-baseline justify-between mt-1">
+                  <h2 className="font-headline-md text-headline-md text-earth-charcoal">{selectedTarget.name}</h2>
+                  <span className="font-headline-md text-headline-md text-primary font-bold">{selectedTarget.probability}%</span>
                 </div>
-                <div className="flex items-center gap-2 text-ink2 text-sm">
-                  <span className="material-symbols-outlined text-sm text-accentt">my_location</span>
-                  <span className="font-mono">{selectedTarget.coordinates}</span>
-                </div>
-                <p className="text-[11px] text-inkb mt-1">
-                  {locCtx && !locCtx.unavailable
-                    ? [locCtx.district, locCtx.state, locCtx.country].filter(Boolean).join(' · ') || 'Locating…'
-                    : locCtx?.unavailable
-                    ? 'Location context unavailable'
-                    : 'Locating…'}
+                <p className="font-body-sm text-body-sm text-on-surface-variant">
+                  {selectedTarget.description}
                 </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-deep2 p-3.5 rounded-xl border border-line">
-                  <div className="text-[10px] font-bold text-ink2 uppercase tracking-wider mb-1">Prospectivity</div>
-                  <div className="font-['Manrope'] text-2xl font-bold text-accentt">{selectedTarget.probability}%</div>
-                </div>
-                <div className="bg-deep2 p-3.5 rounded-xl border border-line">
-                  <div className="text-[10px] font-bold text-ink2 uppercase tracking-wider mb-1">Confidence</div>
-                  <div className="font-['Manrope'] text-2xl font-bold text-okt">{ev.confidence}</div>
-                </div>
-              </div>
-
-              {/* Evidence — OBSERVED / DERIVED / INFERRED / SIMULATED (master-prompt §13) */}
-              <div className="bg-deep2 p-4 rounded-xl border border-line">
-                <div className="text-[10px] font-bold text-ink2 uppercase tracking-wider mb-2.5">Evidence</div>
-                <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-[11px]">
-                  {ev.rows.map((r, i) => (
-                    <React.Fragment key={i}>
-                      <span className="text-ink3 uppercase font-bold">{r.tag}</span>
-                      <span className="text-ink text-right">{r.value}</span>
-                    </React.Fragment>
-                  ))}
-                  <span className="text-ink3 uppercase font-bold">Uncertainty</span>
-                  <span className="text-ink text-right">{ev.uncertainty}</span>
+                
+                {/* Inline Confidence Multi-Vector Gauge */}
+                <div className="grid grid-cols-3 gap-space-xs mt-space-xs pt-space-xs bg-surface-container p-space-sm rounded-lg shadow-inner border border-earth-border/50">
+                  <div className="flex flex-col">
+                    <span className="font-label-sm text-label-sm text-secondary">EM Vector</span>
+                    <span className="font-headline-sm text-headline-sm text-earth-charcoal">{ev.confidence}</span>
+                    <span className="font-label-sm text-label-sm text-telemetry-emerald font-medium">+High Conductor</span>
+                  </div>
+                  <div className="flex flex-col overflow-hidden">
+                    <span className="font-label-sm text-label-sm text-secondary">Spectral</span>
+                    <span className="font-headline-sm text-headline-sm text-earth-charcoal truncate" title={selectedTarget.lng.toFixed(2)}>
+                      {selectedTarget.lng.toFixed(2)}
+                    </span>
+                    <span className="font-label-sm text-label-sm text-copper-accent font-medium truncate">Sericite/Phyllic</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-label-sm text-label-sm text-secondary">Gravity Grad</span>
+                    <span className="font-headline-sm text-headline-sm text-earth-charcoal">+{selectedTarget.densityScore}</span>
+                    <span className="font-label-sm text-label-sm text-secondary">mGal Dense Body</span>
+                  </div>
                 </div>
               </div>
 
-              {/* Ask AI (Groq server-side; deterministic fallback) */}
-              <div className="bg-panel2 p-4 rounded-xl border border-line2/40">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-bold text-accentt uppercase tracking-wider flex items-center gap-1.5">
-                    <span className="material-symbols-outlined text-sm">auto_awesome</span>
-                    AI Assessment
-                  </span>
+              {/* Predicted Mineral Assemblage Breakdown */}
+              <div className="bg-surface-parchment rounded-xl p-space-md shadow-sm border border-earth-border flex flex-col gap-space-sm">
+                <span className="font-label-md text-label-md text-earth-charcoal uppercase tracking-wider">Evidence Factors & Vectors</span>
+                <div className="space-y-space-sm mt-1">
+                  {ev.rows.slice(0, 3).map((r, i) => {
+                    const colors = ['bg-copper-accent', 'bg-ore-gold', 'bg-secondary'];
+                    const textColor = ['text-copper-accent', 'text-ore-gold', 'text-secondary'];
+                    const color = colors[i % colors.length];
+                    const tcolor = textColor[i % textColor.length];
+                    // Map generic evidence to bars for visual fidelity with Stitch
+                    const pct = [48, 29, 23][i] || 20;
+                    return (
+                      <div key={i}>
+                        <div className="flex justify-between font-label-sm text-label-sm mb-1">
+                          <span className="text-earth-charcoal font-medium">{r.tag}</span>
+                          <span className={`${tcolor} font-bold max-w-[150px] truncate`} title={r.value}>{r.value}</span>
+                        </div>
+                        <div className="w-full bg-surface-container-high h-2 rounded-full overflow-hidden shadow-inner">
+                          <div className={`${color} h-full rounded-full`} style={{ width: `${pct}%` }}></div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              
+              {/* Natural Language AI Exploration Assistant */}
+              <div className="bg-surface-parchment rounded-xl p-space-md shadow-sm border border-earth-border flex flex-col gap-space-sm">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-space-xs">
+                    <span className="material-symbols-outlined text-copper-accent text-[18px]">neurology</span>
+                    <span className="font-label-md text-label-md text-earth-charcoal uppercase tracking-wider">Mineral AI Synthesis</span>
+                  </div>
                   <button
                     onClick={askAI}
                     disabled={briefLoading}
-                    className="px-3 py-1 bg-accent text-onaccent text-[11px] font-bold rounded-lg hover:bg-accent2 transition-all disabled:opacity-50"
+                    className="px-2 py-1 bg-surface-container hover:bg-surface-container-high text-earth-charcoal text-[10px] font-bold rounded shadow-sm disabled:opacity-50 transition-colors border border-earth-border/50"
                   >
-                    {briefLoading ? 'Analysing evidence…' : brief ? 'Ask again' : 'Ask AI'}
+                    {briefLoading ? 'Analysing...' : 'Generate Brief'}
                   </button>
                 </div>
-                {brief && (
-                  <div className="text-[11px] text-ink bg-deep2 p-4 rounded-lg border border-line leading-relaxed overflow-y-auto animate-fadeIn max-h-[400px]">
-                    <div className="prose prose-sm prose-invert max-w-none prose-headings:text-accentt prose-headings:font-bold prose-headings:text-[11px] prose-headings:uppercase prose-headings:tracking-wider prose-headings:mt-4 prose-headings:mb-2 first:prose-headings:mt-0 prose-p:text-ink prose-p:mb-3 last:prose-p:mb-0 prose-ul:my-2 prose-li:my-0.5">
+                
+                <div className="p-space-sm rounded-lg bg-surface-container border border-earth-border/50 text-earth-charcoal text-body-sm font-body-sm relative max-h-[250px] overflow-y-auto shadow-inner">
+                  {brief ? (
+                    <div className="prose prose-sm max-w-none prose-headings:text-copper-accent prose-headings:font-bold prose-headings:text-[11px] prose-headings:uppercase prose-headings:tracking-wider prose-headings:mt-4 prose-headings:mb-2 first:prose-headings:mt-0 prose-p:text-earth-charcoal prose-p:mb-3 last:prose-p:mb-0 prose-ul:my-2 prose-li:my-0.5 leading-relaxed">
                       <ReactMarkdown>{brief.text}</ReactMarkdown>
+                      {brief.source === 'groq' && (
+                        <span className="block mt-4 text-[10px] text-on-surface-variant uppercase font-bold pt-2 border-t border-earth-border/50">
+                          Interpreted by GPT-OSS-20B
+                        </span>
+                      )}
                     </div>
-                    {brief.source === 'groq' && (
-                      <span className="block mt-4 text-[9px] text-ink3 uppercase font-bold pt-2 border-t border-line">
-                        Interpreted by GPT-OSS-20B · model scores unchanged
-                      </span>
-                    )}
-                  </div>
-                )}
-                {!brief && !briefLoading && (
-                  <p className="text-[11px] text-ink3">
-                    Ask the AI to explain this target&apos;s evidence in plain language.
-                  </p>
-                )}
-              </div>
-
-              {compareTarget && compareTarget.id !== selectedTarget.id && (
-                <div className="bg-deep2 p-4 rounded-xl border border-line">
-                  <div className="text-[10px] font-bold text-ink2 uppercase tracking-wider mb-2">
-                    {selectedTarget.name} vs {compareTarget.name}
-                  </div>
-                  <table className="w-full text-[11px]">
-                    <tbody>
-                      {[
-                        ['Prospectivity', `${selectedTarget.probability}%`, `${compareTarget.probability}%`],
-                        ['Confidence', evidenceOf(compareTarget, gridByIdRef.current.get(compareTarget.id)).confidence, ev.confidence],
-                        ['Maturity', selectedTarget.maturity, compareTarget.maturity],
-                      ].map(([k, a, b], i) => (
-                        <tr key={i} className="border-t border-line/60">
-                          <td className="py-1 text-ink3">{k}</td>
-                          <td className="py-1 text-right text-ink">{a}</td>
-                          <td className="py-1 text-right text-ink">{b}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                  ) : briefLoading ? (
+                    <p className="text-secondary italic">Consulting exploration AI models...</p>
+                  ) : (
+                    <p className="leading-relaxed italic text-secondary">
+                      &quot;Generate an AI brief to explain this target&apos;s geological evidence and prospectivity scoring in plain language.&quot;
+                    </p>
+                  )}
                 </div>
-              )}
-
-              <button
-                onClick={() => setReviewingTarget(selectedTarget)}
-                className="mt-1 w-full bg-accent hover:bg-accent2 text-onaccent text-xs font-bold uppercase tracking-wider py-3.5 rounded-[18px] transition-all flex items-center justify-center gap-2 shadow-lg shadow-accent/20 active:scale-95"
-              >
-                <span>Advance Review</span>
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </button>
+                
+                <div className="flex items-center gap-2 mt-1">
+                  <input type="text" className="flex-1 bg-canvas-sandstone px-space-sm py-2 rounded-lg text-body-sm font-body-sm text-earth-charcoal outline-none placeholder:text-secondary focus:ring-1 focus:ring-primary shadow-inner border border-earth-border/50" placeholder="Ask AI: e.g., 'Compare this with Tenke deposit...'" />
+                  <button className="px-3 py-2 rounded-lg bg-earth-charcoal text-canvas-sandstone hover:bg-copper-accent transition-colors flex items-center justify-center shadow-sm">
+                    <span className="material-symbols-outlined text-[16px]">send</span>
+                  </button>
+                </div>
               </div>
-              )}
+              
+              {/* Action Commands */}
+              <div className="bg-surface-parchment rounded-xl p-space-md shadow-sm border border-earth-border flex flex-col gap-space-xs mt-auto">
+                <button 
+                  onClick={() => setReviewingTarget(selectedTarget)}
+                  className="w-full py-2.5 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md flex items-center justify-center gap-space-xs shadow-sm hover:bg-tertiary transition-colors"
+                >
+                  <span className="material-symbols-outlined text-[18px]">cloud_download</span>
+                  Review Drill Target Program
+                </button>
+                <div className="grid grid-cols-2 gap-space-xs pt-1">
+                  <button className="py-2 rounded-lg bg-surface-container hover:bg-surface-container-high border border-earth-border/50 text-on-surface font-label-sm text-label-sm flex items-center justify-center gap-1 transition-colors shadow-sm">
+                    <span className="material-symbols-outlined text-[16px]">download</span>
+                    GeoJSON / SHP
+                  </button>
+                  <button className="py-2 rounded-lg bg-surface-container hover:bg-surface-container-high border border-earth-border/50 text-on-surface font-label-sm text-label-sm flex items-center justify-center gap-1 transition-colors shadow-sm">
+                    <span className="material-symbols-outlined text-[16px]">pin_drop</span>
+                    Generate Collar Coords
+                  </button>
+                </div>
+              </div>
+              
             </div>
-          </div>
-        )}
+          )}
+          
+        </div>
       </div>
-
-      <DrillReviewModal target={reviewingTarget} onClose={() => setReviewingTarget(null)} />
+      
+      {reviewingTarget && <DrillReviewModal target={reviewingTarget} onClose={() => setReviewingTarget(null)} />}
     </main>
   );
 }

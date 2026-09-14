@@ -49,9 +49,9 @@ export default function MobileEquipment() {
         </Pill>
       </div>
 
-      {loading && <Card className="text-center text-xs text-ink3">Assessing fleet…</Card>}
+      {loading && <Card className="text-center text-xs text-secondary font-medium border-dashed">Assessing fleet…</Card>}
       {!loading && !filtered.length && (
-        <Card className="text-center text-xs text-ink3">
+        <Card className="text-center text-xs text-secondary font-medium border-dashed">
           No machines match.
         </Card>
       )}

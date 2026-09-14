@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "inverse-surface": "#35302a", "earth-charcoal": "#1E1915", "on-primary-container": "#ffe9de", "surface-container": "#f6ece3", "on-primary-fixed": "#311300", "primary-fixed-dim": "#ffb689", "earth-espresso": "#2C1A14", "earth-border": "#D8CFC4", "background": "#fff8f4", "on-error-container": "#93000a", "surface-variant": "#ebe1d8", "error-container": "#ffdad6", "secondary": "#675c55", "surface-tint": "#8e4e1e", "on-secondary": "#ffffff", "on-secondary-container": "#6d625b", "on-tertiary": "#ffffff", "on-primary-fixed-variant": "#713707", "surface-container-low": "#fcf2e9", "telemetry-crimson": "#A63A2A", "surface-container-high": "#f0e6de", "surface-elevation": "#E3DACF", "tertiary-fixed": "#ffdbcb", "on-secondary-fixed-variant": "#4f453e", "telemetry-emerald": "#2D6A4F", "outline-variant": "#d8c2b6", "secondary-fixed": "#efe0d6", "primary": "#804314", "ore-gold": "#C59B27", "inverse-on-surface": "#f9efe6", "copper-accent": "#B46A36", "canvas-sandstone": "#F7F3EE", "surface-container-lowest": "#ffffff", "on-tertiary-fixed-variant": "#713714", "surface-bright": "#fff8f4", "on-primary": "#ffffff", "on-tertiary-fixed": "#341100", "surface-dim": "#e2d8d0", "surface": "#fff8f4", "inverse-primary": "#ffb689", "outline": "#867369", "on-error": "#ffffff", "tertiary": "#804320", "primary-container": "#9e5a2a", "on-tertiary-container": "#ffe9df", "on-surface-variant": "#53443b", "surface-container-highest": "#ebe1d8", "primary-fixed": "#ffdbc7", "on-background": "#1f1b16", "surface-parchment": "#EDE6DD", "secondary-fixed-dim": "#d2c4bb", "on-secondary-fixed": "#221a14", "on-surface": "#1f1b16", "tertiary-fixed-dim": "#ffb691", "tertiary-container": "#9d5a35", "secondary-container": "#efe0d6", "telemetry-amber": "#C47C17", "error": "#ba1a1a" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "gutter-lg": "2rem", "space-md": "1rem", "space-sm": "0.5rem", "margin": "1rem", "space-lg": "1.5rem", "gutter": "1rem", "margin-md": "1.5rem", "margin-lg": "2rem", "gutter-md": "1.5rem", "space-xl": "2rem", "space-xs": "0.25rem" }, "fontFamily": { "headline-lg": [ "Space Grotesk" ], "headline-md": [ "Space Grotesk" ], "headline-xl": [ "Space Grotesk" ], "label-md": [ "Space Grotesk" ], "body-sm": [ "Work Sans" ], "label-lg": [ "Space Grotesk" ], "headline-xl-mobile": [ "Space Grotesk" ], "label-sm": [ "Space Grotesk" ], "headline-lg-mobile": [ "Space Grotesk" ], "headline-sm": [ "Space Grotesk" ], "body-md": [ "Work Sans" ], "body-lg": [ "Work Sans" ] }, "fontSize": { "headline-lg": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "headline-md": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-xl": [ "44px", { "lineHeight": "52px", "letterSpacing": "-0.03em", "fontWeight": "700" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" } ], "body-sm": [ "12px", { "lineHeight": "18px", "fontWeight": "400" } ], "label-lg": [ "14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600" } ], "headline-xl-mobile": [ "32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "label-sm": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "700" } ], "headline-lg-mobile": [ "26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-sm": [ "18px", { "lineHeight": "26px", "fontWeight": "600" } ], "body-md": [ "14px", { "lineHeight": "22px", "fontWeight": "400" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-parchment border-r border-earth-border z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col h-full"><div class="h-16 px-space-md flex items-center gap-space-sm border-b border-earth-border bg-surface-container-high"><img alt="Crucible AI Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XKURaUWBxRvJ7PerWT4jwanheS9Cgsk9ahJads6JJOIlk3KMXvRbsIjhZIt1hzwHQQKUlpOcSju173XRm_W-m3gRM7au31gYibmvXkFDvniGPVkh2PHqVXIVPmkOoIO1HTVFiYu7sHYyxYlqiRVvKyWodaKq0PUa85F0jClmZzBlrK1SvnD0e11vO03zTXgenJEH0KbFkpcKqL6iOtuBMRKsUCEhhpBCBb_u7IKMpxl6E8KWDWO6u9koY"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-earth-charcoal tracking-tight">CRUCIBLE AI</span><span class="font-label-sm text-label-sm text-copper-accent uppercase tracking-wider">Mineral Core v4.2</span></div></div><div class="flex-1 overflow-y-auto py-space-sm px-space-sm"><nav class="space-y-space-md" data-active-classes="bg-primary-container text-on-primary-container font-label-md rounded"><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Command</div><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-space-xs transition-colors bg-primary-container text-on-primary-container font-label-md rounded" data-path="command-center" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span class="font-label-md text-label-md">Command Center</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Operations</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="production" href="#"><span class="material-symbols-outlined text-[18px]">precision_manufacturing</span><span class="font-label-md text-label-md">Production</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="equipment" href="#"><span class="material-symbols-outlined text-[18px]">construction</span><span class="font-label-md text-label-md">Equipment</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="haul-routing" href="#"><span class="material-symbols-outlined text-[18px]">alt_route</span><span class="font-label-md text-label-md">Haul Routing</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Explore</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="exploration" href="#"><span class="material-symbols-outlined text-[18px]">explore</span><span class="font-label-md text-label-md">Exploration</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Decide</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="scenarios" href="#"><span class="material-symbols-outlined text-[18px]">neurology</span><span class="font-label-md text-label-md">Scenarios</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="intelligence" href="#"><span class="material-symbols-outlined text-[18px]">analytics</span><span class="font-label-md text-label-md">Intelligence</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="alerts" href="#"><span class="material-symbols-outlined text-[18px]">warning</span><span class="font-label-md text-label-md">Alerts</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Data</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="data-hub" href="#"><span class="material-symbols-outlined text-[18px]">database</span><span class="font-label-md text-label-md">Data Hub</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ml-lab" href="#"><span class="material-symbols-outlined text-[18px]">science</span><span class="font-label-md text-label-md">ML Lab</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-secondary">Trust</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="governance" href="#"><span class="material-symbols-outlined text-[18px]">verified_user</span><span class="font-label-md text-label-md">Governance</span></a></div></nav></div><div class="p-space-sm border-t border-earth-border bg-surface-container-low"><div class="flex items-center justify-between px-space-xs py-space-xs rounded bg-surface-container border border-earth-border"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-telemetry-emerald animate-pulse"></span><span class="font-label-sm text-label-sm text-earth-charcoal">TELEMETRY LIVE</span></div><span class="font-label-sm text-label-sm text-copper-accent font-semibold">14ms</span></div></div></div></aside><div class="pl-64 flex flex-col min-h-screen bg-canvas-sandstone"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-parchment/95 backdrop-blur-md border-b border-earth-border z-40 px-space-lg flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-space-xs rounded border border-earth-border text-on-surface"><span class="material-symbols-outlined text-copper-accent text-[18px]">terrain</span><select class="bg-transparent font-label-md text-label-md text-on-surface outline-none cursor-pointer pr-space-xs"><option value="kansanshi">Kansanshi Pit North</option><option value="tenke">Tenke Fungurume</option><option value="lumwana">Lumwana East</option></select></div><div class="h-4 w-px bg-earth-border"></div><div class="flex items-center gap-space-xs text-on-surface-variant font-label-md text-label-md"><span class="text-secondary">Crucible</span><span class="material-symbols-outlined text-[14px] text-outline">chevron_right</span><span class="text-earth-charcoal font-semibold uppercase tracking-wider">Telemetry Feed</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-space-xs rounded bg-surface-container-high border border-earth-border"><span class="material-symbols-outlined text-telemetry-emerald text-[16px]">sync</span><span class="font-label-sm text-label-sm text-on-surface-variant">SYNC: 100% NOMINAL</span></div><button class="flex items-center justify-center w-8 h-8 rounded border border-earth-border bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" title="Toggle Telemetry Palette"><span class="material-symbols-outlined text-[18px]">contrast</span></button><a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors flex items-center gap-space-xs" data-path="admin-portal" href="#"><span class="material-symbols-outlined text-[18px]">settings</span>Admin</a><div class="h-4 w-px bg-earth-border"></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-16 bg-canvas-sandstone flex-1"><div class="flex flex-col w-full">
+<!-- Sub-Header / Fleet Health Pulse Strip -->
+<div class="px-space-lg py-space-md bg-surface-parchment shadow-sm">
+<div class="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-space-md">
+<!-- Title & Live Stamp -->
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded bg-primary-container text-on-primary-container flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[24px]">precision_manufacturing</span>
+</div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-md text-headline-md text-earth-charcoal tracking-tight">Equipment Health Matrix</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-high text-copper-accent font-label-sm text-label-sm uppercase font-semibold">Kansanshi Pit North</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">Real-time vibration, thermal telemetry, and failure prevention models across 42 active extraction assets.</p>
+</div>
+</div>
+<!-- Quick Metrics Ribbon -->
+<div class="flex flex-wrap items-center gap-space-sm w-full xl:w-auto">
+<!-- Fleet Health Index -->
+<div class="px-space-md py-space-xs bg-surface-container rounded shadow-sm flex items-center gap-space-sm min-w-[150px]">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Fleet Health</span>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-earth-charcoal font-bold">88.4%</span>
+<span class="font-label-sm text-label-sm text-telemetry-emerald font-semibold">NOMINAL</span>
+</div>
+</div>
+<div class="w-8 h-8 ml-auto flex items-center justify-center text-telemetry-emerald">
+<svg class="w-7 h-7 -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-variant" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
+<path class="text-telemetry-emerald" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="88.4, 100" stroke-linecap="round" stroke-width="3.5"></path>
+</svg>
+</div>
+</div>
+<!-- Total Assets -->
+<div class="px-space-md py-space-xs bg-surface-container rounded shadow-sm flex items-center gap-space-sm min-w-[170px]">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Active Units</span>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-earth-charcoal font-bold">42</span>
+<span class="font-body-sm text-body-sm text-secondary">/ 45 Ready</span>
+</div>
+</div>
+<div class="flex items-center gap-0.5 ml-auto text-copper-accent">
+<span class="material-symbols-outlined text-[20px]">directions_boat</span>
+</div>
+</div>
+<!-- MTBS -->
+<div class="px-space-md py-space-xs bg-surface-container rounded shadow-sm flex items-center gap-space-sm min-w-[140px]">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">MTBS Fleet</span>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-earth-charcoal font-bold">184</span>
+<span class="font-label-sm text-label-sm text-secondary">hrs</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-copper-accent ml-auto">timer</span>
+</div>
+<!-- Flagged Critical -->
+<div class="px-space-md py-space-xs bg-error-container text-on-error-container rounded shadow-sm flex items-center gap-space-sm min-w-[150px]">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-telemetry-crimson uppercase tracking-wider font-semibold">Flagged Alerts</span>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-telemetry-crimson font-bold">3 Units</span>
+<span class="font-label-sm text-label-sm text-telemetry-crimson">Action Req.</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[22px] text-telemetry-crimson ml-auto animate-pulse">crisis_alert</span>
+</div>
+</div>
+</div>
+<!-- Asset Class Distribution Bar -->
+<div class="mt-space-sm pt-space-xs flex flex-wrap items-center gap-x-space-md gap-y-1 text-secondary font-label-sm text-label-sm">
+<span class="text-earth-charcoal font-semibold">Deployments:</span>
+<span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-copper-accent"></span> 18 Haul Trucks</span>
+<span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-ore-gold"></span> 6 Shovels &amp; Excavators</span>
+<span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary-container"></span> 4 Blast Drills</span>
+<span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-tertiary"></span> 2 Primary Crushers</span>
+<span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary"></span> 12 Auxiliaries (Dozers/Graders)</span>
+</div>
+</div>
+<!-- Main Work Area -->
+<div class="p-space-lg space-y-space-lg">
+<!-- Filters & Search Command Strip -->
+<div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-space-md bg-surface-parchment p-space-sm rounded shadow-sm">
+<!-- Filter Segmented Control -->
+<div class="inline-flex p-1 bg-surface-container rounded gap-1 overflow-x-auto" id="filterContainer">
+<button class="px-space-md py-space-xs rounded bg-earth-charcoal text-canvas-sandstone font-label-md text-label-md transition-all shadow-sm flex items-center gap-1.5" onclick="filterFleet('all', this)">
+<span>All Units</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-high/30 font-label-sm text-label-sm">42</span>
+</button>
+<button class="px-space-md py-space-xs rounded text-earth-charcoal font-label-md text-label-md hover:bg-surface-container-high transition-all flex items-center gap-1.5" onclick="filterFleet('attention', this)">
+<span class="w-2 h-2 rounded-full bg-telemetry-crimson"></span>
+<span>Needs Attention</span>
+<span class="px-1.5 py-0.2 rounded bg-error-container text-telemetry-crimson font-label-sm text-label-sm font-bold">3</span>
+</button>
+<button class="px-space-md py-space-xs rounded text-earth-charcoal font-label-md text-label-md hover:bg-surface-container-high transition-all flex items-center gap-1.5" onclick="filterFleet('medium', this)">
+<span class="w-2 h-2 rounded-full bg-telemetry-amber"></span>
+<span>Medium Risk</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-high text-secondary font-label-sm text-label-sm">7</span>
+</button>
+<button class="px-space-md py-space-xs rounded text-earth-charcoal font-label-md text-label-md hover:bg-surface-container-high transition-all flex items-center gap-1.5" onclick="filterFleet('nominal', this)">
+<span class="w-2 h-2 rounded-full bg-telemetry-emerald"></span>
+<span>Low / Nominal</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-high text-secondary font-label-sm text-label-sm">32</span>
+</button>
+</div>
+<!-- Search & Equipment Class Dropdown -->
+<div class="flex items-center gap-space-sm">
+<div class="relative flex-1 md:w-64">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-[18px] text-secondary">search</span>
+<input class="w-full pl-9 pr-3 py-1.5 bg-canvas-sandstone rounded font-body-sm text-body-sm text-earth-charcoal placeholder:text-secondary outline-none focus:bg-surface-container-lowest shadow-sm" id="equipmentSearch" onkeyup="handleSearch(this.value)" placeholder="Search ID, model, bench..." type="text"/>
+</div>
+<button class="px-space-md py-1.5 rounded bg-surface-container hover:bg-surface-container-high font-label-md text-label-md text-earth-charcoal flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Parameters</span>
+</button>
+</div>
+</div>
+<!-- Section: Needs Immediate Attention (Insight Bento Cards) -->
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-telemetry-crimson text-[20px]">notification_important</span>
+<h2 class="font-headline-sm text-headline-sm text-earth-charcoal tracking-tight">Active Diagnostics Requiring Dispatch</h2>
+</div>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Predictive Telemetry Model v3.9</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-md">
+<!-- Card 1: CAT 793F - Hauler HK-402 (CRITICAL) -->
+<div class="bg-surface-parchment rounded shadow-md flex flex-col justify-between overflow-hidden relative group">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-telemetry-crimson"></div>
+<div class="p-space-md pl-space-lg space-y-space-sm">
+<!-- Header strip -->
+<div class="flex items-start justify-between">
+<div>
+<span class="px-2 py-0.5 rounded bg-error-container text-telemetry-crimson font-label-sm text-label-sm uppercase font-bold tracking-wider">Critical Failure Imminent</span>
+<h3 class="font-headline-sm text-headline-sm text-earth-charcoal font-bold mt-1">CAT 793F - Hauler HK-402</h3>
+<span class="font-body-sm text-body-sm text-secondary">Zone: Kansanshi Bench 14 Cut-back South</span>
+</div>
+<div class="text-right">
+<span class="font-headline-sm text-headline-sm text-telemetry-crimson font-bold block">3.2 hrs</span>
+<span class="font-label-sm text-label-sm text-secondary uppercase">Est. MTTF</span>
+</div>
+</div>
+<!-- Diagnostics Summary -->
+<div class="p-space-sm bg-surface-container rounded">
+<div class="flex items-center justify-between text-earth-charcoal font-label-md text-label-md">
+<span class="font-semibold">Hydraulic Cavitation &amp; Pressure Collapse</span>
+<span class="text-telemetry-crimson font-bold">-42% vs Baseline</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-1">Main hoist cylinder valve port 2 showing high aeration acoustic signatures. Sudden pressure drops detected during dumping cycle.</p>
+</div>
+<!-- Visual Telemetric Mini-Sparkline -->
+<div class="space-y-1">
+<div class="flex justify-between font-label-sm text-label-sm text-secondary">
+<span>HYDRAULIC PRESSURE DELTA (PAST 6 HRS)</span>
+<span class="text-telemetry-crimson font-mono font-semibold">182 bar [Threshold: 240]</span>
+</div>
+<svg class="w-full h-10 bg-surface-container rounded p-1" viewbox="0 0 300 40">
+<path d="M 0,10 Q 30,12 60,11 T 120,15 T 180,24 T 240,32 L 300,38" fill="none" stroke="#ba1a1a" stroke-linecap="round" stroke-width="2.5"></path>
+<line stroke="#d8c2b6" stroke-dasharray="3,3" stroke-width="1" x1="0" x2="300" y1="20" y2="20"></line>
+<circle cx="300" cy="38" fill="#ba1a1a" r="3"></circle>
+</svg>
+</div>
+<!-- Machine Photo Placeholder with Telemetry Overlay -->
+<div class="relative h-28 w-full rounded overflow-hidden shadow-inner">
+<img class="w-full h-full object-cover" data-alt="Heavy open-pit mining yellow haul truck CAT 793F hauling blasted rock along a steep sandstone bench ramp Kansanshi copper mine dramatic sunlight dusty ground" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2CzNW77dhBMj4lEzjnHKypdHK7fAI8DxvhG0yW99FRfpJRsZTahRkr4cXAGTd8QNSSNA7A3JBFjMUHwlh1wXAKbvZr79QoeJrv94OxandJKoULiKDWiXgF49IpJhE6lT73mKOiVn3O2g-56g0WpAMDnJhhDO7uXdYDJhCGyY4KKytbRe_sEcFRlwVw1SGCjnbg4OijnntHm30PXdJo7J93cs5VSS8oX5Wg4TYlyz6p7MmtY2TR0b0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-earth-espresso/80 via-transparent to-transparent flex items-end p-2 justify-between">
+<span class="font-label-sm text-label-sm text-canvas-sandstone font-medium">Sensor Feed: Cyl-Hoist-A4</span>
+<span class="px-1.5 py-0.5 rounded bg-earth-espresso/90 text-primary-fixed font-label-sm text-label-sm font-mono">OP: B. Chanda</span>
+</div>
+</div>
+</div>
+<!-- Bottom Action Buttons -->
+<div class="p-space-md pt-0 pl-space-lg flex items-center gap-space-xs">
+<button class="flex-1 py-space-xs px-space-sm rounded bg-primary-container text-on-primary-container font-label-md text-label-md hover:bg-tertiary transition-colors shadow-sm flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]">engineering</span>
+<span>Dispatch Field Mech</span>
+</button>
+<button class="py-space-xs px-space-sm rounded bg-surface-container text-earth-charcoal font-label-md text-label-md hover:bg-surface-container-high transition-colors flex items-center justify-center" title="Inspect machine sensor feed">
+<span class="material-symbols-outlined text-[18px]">query_stats</span>
+</button>
+</div>
+</div>
+<!-- Card 2: Komatsu PC8000 Shovel #4 (HIGH) -->
+<div class="bg-surface-parchment rounded shadow-md flex flex-col justify-between overflow-hidden relative group">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-telemetry-amber"></div>
+<div class="p-space-md pl-space-lg space-y-space-sm">
+<!-- Header strip -->
+<div class="flex items-start justify-between">
+<div>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-telemetry-amber font-label-sm text-label-sm uppercase font-bold tracking-wider">High Risk Vector</span>
+<h3 class="font-headline-sm text-headline-sm text-earth-charcoal font-bold mt-1">Komatsu PC8000 Shovel #4</h3>
+<span class="font-body-sm text-body-sm text-secondary">Zone: Kansanshi East Pit Main Face</span>
+</div>
+<div class="text-right">
+<span class="font-headline-sm text-headline-sm text-telemetry-amber font-bold block">114°C</span>
+<span class="font-label-sm text-label-sm text-secondary uppercase">Bearing Temp</span>
+</div>
+</div>
+<!-- Diagnostics Summary -->
+<div class="p-space-sm bg-surface-container rounded">
+<div class="flex items-center justify-between text-earth-charcoal font-label-md text-label-md">
+<span class="font-semibold">Swing Bearing Lubrication Deficit</span>
+<span class="text-telemetry-amber font-bold">Thermal Spikes</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-1">Harmonic vibration peaks at 2.4kHz indicating grease starved raceway. Max tolerance is 88°C under continuous 90° slewing load.</p>
+</div>
+<!-- Visual Telemetric Mini-Sparkline -->
+<div class="space-y-1">
+<div class="flex justify-between font-label-sm text-label-sm text-secondary">
+<span>BEARING TEMPERATURE (°C)</span>
+<span class="text-telemetry-amber font-mono font-semibold">+26°C above ambient lim</span>
+</div>
+<svg class="w-full h-10 bg-surface-container rounded p-1" viewbox="0 0 300 40">
+<path d="M 0,28 Q 50,26 100,24 T 180,18 T 240,12 L 300,6" fill="none" stroke="#C47C17" stroke-linecap="round" stroke-width="2.5"></path>
+<line stroke="#d8c2b6" stroke-dasharray="3,3" stroke-width="1" x1="0" x2="300" y1="18" y2="18"></line>
+<circle cx="300" cy="6" fill="#C47C17" r="3"></circle>
+</svg>
+</div>
+<!-- Machine Photo Placeholder with Telemetry Overlay -->
+<div class="relative h-28 w-full rounded overflow-hidden shadow-inner">
+<img class="w-full h-full object-cover" data-alt="Massive Komatsu PC8000 hydraulic mining shovel digging into rich copper porphyry strata face Kansanshi mine Zambian copperbelt dust rising" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_OjLpZvSZfO_CamJjwxArD5CQQlrEDX2lzDNwK6vWLy7kR8YhlyQJg0sYJErEjFcrZbCH4ctd_NuRRjos00o8qh-bJrClK191FlcfWiOIX6pdWOrm_GjYVlfTiBEm3sq-5fRHRlkJ621PvnOzWxSuTJp3Cwz4SoJuCOn_vSL8ItpCvLk0Vb3sByTEaNm_s63kk2tcEceKbg53cEafwZ5eifUwmimrN2XalZRQWzTrXcfwDo5oKiGz"/>
+<div class="absolute inset-0 bg-gradient-to-t from-earth-espresso/80 via-transparent to-transparent flex items-end p-2 justify-between">
+<span class="font-label-sm text-label-sm text-canvas-sandstone font-medium">Lube Line P-7 Automated</span>
+<span class="px-1.5 py-0.5 rounded bg-earth-espresso/90 text-primary-fixed font-label-sm text-label-sm font-mono">OP: M. Tembo</span>
+</div>
+</div>
+</div>
+<!-- Bottom Action Buttons -->
+<div class="p-space-md pt-0 pl-space-lg flex items-center gap-space-xs">
+<button class="flex-1 py-space-xs px-space-sm rounded bg-primary-container text-on-primary-container font-label-md text-label-md hover:bg-tertiary transition-colors shadow-sm flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Schedule Quick-Lube (30m)</span>
+</button>
+<button class="py-space-xs px-space-sm rounded bg-surface-container text-earth-charcoal font-label-md text-label-md hover:bg-surface-container-high transition-colors flex items-center justify-center" title="Telemetry view">
+<span class="material-symbols-outlined text-[18px]">show_chart</span>
+</button>
+</div>
+</div>
+<!-- Card 3: Metso Superior Crusher 1 (HIGH) -->
+<div class="bg-surface-parchment rounded shadow-md flex flex-col justify-between overflow-hidden relative group">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-telemetry-amber"></div>
+<div class="p-space-md pl-space-lg space-y-space-sm">
+<!-- Header strip -->
+<div class="flex items-start justify-between">
+<div>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-telemetry-amber font-label-sm text-label-sm uppercase font-bold tracking-wider">Primary Circuit Choke</span>
+<h3 class="font-headline-sm text-headline-sm text-earth-charcoal font-bold mt-1">Metso Gyratory Crusher #1</h3>
+<span class="font-body-sm text-body-sm text-secondary">Zone: Run-of-Mine Primary Hopper Vault</span>
+</div>
+<div class="text-right">
+<span class="font-headline-sm text-headline-sm text-earth-charcoal font-bold block">8.2%</span>
+<span class="font-label-sm text-label-sm text-secondary uppercase">Liner Remaining</span>
+</div>
+</div>
+<!-- Diagnostics Summary -->
+<div class="p-space-sm bg-surface-container rounded">
+<div class="flex items-center justify-between text-earth-charcoal font-label-md text-label-md">
+<span class="font-semibold">Mantle Liner Excursion</span>
+<span class="text-telemetry-amber font-bold">Hydroset High</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-1">Hydroset position compensation maxed out at 94mm. Tramp metal detection tripped 2x on conveyor C-01 feed.</p>
+</div>
+<!-- Visual Telemetric Mini-Sparkline -->
+<div class="space-y-1">
+<div class="flex justify-between font-label-sm text-label-sm text-secondary">
+<span>CRUSHER MOTOR AMPERAGE DRAW</span>
+<span class="text-telemetry-amber font-mono font-semibold">312A [Peak: 340A]</span>
+</div>
+<svg class="w-full h-10 bg-surface-container rounded p-1" viewbox="0 0 300 40">
+<path d="M 0,22 Q 40,24 80,18 T 140,20 T 200,12 T 260,8 L 300,10" fill="none" stroke="#C47C17" stroke-linecap="round" stroke-width="2.5"></path>
+<line stroke="#d8c2b6" stroke-dasharray="3,3" stroke-width="1" x1="0" x2="300" y1="12" y2="12"></line>
+<circle cx="300" cy="10" fill="#C47C17" r="3"></circle>
+</svg>
+</div>
+<!-- Machine Photo Placeholder with Telemetry Overlay -->
+<div class="relative h-28 w-full rounded overflow-hidden shadow-inner">
+<img class="w-full h-full object-cover" data-alt="Massive industrial primary gyratory crusher crushing boulder-sized copper ores at open pit processing facility concrete enclosure dust suppression mist" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAn_oi3JfrVbVTGR_sg1Qn3NYUM2WUVGL8snIQIT7W1EcmRPBXBcIrUXlio6wDVkvt7YLVs-GYc0x2mduqiwuk0WPCdopXk_bPfNVg8x46u7X-EumWvb9BHg2W8GzuESzEEL9zu3-fUbaBoI-RNItSr3dMxlJxHAUvM0MFPmtjC5KlwFaOZkJMQZ0FRv0rYZ0_8LNSZ5WAp-MWjSFnfkCDinYaFBjzxmqYcW1TUfSsZCW1KzzfMKlXn"/>
+<div class="absolute inset-0 bg-gradient-to-t from-earth-espresso/80 via-transparent to-transparent flex items-end p-2 justify-between">
+<span class="font-label-sm text-label-sm text-canvas-sandstone font-medium">Primary Mantle Set</span>
+<span class="px-1.5 py-0.5 rounded bg-earth-espresso/90 text-primary-fixed font-label-sm text-label-sm font-mono">Continuous Plant 1</span>
+</div>
+</div>
+</div>
+<!-- Bottom Action Buttons -->
+<div class="p-space-md pt-0 pl-space-lg flex items-center gap-space-xs">
+<button class="flex-1 py-space-xs px-space-sm rounded bg-primary-container text-on-primary-container font-label-md text-label-md hover:bg-tertiary transition-colors shadow-sm flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]">sensors</span>
+<span>View Sensor Telemetry</span>
+</button>
+<button class="py-space-xs px-space-sm rounded bg-surface-container text-earth-charcoal font-label-md text-label-md hover:bg-surface-container-high transition-colors flex items-center justify-center" title="Schedule liner swap">
+<span class="material-symbols-outlined text-[18px]">build</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Fleet Telemetry Status Matrix / Table -->
+<div class="bg-surface-parchment rounded shadow-sm overflow-hidden">
+<!-- Matrix Header & Quick Filtering -->
+<div class="p-space-md flex flex-col md:flex-row items-start md:items-center justify-between gap-space-sm bg-surface-container-high">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-earth-charcoal tracking-tight">Active Telemetry Fleet Stream</h2>
+<span class="font-body-sm text-body-sm text-secondary">Showing 8 priority units across active mining pits</span>
+</div>
+<div class="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-telemetry-emerald animate-ping"></span>
+<span>Sampling Interval: 2.0s</span>
+<button class="ml-space-sm px-space-xs py-1 rounded bg-surface-container text-earth-charcoal hover:bg-surface-container-lowest font-label-sm text-label-sm flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">download</span>
+<span>Export CSV</span>
+</button>
+</div>
+</div>
+<!-- High-Density Table Layout -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse" id="equipmentTable">
+<thead>
+<tr class="bg-surface-elevation text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-space-md">Asset ID / Model</th>
+<th class="py-3 px-space-md">Class / Role</th>
+<th class="py-3 px-space-md">Operator / Pit Location</th>
+<th class="py-3 px-space-md">Hydraulic &amp; Engine</th>
+<th class="py-3 px-space-md">Heartbeat</th>
+<th class="py-3 px-space-md">Vibration / Thermal Index</th>
+<th class="py-3 px-space-md text-right">Action Protocol</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent font-body-sm text-body-sm text-earth-charcoal">
+<!-- Row 1: HK-402 (CRITICAL) -->
+<tr class="bg-surface-container-low hover:bg-surface-container transition-colors" data-status="critical">
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-telemetry-crimson animate-pulse"></span>
+<div>
+<span class="font-headline-sm text-headline-sm text-earth-charcoal font-bold block leading-none">HK-402</span>
+<span class="font-label-sm text-label-sm text-secondary">CAT 793F Ultra Hauler</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-md font-label-md text-label-md text-secondary">Haulage (240t)</td>
+<td class="py-3 px-space-md">
+<span class="text-earth-charcoal font-medium block">B. Chanda</span>
+<span class="font-label-sm text-label-sm text-secondary">Bench 14 - Cut S</span>
+</td>
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-error-container text-telemetry-crimson font-label-sm text-label-sm font-bold">182 BAR (-42%)</span>
+</div>
+</td>
+<td class="py-3 px-space-md">
+<span class="font-label-sm text-label-sm text-telemetry-emerald flex items-center gap-1 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-telemetry-emerald"></span> 0.4s ago
+                </span>
+</td>
+<td class="py-3 px-space-md font-mono text-earth-charcoal font-medium">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-surface-container-high h-2 rounded overflow-hidden">
+<div class="bg-telemetry-crimson h-full" style="width: 92%;"></div>
+</div>
+<span class="text-telemetry-crimson font-bold">9.4 mm/s</span>
+</div>
+</td>
+<td class="py-3 px-space-md text-right">
+<button class="px-3 py-1 rounded bg-primary-container text-on-primary-container font-label-sm text-label-sm hover:bg-tertiary shadow-sm transition-colors">
+                  Stage Bay Dispatch
+                </button>
+</td>
+</tr>
+<!-- Row 2: SH-004 (HIGH RISK) -->
+<tr class="bg-surface-parchment hover:bg-surface-container transition-colors" data-status="attention">
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-telemetry-amber"></span>
+<div>
+<span class="font-headline-sm text-headline-sm text-earth-charcoal font-bold block leading-none">SH-004</span>
+<span class="font-label-sm text-label-sm text-secondary">Komatsu PC8000</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-md font-label-md text-label-md text-secondary">Excavation / Shovel</td>
+<td class="py-3 px-space-md">
+<span class="text-earth-charcoal font-medium block">M. Tembo</span>
+<span class="font-label-sm text-label-sm text-secondary">Kansanshi East Pit Face</span>
+</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-telemetry-amber font-label-sm text-label-sm font-bold">Temp 114°C HIGH</span>
+</td>
+<td class="py-3 px-space-md">
+<span class="font-label-sm text-label-sm text-telemetry-emerald flex items-center gap-1 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-telemetry-emerald"></span> 1.1s ago
+                </span>
+</td>
+<td class="py-3 px-space-md font-mono text-earth-charcoal font-medium">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-surface-container-high h-2 rounded overflow-hidden">
+<div class="bg-telemetry-amber h-full" style="width: 74%;"></div>
+</div>
+<span class="text-telemetry-amber font-bold">5.8 mm/s</span>
+</div>
+</td>
+<td class="py-3 px-space-md text-right">
+<button class="px-3 py-1 rounded bg-surface-container text-earth-charcoal hover:bg-surface-container-high font-label-sm text-label-sm shadow-sm transition-colors">
+                  Trigger Lube Cycle
+                </button>
+</td>
+</tr>
+<!-- Row 3: CR-001 (HIGH RISK) -->
+<tr class="bg-surface-container-low hover:bg-surface-container transition-colors" data-status="attention">
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-telemetry-amber"></span>
+<div>
+<span class="font-headline-sm text-headline-sm text-earth-charcoal font-bold block leading-none">CR-001</span>
+<span class="font-label-sm text-label-sm text-secondary">Metso Superior 60-89</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-md font-label-md text-label-md text-secondary">Primary Crusher</td>
+<td class="py-3 px-space-md">
+<span class="text-earth-charcoal font-medium block">Station Auto-Ops</span>
+<span class="font-label-sm text-label-sm text-secondary">ROM Hopper Vault 1</span>
+</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-telemetry-amber font-label-sm text-label-sm font-bold">Hydroset 94mm</span>
+</td>
+<td class="py-3 px-space-md">
+<span class="font-label-sm text-label-sm text-telemetry-emerald flex items-center gap-1 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-telemetry-emerald"></span> 0.2s ago
+                </span>
+</td>
+<td class="py-3 px-space-md font-mono text-earth-charcoal font-medium">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-surface-container-high h-2 rounded overflow-hidden">
+<div class="bg-telemetry-amber h-full" style="width: 68%;"></div>
+</div>
+<span class="text-earth-charcoal font-bold">4.2 mm/s</span>
+</div>
+</td>
+<td class="py-3 px-space-md text-right">
+<button class="px-3 py-1 rounded bg-surface-container text-earth-charcoal hover:bg-surface-container-high font-label-sm text-label-sm shadow-sm transition-colors">
+                  Inspect Liners
+                </button>
+</td>
+</tr>
+<!-- Row 4: DR-102 (MEDIUM RISK) -->
+<tr class="bg-surface-parchment hover:bg-surface-container transition-colors" data-status="medium">
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-telemetry-amber"></span>
+<div>
+<span class="font-headline-sm text-headline-sm text-earth-charcoal font-bold block leading-none">DR-102</span>
+<span class="font-label-sm text-label-sm text-secondary">Epiroc Pit Viper 271</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-md font-label-md text-label-md text-secondary">Blast Drill Rig</td>
+<td class="py-3 px-space-md">
+<span class="text-earth-charcoal font-medium block">P. Lungu</span>
+<span class="font-label-sm text-label-sm text-secondary">Bench 16 West Extension</span>
+</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded bg-surface-container text-earth-charcoal font-label-sm text-label-sm">Rotary Torque Nom.</span>
+</td>
+<td class="py-3 px-space-md">
+<span class="font-label-sm text-label-sm text-telemetry-emerald flex items-center gap-1 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-telemetry-emerald"></span> 1.8s ago
+                </span>
+</td>
+<td class="py-3 px-space-md font-mono text-earth-charcoal font-medium">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-surface-container-high h-2 rounded overflow-hidden">
+<div class="bg-telemetry-amber h-full" style="width: 48%;"></div>
+</div>
+<span class="text-earth-charcoal">3.1 mm/s</span>
+</div>
+</td>
+<td class="py-3 px-space-md text-right">
+<button class="px-3 py-1 rounded bg-surface-container text-earth-charcoal hover:bg-surface-container-high font-label-sm text-label-sm shadow-sm transition-colors">
+                  Bit Wear Log
+                </button>
+</td>
+</tr>
+<!-- Row 5: HK-405 (NOMINAL) -->
+<tr class="bg-surface-container-low hover:bg-surface-container transition-colors" data-status="nominal">
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-telemetry-emerald"></span>
+<div>
+<span class="font-headline-sm text-headline-sm text-earth-charcoal font-bold block leading-none">HK-405</span>
+<span class="font-label-sm text-label-sm text-secondary">CAT 793F Ultra Hauler</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-md font-label-md text-label-md text-secondary">Haulage (240t)</td>
+<td class="py-3 px-space-md">
+<span class="text-earth-charcoal font-medium block">K. Mwape</span>
+<span class="font-label-sm text-label-sm text-secondary">Main In-Pit Ramp 3</span>
+</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded bg-surface-container text-telemetry-emerald font-label-sm text-label-sm font-semibold">278 BAR Nominal</span>
+</td>
+<td class="py-3 px-space-md">
+<span class="font-label-sm text-label-sm text-telemetry-emerald flex items-center gap-1 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-telemetry-emerald"></span> 0.5s ago
+                </span>
+</td>
+<td class="py-3 px-space-md font-mono text-earth-charcoal font-medium">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-surface-container-high h-2 rounded overflow-hidden">
+<div class="bg-telemetry-emerald h-full" style="width: 18%;"></div>
+</div>
+<span class="text-secondary">1.2 mm/s</span>
+</div>
+</td>
+<td class="py-3 px-space-md text-right">
+<button class="px-3 py-1 rounded bg-surface-container text-earth-charcoal hover:bg-surface-container-high font-label-sm text-label-sm shadow-sm transition-colors">
+                  Telemetry Details
+                </button>
+</td>
+</tr>
+<!-- Row 6: DZ-201 (NOMINAL) -->
+<tr class="bg-surface-parchment hover:bg-surface-container transition-colors" data-status="nominal">
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-telemetry-emerald"></span>
+<div>
+<span class="font-headline-sm text-headline-sm text-earth-charcoal font-bold block leading-none">DZ-201</span>
+<span class="font-label-sm text-label-sm text-secondary">CAT D11 Track Dozer</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-md font-label-md text-label-md text-secondary">Bench Preparation</td>
+<td class="py-3 px-space-md">
+<span class="text-earth-charcoal font-medium block">S. Banda</span>
+<span class="font-label-sm text-label-sm text-secondary">Waste Dump 4 Crest</span>
+</td>
+<td class="py-3 px-space-md">
+<span class="px-2 py-0.5 rounded bg-surface-container text-telemetry-emerald font-label-sm text-label-sm font-semibold">Track Tension OK</span>
+</td>
+<td class="py-3 px-space-md">
+<span class="font-label-sm text-label-sm text-telemetry-emerald flex items-center gap-1 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-telemetry-emerald"></span> 0.8s ago
+                </span>
+</td>
+<td class="py-3 px-space-md font-mono text-earth-charcoal font-medium">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-surface-container-high h-2 rounded overflow-hidden">
+<div class="bg-telemetry-emerald h-full" style="width: 22%;"></div>
+</div>
+<span class="text-secondary">1.8 mm/s</span>
+</div>
+</td>
+<td class="py-3 px-space-md text-right">
+<button class="px-3 py-1 rounded bg-surface-container text-earth-charcoal hover:bg-surface-container-high font-label-sm text-label-sm shadow-sm transition-colors">
+                  Telemetry Details
+                </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-space-sm bg-surface-elevation flex items-center justify-between font-label-sm text-label-sm text-secondary">
+<span>Displaying Kansanshi Northern Sector Pit Feed</span>
+<div class="flex items-center gap-1">
+<button class="px-2 py-0.5 rounded bg-surface-container hover:bg-surface-container-high">Prev</button>
+<span class="px-2 font-bold text-earth-charcoal">1 / 4</span>
+<button class="px-2 py-0.5 rounded bg-surface-container hover:bg-surface-container-high">Next</button>
+</div>
+</div>
+</div>
+<!-- Quick Actions & Maintenance Bay Scheduling Strip -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-md">
+<!-- Scheduling Action Staging -->
+<div class="lg:col-span-2 bg-surface-parchment rounded p-space-md shadow-sm space-y-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-copper-accent text-[22px]">garage</span>
+<h3 class="font-headline-sm text-headline-sm text-earth-charcoal">Heavy Workshop Bay Availability &amp; Staging</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-copper-accent font-semibold uppercase">Zambia Central Yard</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm">
+<!-- Bay 1 -->
+<div class="p-space-sm bg-surface-container rounded flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-earth-charcoal font-bold">Bay 01 (Heavy Haul)</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-telemetry-emerald font-label-sm text-label-sm font-semibold">AVAILABLE</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-1">Ready for HK-402 hydraulic cylinder teardown. Hoist crane rated 50T cleared.</p>
+</div>
+<button class="mt-space-sm w-full py-1.5 rounded bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold hover:bg-tertiary shadow-sm transition-colors">
+              Reserve for HK-402 (3.2h Window)
+            </button>
+</div>
+<!-- Bay 2 -->
+<div class="p-space-sm bg-surface-container rounded flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-earth-charcoal font-bold">Bay 02 (Shovel/Drill)</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-secondary font-label-sm text-label-sm">OCCUPIED</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-1">PV-271 Routine 500h service in progress. Est completion: 1h 40m.</p>
+</div>
+<div class="mt-space-sm w-full py-1.5 rounded bg-surface-container-high text-secondary font-label-sm text-label-sm text-center font-medium">
+              Occupied (Clears 15:30)
+            </div>
+</div>
+<!-- Bay 3 (Quick-Lube Pad) -->
+<div class="p-space-sm bg-surface-container rounded flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-earth-charcoal font-bold">Quick-Lube Mobile Unit 3</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-telemetry-emerald font-label-sm text-label-sm font-semibold">READY</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-1">Mobile truck en route to Bench 12. Ideal for Shovel #4 swing bearing regrease.</p>
+</div>
+<button class="mt-space-sm w-full py-1.5 rounded bg-earth-charcoal text-canvas-sandstone font-label-sm text-label-sm font-semibold hover:bg-earth-espresso shadow-sm transition-colors">
+              Reroute to PC8000 Shovel #4
+            </button>
+</div>
+</div>
+</div>
+<!-- Parts & Stock Warehouse Telemetry -->
+<div class="bg-surface-parchment rounded p-space-md shadow-sm space-y-space-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-copper-accent text-[20px]">inventory_2</span>
+<h3 class="font-headline-sm text-headline-sm text-earth-charcoal">Critical Spares Inventory</h3>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">Solwezi Depot</span>
+</div>
+<div class="space-y-space-xs mt-space-sm">
+<div class="flex items-center justify-between p-2 bg-surface-container rounded">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-earth-charcoal font-semibold">CAT 793F Hoist Cylinder Seal Kit</span>
+<span class="font-body-sm text-body-sm text-secondary">SKU: 382-9912A</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-telemetry-emerald font-label-sm text-label-sm font-bold">4 in Stock</span>
+</div>
+<div class="flex items-center justify-between p-2 bg-surface-container rounded">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-earth-charcoal font-semibold">Mobilith SHC 460 High-Pressure Grease</span>
+<span class="font-body-sm text-body-sm text-secondary">Drum 200L</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-telemetry-emerald font-label-sm text-label-sm font-bold">12 Drums</span>
+</div>
+<div class="flex items-center justify-between p-2 bg-surface-container rounded">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-earth-charcoal font-semibold">Metso 60-89 Concave Ring Segments</span>
+<span class="font-body-sm text-body-sm text-secondary">Manganese Alloy #4</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-error-container text-telemetry-crimson font-label-sm text-label-sm font-bold">1 Unit (Low)</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-space-xs py-space-xs rounded bg-surface-container hover:bg-surface-container-high text-earth-charcoal font-label-md text-label-md flex items-center justify-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">local_shipping</span>
+<span>Open Logistics Manifest</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function filterFleet(type, btnElement) {
+    // Update button visual styles
+    const container = document.getElementById('filterContainer');
+    const buttons = container.querySelectorAll('button');
+    buttons.forEach(b => {
+      b.className = "px-space-md py-space-xs rounded text-earth-charcoal font-label-md text-label-md hover:bg-surface-container-high transition-all flex items-center gap-1.5";
+    });
+    btnElement.className = "px-space-md py-space-xs rounded bg-earth-charcoal text-canvas-sandstone font-label-md text-label-md transition-all shadow-sm flex items-center gap-1.5";
+
+    // Filter table rows
+    const rows = document.querySelectorAll('#equipmentTable tbody tr');
+    rows.forEach(row => {
+      const status = row.getAttribute('data-status');
+      if (type === 'all') {
+        row.style.display = '';
+      } else if (type === 'attention') {
+        row.style.display = (status === 'critical' || status === 'attention') ? '' : 'none';
+      } else if (type === 'medium') {
+        row.style.display = (status === 'medium') ? '' : 'none';
+      } else if (type === 'nominal') {
+        row.style.display = (status === 'nominal') ? '' : 'none';
+      }
+    });
+  }
+
+  function handleSearch(term) {
+    const filter = term.toLowerCase();
+    const rows = document.querySelectorAll('#equipmentTable tbody tr');
+    rows.forEach(row => {
+      const text = row.innerText.toLowerCase();
+      row.style.display = text.includes(filter) ? '' : 'none';
+    });
+  }
+</script></main></div></body></html>

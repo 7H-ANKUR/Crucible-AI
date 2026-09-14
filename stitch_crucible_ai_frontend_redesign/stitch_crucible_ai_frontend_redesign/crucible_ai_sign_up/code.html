@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Create Account | Crucible AI</title>
+<!-- Tailwind CSS v3 with forms and container queries plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              sand: '#F7EFE6',
+              surface: '#FFFBF7',
+              earth: '#130C07',
+              copper: '#8E4D25',
+              copperHover: '#783F1D',
+              accent: '#E09F67'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            display: ['Cabinet Grotesk', 'Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="custom-typography">
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .hero-title {
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      font-weight: 800;
+    }
+    .form-heading {
+      letter-spacing: -0.03em;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body class="bg-brand-sand min-h-screen text-slate-800 antialiased selection:bg-brand-copper selection:text-white">
+<!-- BEGIN: SplitScreenLayout -->
+<main class="min-h-screen flex flex-col lg:flex-row">
+<!-- BEGIN: LeftHeroSection -->
+<section class="relative w-full lg:w-[55%] min-h-[580px] lg:min-h-screen flex flex-col justify-between p-8 sm:p-12 lg:p-16 overflow-hidden bg-brand-earth" data-purpose="brand-hero">
+<!-- Background Quarry Image -->
+<div class="absolute inset-0 z-0">
+<img alt="Geological engineers inspecting mining site" class="w-full h-full object-cover object-center opacity-45 transform scale-105 filter saturate-75 contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAn2HSaKT4cQn0Exs-fYoDkpxcAL2OYu_pcr6mr9zxQ_jt1WiDH9fpSHExE3SIxTEnZZ1v2ryxli7WLCBJElMDglmK-mAUrc-lW4Q3fsoEGifFdsIZWqWFXQq_154kVrCMlHB9sWCs6L8zoKGUeCz9aROADgKhvZkpBgdfZ4liGh_r6yb2ajnzgfFy27MJAhqIaoYMZZTe87kFHBosqGQqBWuzeJYrwir3uWhr1BkjTge8mqP_9tD-V"/>
+<!-- Gradients over image for visual readability -->
+<div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/30"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/95 via-transparent to-black/40"></div>
+</div>
+<!-- Top Header / Brand Logo -->
+<header class="relative z-10">
+<div class="flex items-center space-x-3.5 tracking-wider">
+<!-- Diamond Prism Icon -->
+<svg aria-label="Crucible AI Prism Logo" class="w-9 h-9 text-white" fill="none" viewbox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+<path d="M18 2L32 12V24L18 34L4 24V12L18 2Z" stroke="currentColor" stroke-linejoin="round" stroke-width="2.5"></path>
+<path d="M18 2V34" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M4 12L32 24" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path>
+<path d="M32 12L4 24" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path>
+<path d="M18 8L27 15V21L18 28L9 21V15L18 8Z" fill="currentColor" fill-opacity="0.25"></path>
+</svg>
+<span class="text-2xl font-black tracking-[0.25em] text-white uppercase font-sans">CRUCIBLE AI</span>
+</div>
+</header>
+<!-- Center Content: Title & Bullet Points -->
+<div class="relative z-10 my-auto py-10 lg:py-16 max-w-xl">
+<h1 class="hero-title text-4xl sm:text-5xl lg:text-[3.75rem] text-white mb-10">
+          Start your <br/>
+<span class="text-brand-accent">exploration</span> <br/>
+          Journey
+        </h1>
+<!-- Feature Points -->
+<div class="space-y-6 max-w-md">
+<!-- Feature 1 -->
+<div class="flex items-start space-x-4 group">
+<div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 text-white/80 group-hover:text-brand-accent group-hover:border-brand-accent/40 transition-colors">
+<!-- Lightning Bolt Icon -->
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<h3 class="text-white font-semibold text-base">Fast Analysis</h3>
+<p class="text-white/60 text-sm mt-0.5">Results in hours, not weeks</p>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="flex items-start space-x-4 group">
+<div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 text-white/80 group-hover:text-brand-accent group-hover:border-brand-accent/40 transition-colors">
+<!-- Globe Icon -->
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M3.6 9h16.8M3.6 15h16.8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M12 3a14.3 14.3 0 00-3.5 9 14.3 14.3 0 003.5 9 14.3 14.3 0 003.5-9A14.3 14.3 0 0012 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<h3 class="text-white font-semibold text-base">Pan-African &amp; Global Coverage</h3>
+<p class="text-white/60 text-sm mt-0.5">Sentinel-2, ASTER, EMIT data</p>
+</div>
+</div>
+<!-- Feature 3 -->
+<div class="flex items-start space-x-4 group">
+<div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 text-white/80 group-hover:text-brand-accent group-hover:border-brand-accent/40 transition-colors">
+<!-- Shield Check Icon -->
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<h3 class="text-white font-semibold text-base">Peer-Reviewed Methods</h3>
+<p class="text-white/60 text-sm mt-0.5">Published spectral indices</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Left Footer Tagline -->
+<footer class="relative z-10 pt-6 border-t border-white/10">
+<p class="text-white/50 text-sm font-medium">
+          Trusted by exploration teams across Africa and Latin America
+        </p>
+</footer>
+</section>
+<!-- END: LeftHeroSection -->
+<!-- BEGIN: RightAuthSection -->
+<section class="w-full lg:w-[45%] bg-brand-sand flex flex-col justify-between p-8 sm:p-12 lg:px-20 lg:py-16" data-purpose="signup-form-container">
+<!-- Top spacer for symmetrical balance on large viewports -->
+<div class="hidden lg:block"></div>
+<!-- Signup Form Block -->
+<div class="w-full max-w-md mx-auto my-auto py-8">
+<!-- Form Header -->
+<header class="mb-8">
+<h2 class="form-heading text-3xl sm:text-4xl text-neutral-900 leading-tight">
+            Create your account
+          </h2>
+<p class="text-neutral-600 text-sm sm:text-base mt-2 leading-relaxed">
+            Get started with mineral prospectivity analysis and autonomous pit intelligence
+          </p>
+</header>
+<!-- Registration Form -->
+<form action="#" class="space-y-5" method="POST" onsubmit="event.preventDefault();">
+<!-- Email Field Group -->
+<div>
+<label class="block text-xs font-semibold text-neutral-800 uppercase tracking-wider mb-2" for="email">
+              Email <span class="text-red-500 font-bold">*</span>
+</label>
+<input class="w-full px-4 py-3.5 bg-white border border-stone-300 rounded-lg text-neutral-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-copper focus:border-brand-copper shadow-sm transition-all duration-150" id="email" name="email" placeholder="you@company.com" required="" type="email"/>
+<p class="text-xs text-neutral-500 mt-2">
+              We'll send a 6-digit code to your inbox.
+            </p>
+</div>
+<!-- Agreement Checkbox -->
+<div class="flex items-start pt-1">
+<div class="flex items-center h-5">
+<input class="w-4 h-4 text-brand-copper border-stone-300 rounded focus:ring-brand-copper focus:ring-offset-0 bg-white" id="terms" name="terms" required="" type="checkbox"/>
+</div>
+<label class="ml-2.5 text-xs sm:text-sm text-neutral-700 leading-snug cursor-pointer" for="terms">
+              I agree to the <a class="underline hover:text-brand-copper transition-colors" href="#">Terms of Service</a> and <a class="underline hover:text-brand-copper transition-colors" href="#">Privacy Policy</a>
+</label>
+</div>
+<!-- Submit Button -->
+<div class="pt-2">
+<button class="w-full py-3.5 px-6 rounded-lg bg-brand-copper hover:bg-brand-copperHover text-white font-semibold text-base shadow-sm hover:shadow transition-all duration-150 active:scale-[0.99] flex justify-center items-center" type="submit">
+              Continue
+            </button>
+</div>
+<!-- Login Link -->
+<div class="text-center pt-2">
+<p class="text-sm text-neutral-600">
+              Already have an account? 
+              <a class="font-medium text-neutral-800 underline hover:text-brand-copper transition-colors ml-1" href="#">
+                Sign in
+              </a>
+</p>
+</div>
+</form>
+</div>
+<!-- Legal and Attribution Footer -->
+<footer class="w-full max-w-md mx-auto pt-8 border-t border-stone-200/80 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 gap-3">
+<div class="space-x-2">
+<a class="hover:text-neutral-800 transition-colors" href="#">Terms</a>
+<span>·</span>
+<a class="hover:text-neutral-800 transition-colors" href="#">Privacy</a>
+</div>
+<div>
+<span>Developed by </span>
+<a class="underline hover:text-neutral-800 transition-colors" href="#">SolidFi Labs</a>
+</div>
+</footer>
+</section>
+<!-- END: RightAuthSection -->
+</main>
+<!-- END: SplitScreenLayout -->
+</body></html>

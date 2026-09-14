@@ -8,18 +8,16 @@
 import React from 'react';
 import { ClerkProvider, useUser } from '@clerk/nextjs';
 import { CrucibleAuthProvider, type Role } from '@/lib/roles';
-import { useTheme } from '@/lib/theme';
 
 function ClerkThemed({ children }: { children: React.ReactNode }) {
-  const { isDark } = useTheme();
   return (
     <ClerkProvider
       appearance={{
         variables: {
-          colorPrimary: '#f59a23',
-          colorBackground: isDark ? '#0b1a22' : '#ffffff',
-          colorInputBackground: isDark ? '#14212a' : '#f1f3f5',
-          colorInputText: isDark ? '#d7e4ef' : '#182430',
+          colorPrimary: '#b85a2c',
+          colorBackground: '#ffffff',
+          colorInputBackground: '#f1f3f5',
+          colorInputText: '#182430',
           borderRadius: '0.75rem',
           fontFamily: 'Inter, sans-serif',
         },

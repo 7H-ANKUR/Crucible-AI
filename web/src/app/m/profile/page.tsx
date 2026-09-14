@@ -2,6 +2,7 @@
 
 /**
  * m/profile — mobile identity card: DP, name, role, scope, session controls.
+ * Reskinned to Earthy Industrial.
  */
 import React from 'react';
 import Link from 'next/link';
@@ -18,7 +19,7 @@ export default function MobileProfile() {
   if (!isLoaded) {
     return (
       <div className="grid place-items-center py-20">
-        <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-copper-accent border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -26,11 +27,11 @@ export default function MobileProfile() {
   if (!isSignedIn || !user) {
     return (
       <div className="text-center py-16">
-        <span className="material-symbols-outlined text-ink3 text-5xl">account_circle</span>
-        <p className="mt-3 text-sm text-ink2">Sign in to view your profile.</p>
+        <span className="material-symbols-outlined text-secondary text-5xl">account_circle</span>
+        <p className="mt-3 text-sm text-secondary">Sign in to view your profile.</p>
         <Link
-          href="/login"
-          className="inline-block mt-4 text-xs font-bold bg-btn text-btnt px-6 py-2.5 rounded-full"
+          href="/sign-in"
+          className="inline-block mt-4 text-xs font-bold bg-earth-charcoal text-canvas-sandstone px-6 py-2.5 rounded-full shadow-sm"
         >
           Sign in
         </Link>
@@ -48,21 +49,21 @@ export default function MobileProfile() {
       <PageHeader kicker="Account" title="Profile" />
 
       {/* Identity card */}
-      <Card className="!p-5 text-center mb-4">
+      <Card className="!p-5 text-center mb-4 bg-surface-parchment border-earth-border shadow-sm">
         <div className="relative inline-block">
           <Avatar
             src={user.imageUrl}
             name={user.fullName}
-            className="w-20 h-20 rounded-full object-cover border-2 border-accent/60 shadow-[0_0_20px_rgba(255,197,111,0.25)] mx-auto"
+            className="w-20 h-20 rounded-full object-cover border-2 border-copper-accent/40 shadow-sm mx-auto"
           />
-          <span className="absolute bottom-0.5 right-0.5 w-3.5 h-3.5 rounded-full bg-ok border-2 border-card" />
+          <span className="absolute bottom-0.5 right-0.5 w-3.5 h-3.5 rounded-full bg-telemetry-emerald border-2 border-surface-parchment" />
         </div>
-        <h2 className="font-['Manrope'] text-lg font-bold text-ink mt-3 truncate">
+        <h2 className="font-['Space_Grotesk'] text-lg font-bold text-earth-charcoal mt-3 truncate">
           {user.fullName ?? user.username ?? email.split('@')[0]}
         </h2>
-        <p className="text-xs text-ink2 truncate">{email}</p>
+        <p className="text-xs text-secondary truncate">{email}</p>
         {role && (
-          <span className="inline-block mt-2 px-3 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider border-accent/40 bg-accent/15 text-accentt">
+          <span className="inline-block mt-2 px-3 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider border-copper-accent/40 bg-copper-accent/10 text-copper-accent">
             {ROLE_LABEL[role as Role] ?? role}
           </span>
         )}
@@ -72,31 +73,31 @@ export default function MobileProfile() {
       </Card>
 
       {/* Details */}
-      <Card className="!p-0 overflow-hidden mb-4">
+      <Card className="!p-0 overflow-hidden mb-4 bg-surface-parchment border-earth-border shadow-sm">
         {[
           ['Department scope', scope, 'workspaces'],
           ['Member since', memberSince, 'calendar_month'],
           ['Auth provider', 'Clerk (JWT session)', 'verified_user'],
           ['User ID', user.id, 'fingerprint'],
         ].map(([label, value, icon], i) => (
-          <div key={label} className={`px-4 py-3 flex items-center gap-3 ${i > 0 ? 'border-t border-line' : ''}`}>
-            <span className="material-symbols-outlined !text-[18px] text-ink3">{icon}</span>
+          <div key={label} className={`px-4 py-3 flex items-center gap-3 ${i > 0 ? 'border-t border-earth-border' : ''}`}>
+            <span className="material-symbols-outlined !text-[18px] text-secondary">{icon}</span>
             <div className="min-w-0 flex-1">
-              <div className="text-[9px] font-bold text-ink2 uppercase tracking-wider">{label}</div>
-              <div className="text-[11px] text-ink font-mono truncate">{value}</div>
+              <div className="text-[9px] font-bold text-secondary uppercase tracking-wider">{label}</div>
+              <div className="text-[11px] text-earth-charcoal font-mono truncate">{value}</div>
             </div>
           </div>
         ))}
       </Card>
 
       {/* Access */}
-      <div className="text-[10px] font-bold text-ink3 uppercase tracking-widest mb-2">Your access</div>
+      <div className="text-[10px] font-bold text-secondary uppercase tracking-widest mb-2">Your access</div>
       <div className="flex flex-wrap gap-2 mb-5">
         {accessible.map((p) => (
           <Link
             key={p.href}
             href={'/m' + p.href}
-            className="px-3 py-1.5 rounded-full bg-panel2 border border-line text-xs font-semibold text-ink2 active:border-accent/50 flex items-center gap-1.5"
+            className="px-3 py-1.5 rounded-full bg-surface-container-low border border-earth-border text-xs font-semibold text-secondary hover:text-copper-accent hover:border-copper-accent/40 transition-all flex items-center gap-1.5"
           >
             <span className="material-symbols-outlined !text-[15px]">{p.icon}</span>
             {p.label}
@@ -104,7 +105,7 @@ export default function MobileProfile() {
         ))}
         <Link
           href="/m/alerts"
-          className="px-3 py-1.5 rounded-full bg-panel2 border border-line text-xs font-semibold text-ink2 flex items-center gap-1.5"
+          className="px-3 py-1.5 rounded-full bg-surface-container-low border border-earth-border text-xs font-semibold text-secondary flex items-center gap-1.5"
         >
           <span className="material-symbols-outlined !text-[15px]">notifications_active</span>
           Alerts
@@ -112,7 +113,7 @@ export default function MobileProfile() {
         {isSuperAdmin && (
           <Link
             href="/m/admin"
-            className="px-3 py-1.5 rounded-full bg-accent/15 border border-accent/40 text-xs font-bold text-accentt flex items-center gap-1.5"
+            className="px-3 py-1.5 rounded-full bg-copper-accent/10 border border-copper-accent/40 text-xs font-bold text-copper-accent flex items-center gap-1.5"
           >
             <span className="material-symbols-outlined !text-[15px]">admin_panel_settings</span>
             Manage admins
@@ -122,7 +123,7 @@ export default function MobileProfile() {
 
       <button
         onClick={() => clerk.signOut({ redirectUrl: '/m' })}
-        className="w-full py-3 rounded-xl border border-danger/50 text-xs font-bold uppercase tracking-wider text-dangert active:scale-[0.98] transition-transform"
+        className="w-full py-3 rounded-xl border border-telemetry-crimson/50 text-xs font-bold uppercase tracking-wider text-telemetry-crimson hover:bg-telemetry-crimson/10 transition-all active:scale-[0.98]"
       >
         Sign out
       </button>

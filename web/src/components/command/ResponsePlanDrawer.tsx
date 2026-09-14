@@ -2,15 +2,7 @@
 
 /**
  * ResponsePlanDrawer.tsx — the decision itself.
- *
- * Situation, evidence, root cause, what to do in each window, what it costs,
- * what it risks, who must approve it — and the option comparison against doing
- * nothing, so the manager can see what they are choosing between rather than
- * being handed a single answer.
- *
- * The verbs matter. "File for approval" and "Record as started" describe what a
- * person does; nothing here says "deploy" or "execute", because Crucible AI does not
- * perform operational actions and the interface must not imply that it does.
+ * Reskinned to Stitch "Earthy Industrial" design system (light-only).
  */
 import React, { useEffect, useState } from 'react';
 import {
@@ -85,38 +77,38 @@ export function ResponsePlanDrawer({
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-[2px]"
+        className="absolute inset-0 bg-earth-charcoal/40 backdrop-blur-[2px]"
         onClick={onClose}
         aria-hidden
       />
 
-      <aside className="relative flex h-full w-full max-w-2xl flex-col border-l border-line2 bg-page shadow-2xl">
-        <header className="flex items-start justify-between gap-3 border-b border-line2/60 px-5 py-3">
+      <aside className="relative flex h-full w-full max-w-2xl flex-col border-l border-earth-border bg-surface-parchment shadow-2xl animate-drawerIn">
+        <header className="flex items-start justify-between gap-3 border-b border-earth-border bg-surface-container-high px-5 py-3">
           <div className="min-w-0">
             <div className="flex items-center gap-2">
               <SeverityChip severity={item.severity} />
-              <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-ink2/70">
+              <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-secondary">
                 Response plan
               </span>
               {filed && (
-                <span className="rounded border border-sky-500/30 bg-sky-500/5 px-1.5 py-px text-[9px] font-bold uppercase tracking-wider text-sky-400">
+                <span className="rounded border border-primary/30 bg-primary-fixed/40 px-1.5 py-px text-[9px] font-bold uppercase tracking-wider text-primary">
                   {filed.ref} · {filed.state.replace(/_/g, ' ').toLowerCase()}
                 </span>
               )}
             </div>
-            <h2 className="mt-1 text-lg font-bold text-ink truncate">
+            <h2 className="mt-1.5 text-lg font-bold text-earth-charcoal truncate font-['Space_Grotesk']">
               {plan?.title || item.title}
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="shrink-0 rounded-lg p-1.5 text-ink2 hover:bg-panel3 hover:text-ink transition-colors"
+            className="shrink-0 rounded p-1.5 text-on-surface-variant hover:bg-surface-container-highest hover:text-earth-charcoal transition-colors"
           >
             <span className="material-symbols-outlined !text-[20px]">close</span>
           </button>
         </header>
 
-        <div className="flex-1 overflow-y-auto px-5 py-4 space-y-5">
+        <div className="flex-1 overflow-y-auto px-5 py-5 space-y-6">
           {error && (
             <Caveat tone="warn" icon="error">
               {error}
@@ -133,14 +125,14 @@ export function ResponsePlanDrawer({
           {plan?.available && (
             <>
               <Block title="Situation">
-                <p className="text-sm leading-relaxed text-ink/90">{plan.situation}</p>
+                <p className="text-sm leading-relaxed text-earth-charcoal">{plan.situation}</p>
               </Block>
 
               <Block
                 title="Root cause"
                 action={<ProvenanceBadge mode={plan.root_cause_calculation_mode} />}
               >
-                <p className="text-sm leading-relaxed text-ink2">{plan.root_cause}</p>
+                <p className="text-sm leading-relaxed text-secondary">{plan.root_cause}</p>
               </Block>
 
               <Block title="Expected result" action={<EvidenceBadge quality={plan.evidence_quality} />}>
@@ -163,12 +155,12 @@ export function ResponsePlanDrawer({
                     tone={(plan.expected.residual_gap_t ?? 0) > 0 ? 'bad' : 'good'}
                   />
                 </div>
-                <p className="mt-2 text-[11px] leading-snug text-ink2/60">{plan.expected.note}</p>
+                <p className="mt-2 text-[11px] leading-snug text-on-surface-variant">{plan.expected.note}</p>
               </Block>
 
               {plan.action_groups.map((g) => (
                 <Block key={g.horizon} title={g.label}>
-                  <div className="space-y-2.5">
+                  <div className="space-y-3">
                     {g.actions.map((a) => (
                       <RecommendationCard key={a.key} rec={a} />
                     ))}
@@ -178,37 +170,39 @@ export function ResponsePlanDrawer({
 
               {plan.comparison?.available && plan.comparison.rows && (
                 <Block title={`Options at ${plan.comparison.horizon_label?.toLowerCase()}`}>
-                  <div className="overflow-x-auto">
+                  <div className="overflow-x-auto rounded border border-earth-border">
                     <table className="w-full text-[11px]">
-                      <thead>
-                        <tr className="border-b border-line2/40 text-left text-ink2/60">
-                          <th className="py-1.5 pr-3 font-semibold">Option</th>
-                          <th className="py-1.5 pr-3 text-right font-semibold">Shortfall</th>
-                          <th className="py-1.5 pr-3 text-right font-semibold">Recovered</th>
-                          <th className="py-1.5 text-right font-semibold">Cost</th>
+                      <thead className="bg-surface-container-low">
+                        <tr className="border-b border-earth-border text-left text-secondary">
+                          <th className="py-2 pl-3 pr-3 font-semibold">Option</th>
+                          <th className="py-2 pr-3 text-right font-semibold">Shortfall</th>
+                          <th className="py-2 pr-3 text-right font-semibold">Recovered</th>
+                          <th className="py-2 pr-3 text-right font-semibold">Cost</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {plan.comparison.rows.map((r) => (
+                        {plan.comparison.rows.map((r, i) => (
                           <tr
                             key={r.key}
-                            className={`border-b border-line2/20 ${r.is_baseline ? 'text-red-300/80' : 'text-ink2'}`}
+                            className={`border-b border-earth-border ${
+                              r.is_baseline ? 'bg-telemetry-crimson/5 text-telemetry-crimson' : 'text-earth-charcoal'
+                            } ${i === plan.comparison!.rows!.length - 1 ? 'border-b-0' : ''}`}
                           >
-                            <td className="py-1.5 pr-3">{r.label}</td>
-                            <td className="py-1.5 pr-3 text-right tabular-nums">
+                            <td className="py-2 pl-3 pr-3 font-medium">{r.label}</td>
+                            <td className="py-2 pr-3 text-right tabular-nums">
                               {tonnes(r.shortfall_t)}
                             </td>
-                            <td className="py-1.5 pr-3 text-right tabular-nums text-emerald-400/80">
+                            <td className="py-2 pr-3 text-right tabular-nums font-semibold text-telemetry-emerald">
                               {r.recovered_t > 0 ? tonnes(r.recovered_t, true) : '—'}
                             </td>
-                            <td className="py-1.5 text-right tabular-nums">{rupees(r.cost_inr)}</td>
+                            <td className="py-2 pr-3 text-right tabular-nums">{rupees(r.cost_inr)}</td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
                   </div>
                   {plan.comparison.note && (
-                    <p className="mt-2 text-[11px] leading-snug text-ink2/60">
+                    <p className="mt-2 text-[11px] leading-snug text-on-surface-variant">
                       {plan.comparison.note}
                     </p>
                   )}
@@ -217,11 +211,11 @@ export function ResponsePlanDrawer({
 
               {plan.not_available.length > 0 && (
                 <Block title="Considered and refused">
-                  <div className="space-y-1.5">
+                  <div className="space-y-2">
                     {plan.not_available.map((b) => (
-                      <div key={b.key} className="rounded-lg border border-line2/40 px-3 py-2">
-                        <span className="text-[11px] font-semibold text-ink2">{b.title}</span>
-                        <p className="mt-0.5 text-[11px] leading-snug text-ink2/70">
+                      <div key={b.key} className="rounded border border-earth-border bg-surface-container-low px-3 py-2">
+                        <span className="text-[11px] font-semibold text-secondary">{b.title}</span>
+                        <p className="mt-1 text-[11px] leading-snug text-on-surface-variant">
                           {b.constraint_summary}
                         </p>
                       </div>
@@ -234,7 +228,7 @@ export function ResponsePlanDrawer({
                 <Block title="Risks">
                   <ul className="space-y-1">
                     {plan.risks.map((r) => (
-                      <li key={r} className="text-[11px] leading-snug text-amber-200/70">
+                      <li key={r} className="text-[11px] leading-snug text-telemetry-amber">
                         · {r}
                       </li>
                     ))}
@@ -243,14 +237,14 @@ export function ResponsePlanDrawer({
               )}
 
               <Block title="Accountability">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-4 rounded border border-earth-border bg-surface-container-lowest p-3">
                   <div>
                     <SectionLabel>Owners</SectionLabel>
-                    <p className="text-[11px] text-ink2">{plan.owners.join(', ') || '—'}</p>
+                    <p className="text-[11px] font-medium text-earth-charcoal">{plan.owners.join(', ') || '—'}</p>
                   </div>
                   <div>
                     <SectionLabel>Approval required</SectionLabel>
-                    <p className="text-[11px] text-ink2">
+                    <p className="text-[11px] font-medium text-earth-charcoal">
                       {plan.approval_required.map((r) => r.replace(/_/g, ' ')).join(' or ') || '—'}
                     </p>
                   </div>
@@ -263,13 +257,13 @@ export function ResponsePlanDrawer({
         </div>
 
         {plan?.available && (
-          <footer className="border-t border-line2/60 bg-panel2/60 px-5 py-3">
+          <footer className="border-t border-earth-border bg-surface-container-high px-5 py-4">
             <div className="flex flex-wrap gap-2">
               {!filed && (
                 <button
                   onClick={onFile}
                   disabled={pending}
-                  className="rounded-lg bg-chipon px-4 py-2 text-xs font-bold text-inkb hover:brightness-110 disabled:opacity-50 transition-all"
+                  className="rounded bg-primary px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-primary-container hover:text-on-primary-container disabled:opacity-50 transition-all"
                 >
                   File for approval
                 </button>
@@ -278,7 +272,7 @@ export function ResponsePlanDrawer({
                 <button
                   onClick={() => onStep('submit')}
                   disabled={pending}
-                  className="rounded-lg bg-chipon px-4 py-2 text-xs font-bold text-inkb hover:brightness-110 disabled:opacity-50 transition-all"
+                  className="rounded bg-primary px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-primary-container disabled:opacity-50 transition-all"
                 >
                   Submit for review
                 </button>
@@ -290,7 +284,7 @@ export function ResponsePlanDrawer({
                       onStep('approve', { rationale: 'Approved from the Command Center.' })
                     }
                     disabled={pending}
-                    className="rounded-lg bg-emerald-500/90 px-4 py-2 text-xs font-bold text-white hover:brightness-110 disabled:opacity-50 transition-all"
+                    className="rounded bg-telemetry-emerald px-4 py-2 text-xs font-bold text-white shadow-sm hover:brightness-110 disabled:opacity-50 transition-all"
                   >
                     Approve
                   </button>
@@ -300,7 +294,7 @@ export function ResponsePlanDrawer({
                       if (reason) void onStep('reject', { rationale: reason });
                     }}
                     disabled={pending}
-                    className="rounded-lg border border-red-500/40 px-4 py-2 text-xs font-bold text-red-400 hover:bg-red-500/10 disabled:opacity-50 transition-all"
+                    className="rounded border border-telemetry-crimson/50 px-4 py-2 text-xs font-bold text-telemetry-crimson hover:bg-telemetry-crimson/10 disabled:opacity-50 transition-all"
                   >
                     Reject
                   </button>
@@ -310,7 +304,7 @@ export function ResponsePlanDrawer({
                 <button
                   onClick={() => onStep('start')}
                   disabled={pending}
-                  className="rounded-lg bg-chipon px-4 py-2 text-xs font-bold text-inkb hover:brightness-110 disabled:opacity-50 transition-all"
+                  className="rounded bg-primary px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-primary-container disabled:opacity-50 transition-all"
                 >
                   Record as started
                 </button>
@@ -319,7 +313,7 @@ export function ResponsePlanDrawer({
                 <button
                   onClick={() => onStep('complete')}
                   disabled={pending}
-                  className="rounded-lg bg-chipon px-4 py-2 text-xs font-bold text-inkb hover:brightness-110 disabled:opacity-50 transition-all"
+                  className="rounded bg-primary px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-primary-container disabled:opacity-50 transition-all"
                 >
                   Record as complete
                 </button>
@@ -335,14 +329,14 @@ export function ResponsePlanDrawer({
                     void onStep('outcome', { actual_value: value, variance_reason: why });
                   }}
                   disabled={pending}
-                  className="rounded-lg bg-chipon px-4 py-2 text-xs font-bold text-inkb hover:brightness-110 disabled:opacity-50 transition-all"
+                  className="rounded bg-primary px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-primary-container disabled:opacity-50 transition-all"
                 >
                   Record what happened
                 </button>
               )}
               <button
                 onClick={onClose}
-                className="ml-auto rounded-lg border border-line2/60 px-4 py-2 text-xs font-semibold text-ink2 hover:text-ink transition-colors"
+                className="ml-auto rounded border border-earth-border px-4 py-2 text-xs font-semibold text-secondary hover:text-earth-charcoal hover:bg-surface-container transition-colors"
               >
                 Close
               </button>
@@ -365,7 +359,7 @@ function Block({
 }) {
   return (
     <section>
-      <div className="mb-1.5 flex items-center justify-between gap-2">
+      <div className="mb-2 flex items-center justify-between gap-2 border-b border-earth-border pb-1">
         <SectionLabel>{title}</SectionLabel>
         {action}
       </div>

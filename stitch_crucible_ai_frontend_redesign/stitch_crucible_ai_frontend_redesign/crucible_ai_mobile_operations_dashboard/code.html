@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Crucible AI - Mobile Operations Dashboard</title>
+<!-- Google Fonts: Space Grotesk -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Space Grotesk"', 'sans-serif'],
+          },
+          colors: {
+            copper: {
+              DEFAULT: '#9E5A2A',
+              light: '#B46A36',
+              dark: '#7D441D',
+              surface: '#FDF7F3',
+              border: '#E8D5C8',
+            },
+            charcoal: {
+              DEFAULT: '#2B231D',
+              deep: '#1E1813',
+              muted: '#695E57',
+            },
+            sand: {
+              50: '#FBF9F6',
+              100: '#F4EFEA',
+              200: '#E8DFD5',
+              300: '#D5C7B8',
+            },
+            critical: '#DC2626',
+            warning: '#D97706',
+            success: '#16A34A',
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="base-layout">
+    body {
+      background-color: #F4EFEA;
+      color: #2B231D;
+      font-family: 'Space Grotesk', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    /* Pattern for hatched projection graph */
+    .hatch-pattern {
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(158, 90, 42, 0.15),
+        rgba(158, 90, 42, 0.15) 3px,
+        rgba(158, 90, 42, 0.03) 3px,
+        rgba(158, 90, 42, 0.03) 6px
+      );
+    }
+    /* Drawer smooth slide transition */
+    #mobile-drawer {
+      transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #mobile-drawer-backdrop {
+      transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    /* Hide scrollbars on clean mobile view */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex justify-center bg-sand-200">
+<!-- Mobile Viewport Container (~390px iPhone Pro Form Factor) -->
+<div class="w-full max-w-[420px] min-h-screen bg-sand-50 shadow-2xl relative flex flex-col pb-16 overflow-x-hidden border-x border-sand-300/60" data-purpose="mobile-viewport">
+<!-- BEGIN: MobileHeader -->
+<!-- 52px Sticky App Bar with Navigation Controls & Active Mine Pill -->
+<header class="sticky top-0 z-40 h-[52px] bg-sand-50/95 backdrop-blur-md border-b border-sand-200 px-3.5 flex items-center justify-between" data-purpose="sticky-header">
+<!-- Left side: Hamburger Drawer Trigger & Brand Logo -->
+<div class="flex items-center gap-2">
+<button aria-label="Open Navigation Menu" class="p-1.5 rounded text-charcoal hover:bg-sand-100 active:scale-95 transition-transform" id="drawer-toggle-btn" type="button">
+<svg class="w-5 h-5 stroke-charcoal stroke-2 fill-none" viewbox="0 0 24 24">
+<path d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<div class="flex items-center gap-1.5">
+<img alt="Crucible AI Logo" class="w-6 h-6 object-contain" src="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none'&gt;&lt;polygon points='50,8 88,30 88,70 50,92 12,70 12,30' stroke='%239E5A2A' stroke-width='4' fill='%232B231D'/&gt;&lt;polygon points='50,8 88,30 50,50 12,30' fill='%239E5A2A' fill-opacity='0.25'/&gt;&lt;polygon points='50,50 88,30 88,70 50,92' fill='%239E5A2A' fill-opacity='0.45'/&gt;&lt;polygon points='50,50 12,30 12,70 50,92' fill='%23B46A36' fill-opacity='0.3'/&gt;&lt;circle cx='50' cy='50' r='12' fill='%239E5A2A'/&gt;&lt;path d='M44 50 L56 50 M50 44 L50 56' stroke='%23FFF8F4' stroke-width='3' stroke-linecap='round'/&gt;&lt;/svg&gt;"/>
+<span class="font-bold tracking-tight text-xs text-charcoal font-sans">CRUCIBLE</span>
+</div>
+</div>
+<!-- Center: Active Mine Pill Selector -->
+<button class="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold bg-sand-100 hover:bg-sand-200/80 border border-sand-300/70 rounded-full text-charcoal active:scale-95 transition" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+<span>Kansanshi Pit North</span>
+<svg class="w-3 h-3 text-charcoal-muted" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<!-- Right side: Theme toggle, Desktop view switch & User Avatar -->
+<div class="flex items-center gap-1.5">
+<button aria-label="Desktop view" class="p-1 rounded text-charcoal-muted hover:text-charcoal hover:bg-sand-100 text-[10px] font-medium" title="Switch to Desktop Mode">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.75" viewbox="0 0 24 24">
+<path d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<div class="w-6 h-6 rounded-full bg-copper text-sand-50 font-bold text-[10px] flex items-center justify-center ring-1 ring-copper-light shadow-sm">
+          MV
+        </div>
+</div>
+</header>
+<!-- END: MobileHeader -->
+<!-- BEGIN: MobileDrawerNavigation -->
+<!-- Slide-in drawer overlay visible or toggleable -->
+<div class="fixed inset-0 bg-charcoal-deep/50 z-50 pointer-events-none opacity-0 transition-opacity" id="mobile-drawer-backdrop"></div>
+<aside aria-hidden="true" class="fixed top-0 left-0 bottom-0 w-[295px] max-w-[80vw] bg-sand-50 z-50 border-r border-sand-300 shadow-2xl flex flex-col transform -translate-x-full" id="mobile-drawer">
+<!-- Drawer Header with User Profile Details -->
+<div class="p-4 border-b border-sand-200 bg-sand-100/60">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<img alt="Crucible AI" class="w-5 h-5" src="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none'&gt;&lt;polygon points='50,8 88,30 88,70 50,92 12,70 12,30' stroke='%239E5A2A' stroke-width='4' fill='%232B231D'/&gt;&lt;polygon points='50,8 88,30 50,50 12,30' fill='%239E5A2A' fill-opacity='0.25'/&gt;&lt;polygon points='50,50 88,30 88,70 50,92' fill='%239E5A2A' fill-opacity='0.45'/&gt;&lt;polygon points='50,50 12,30 12,70 50,92' fill='%23B46A36' fill-opacity='0.3'/&gt;&lt;circle cx='50' cy='50' r='12' fill='%239E5A2A'/&gt;&lt;path d='M44 50 L56 50 M50 44 L50 56' stroke='%23FFF8F4' stroke-width='3' stroke-linecap='round'/&gt;&lt;/svg&gt;"/>
+<span class="font-bold text-xs tracking-wider text-charcoal">CRUCIBLE MOBILE</span>
+</div>
+<button class="p-1 rounded text-charcoal-muted hover:text-charcoal hover:bg-sand-200" id="drawer-close-btn">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-md bg-copper text-sand-50 font-bold text-sm flex items-center justify-center shadow">
+            MV
+          </div>
+<div class="overflow-hidden">
+<h2 class="text-sm font-bold text-charcoal truncate">Marcus Vance</h2>
+<p class="text-[11px] text-charcoal-muted truncate">Shift A Supervisor</p>
+<p class="text-[10px] text-copper font-medium tracking-tight">Kansanshi Operations</p>
+</div>
+</div>
+</div>
+<!-- Department Navigation Links -->
+<nav class="flex-1 overflow-y-auto p-3 space-y-1 text-xs">
+<p class="px-2 pt-2 pb-1 text-[10px] uppercase font-bold text-charcoal-muted tracking-wider">Operational Modules</p>
+<a class="flex items-center justify-between px-3 py-2.5 rounded-md font-medium text-charcoal hover:bg-sand-100 transition-colors" href="#command-center">
+<div class="flex items-center gap-2.5">
+<span>⚡</span>
+<span>Command Center</span>
+</div>
+<span class="text-[10px] text-charcoal-muted">/m/command-center</span>
+</a>
+<a class="flex items-center justify-between px-3 py-2.5 rounded-md font-semibold bg-copper/10 text-copper border border-copper/20 transition-colors" href="#production">
+<div class="flex items-center gap-2.5">
+<span>⛏️</span>
+<span>Production Forecast</span>
+</div>
+<span class="text-[10px] bg-copper text-sand-50 px-1.5 py-0.5 rounded-full font-bold">Active</span>
+</a>
+<a class="flex items-center justify-between px-3 py-2.5 rounded-md font-medium text-charcoal hover:bg-sand-100 transition-colors" href="#equipment">
+<div class="flex items-center gap-2.5">
+<span>🚜</span>
+<span>Equipment Health</span>
+</div>
+<span class="text-[10px] bg-warning/20 text-warning font-bold px-1.5 py-0.5 rounded">2 warn</span>
+</a>
+<a class="flex items-center justify-between px-3 py-2.5 rounded-md font-medium text-charcoal hover:bg-sand-100 transition-colors" href="#alerts">
+<div class="flex items-center gap-2.5">
+<span>🚨</span>
+<span>Active Alerts</span>
+</div>
+<span class="text-[10px] bg-critical text-white font-bold px-1.5 py-0.5 rounded-full">3 Critical</span>
+</a>
+<a class="flex items-center justify-between px-3 py-2.5 rounded-md font-medium text-charcoal hover:bg-sand-100 transition-colors" href="#gis">
+<div class="flex items-center gap-2.5">
+<span>🛰️</span>
+<span>Exploration GIS</span>
+</div>
+<span class="text-[10px] text-charcoal-muted">Lidar v4</span>
+</a>
+<a class="flex items-center justify-between px-3 py-2.5 rounded-md font-medium text-charcoal hover:bg-sand-100 transition-colors" href="#governance">
+<div class="flex items-center gap-2.5">
+<span>🛡️</span>
+<span>Governance &amp; Sign-off</span>
+</div>
+<span class="text-[10px] text-success font-semibold">ISO Audit</span>
+</a>
+</nav>
+<!-- Drawer Footer Action -->
+<div class="p-3 border-t border-sand-200 bg-sand-100/40">
+<button class="w-full py-2 px-3 text-xs font-semibold rounded bg-sand-200 hover:bg-sand-300 text-charcoal transition flex items-center justify-center gap-2">
+<span>End of Shift Sign-off (18:00)</span>
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</aside>
+<!-- END: MobileDrawerNavigation -->
+<!-- Main Content Area -->
+<main class="flex-1 px-3.5 pt-3.5 pb-6 space-y-4" data-purpose="dashboard-main-content">
+<!-- BEGIN: ShiftGreetingBanner -->
+<section class="bg-gradient-to-r from-copper-surface via-sand-100 to-copper-surface/50 border border-copper-border rounded-lg p-3 relative overflow-hidden" data-purpose="role-greeting-banner">
+<div class="flex justify-between items-start">
+<div>
+<h1 class="text-base font-bold text-charcoal tracking-tight">Good afternoon, Marcus</h1>
+<div class="mt-1 inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-sand-200/80 border border-sand-300 text-[11px] font-medium text-charcoal">
+<span class="w-1.5 h-1.5 rounded-full bg-copper"></span>
+<span>Operations Management • Shift Alpha (06:00 - 18:00)</span>
+</div>
+</div>
+<span class="text-[11px] font-mono font-semibold text-charcoal-muted bg-white/70 px-2 py-0.5 rounded border border-sand-200">
+            14:42 CAT
+          </span>
+</div>
+</section>
+<!-- END: ShiftGreetingBanner -->
+<!-- BEGIN: MobileKpiGrid -->
+<!-- 4 Compact StatCards in a clean 2x2 grid from Section 5 specifications -->
+<section aria-label="Key Performance Indicators" data-purpose="kpi-grid">
+<div class="grid grid-cols-2 gap-2.5">
+<!-- Card 1: P50 Forecast -->
+<div class="bg-white border border-sand-200 rounded-lg p-2.5 shadow-sm">
+<div class="flex items-center justify-between text-charcoal-muted mb-1">
+<span class="text-[11px] font-medium uppercase tracking-wider">P50 Forecast</span>
+<span class="text-copper">⛏️</span>
+</div>
+<div class="text-lg font-bold text-charcoal font-mono">142.8k <span class="text-xs font-normal font-sans text-charcoal-muted">t</span></div>
+<div class="mt-1 flex items-center gap-1 text-[10px] text-critical font-medium">
+<svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 14l-7 7m0 0l-7-7m7 7V3" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+</svg>
+<span>Shortfall Risk: 8.4%</span>
+</div>
+</div>
+<!-- Card 2: Fleet At Risk -->
+<div class="bg-white border border-sand-200 rounded-lg p-2.5 shadow-sm">
+<div class="flex items-center justify-between text-charcoal-muted mb-1">
+<span class="text-[11px] font-medium uppercase tracking-wider">Fleet At Risk</span>
+<span class="text-critical">🚜</span>
+</div>
+<div class="text-lg font-bold text-critical font-mono">3 Units</div>
+<div class="mt-1 text-[10px] text-charcoal-muted font-mono truncate">
+              HK-402, SH-004
+            </div>
+</div>
+<!-- Card 3: Open Alerts -->
+<div class="bg-white border border-sand-200 rounded-lg p-2.5 shadow-sm">
+<div class="flex items-center justify-between text-charcoal-muted mb-1">
+<span class="text-[11px] font-medium uppercase tracking-wider">Open Alerts</span>
+<span class="text-warning">🚨</span>
+</div>
+<div class="text-lg font-bold text-charcoal font-mono">8 Total</div>
+<div class="mt-1 text-[10px] font-medium">
+<span class="text-critical font-bold">3 Crit</span> <span class="text-charcoal-muted">/</span> <span class="text-warning font-bold">5 Warn</span>
+</div>
+</div>
+<!-- Card 4: Energy Intensity -->
+<div class="bg-white border border-sand-200 rounded-lg p-2.5 shadow-sm">
+<div class="flex items-center justify-between text-charcoal-muted mb-1">
+<span class="text-[11px] font-medium uppercase tracking-wider">Energy Intensity</span>
+<span class="text-emerald-600">⚡</span>
+</div>
+<div class="text-lg font-bold text-charcoal font-mono">14.1 <span class="text-xs font-normal font-sans text-charcoal-muted">kWh/t</span></div>
+<div class="mt-1 text-[10px] text-emerald-700 font-medium flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+<span>Nominal Baseline</span>
+</div>
+</div>
+</div>
+</section>
+<!-- END: MobileKpiGrid -->
+<!-- BEGIN: ProductionSection -->
+<!-- Dedicated Section 5: /m/production Module Preview -->
+<section class="space-y-3" data-purpose="production-forecast-section">
+<!-- Section Header with View Toggle -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<h2 class="text-xs font-bold uppercase tracking-wider text-charcoal">Shift 12h Production Curve</h2>
+<span class="text-[10px] bg-copper/10 text-copper px-1.5 py-0.2 rounded font-semibold border border-copper/20">LIVE</span>
+</div>
+<span class="text-[10px] text-charcoal-muted font-medium">Target: 155,000 t</span>
+</div>
+<!-- P50 Hero Card & Sparkline Projections -->
+<div class="bg-white border border-sand-200 rounded-lg p-3.5 shadow-sm relative overflow-hidden" data-purpose="p50-hero-card">
+<div class="flex items-start justify-between">
+<div>
+<span class="text-[11px] font-medium text-charcoal-muted">Actual Run + P50 Estimated Close</span>
+<div class="text-2xl font-bold text-charcoal font-mono tracking-tight mt-0.5">
+                142,800 <span class="text-xs font-normal font-sans text-charcoal-muted">Tonnes</span>
+</div>
+</div>
+<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-critical/10 text-critical border border-critical/20">
+              -12,200 t Gap
+            </span>
+</div>
+<!-- Mini Aerial Context Banner -->
+<div class="relative mt-3 rounded overflow-hidden border border-sand-200 h-16 w-full">
+<img alt="Kansanshi Pit North Shovel Digface" class="w-full h-full object-cover brightness-95 filter" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8Edn7zzEbUw0R5icipBV1N61fgyK_UKljTBJeYMuxAXbqto8ZFnCEPluTWnf8rL8I_sAsWGaXcWSRuYLdkX06jAZZP7irvMAF8WuBCzi_xo4lXBHERKrqnMnCFoRLgxkaAEqdIzXFPoFil9dSR5cORhGcB6Fg78lYfb_pdysVXnJUpePPblXmkIac5W3S89Ll6yAmapN99PO4FMGhFAp2f4ppb2XBmQCrG9qviB2l0T4NcJqaZRAi"/>
+<div class="absolute inset-0 bg-gradient-to-t from-charcoal-deep/80 via-charcoal/20 to-transparent flex items-end p-1.5">
+<span class="text-[10px] font-mono text-sand-50 bg-charcoal-deep/60 px-1.5 py-0.5 rounded">
+                Sector 4: Primary Excavation Face #02
+              </span>
+</div>
+</div>
+<!-- Compact Production Timeline Sparkline: Actuals vs Hatched Projections -->
+<div class="mt-3.5 pt-3 border-t border-sand-100">
+<div class="flex items-center justify-between text-[10px] text-charcoal-muted mb-1.5 font-mono">
+<span>06:00 (Actual)</span>
+<span class="font-bold text-copper">14:00 (Now)</span>
+<span>18:00 (P50 Hatch)</span>
+</div>
+<!-- Visual Timeline Bar -->
+<div class="h-6 w-full bg-sand-100 rounded flex overflow-hidden border border-sand-200 p-0.5 gap-0.5" data-purpose="production-timeline-chart">
+<!-- Actual Tonnage Bar (06:00 to 14:00) -->
+<div class="h-full bg-copper rounded-l flex items-center justify-center text-[9px] text-white font-mono font-bold" style="width: 66%;">
+                94.2k t (Act)
+              </div>
+<!-- Hatched Projection Bar (14:00 to 18:00) -->
+<div class="h-full hatch-pattern border-l border-copper/50 rounded-r flex items-center justify-center text-[9px] text-copper font-mono font-bold" style="width: 34%;">
+                +48.6k t (P50)
+              </div>
+</div>
+<div class="flex items-center justify-between text-[9px] text-charcoal-muted mt-1.5">
+<span class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-xs bg-copper inline-block"></span> Verified Dispatch Payload
+              </span>
+<span class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-xs hatch-pattern border border-copper/60 inline-block"></span> Predictive Run-rate
+              </span>
+</div>
+</div>
+</div>
+<!-- Section 5: Active Risk Vectors -->
+<div class="space-y-2" data-purpose="risk-vectors-container">
+<div class="flex items-center justify-between">
+<h3 class="text-xs font-bold uppercase tracking-wider text-charcoal">Active Risk Vectors (3)</h3>
+<span class="text-[10px] text-critical font-bold">Total Impact: -$68k/hr</span>
+</div>
+<!-- Risk Card 1: Critical Hydraulic Drop -->
+<article class="bg-white border-l-4 border-l-critical border border-sand-200 rounded-r-lg p-3 shadow-sm flex flex-col justify-between gap-2.5">
+<div class="flex items-start justify-between gap-2">
+<div>
+<div class="flex items-center gap-1.5">
+<span class="px-1.5 py-0.5 text-[9px] font-bold uppercase bg-critical text-white rounded">Critical</span>
+<h4 class="text-xs font-bold text-charcoal">Shovel #4 Hydraulic Pressure Drop</h4>
+</div>
+<p class="text-[11px] text-charcoal-muted mt-1">Main boom cylinder feed drop (-41% pressure, -$34k/hr yield lost)</p>
+</div>
+<span class="font-mono text-[10px] font-bold text-critical bg-critical/10 px-1.5 py-0.5 rounded shrink-0">SH-004</span>
+</div>
+<div class="flex items-center justify-between pt-1 border-t border-sand-100">
+<span class="text-[10px] text-charcoal-muted font-mono">Detected 12m ago</span>
+<button class="px-2.5 py-1 text-[11px] font-semibold bg-copper hover:bg-copper-light active:bg-copper-dark text-white rounded transition shadow-sm flex items-center gap-1" type="button">
+<span>Simulate Mitigation</span>
+<svg class="w-3 h-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</article>
+<!-- Risk Card 2: Medium Haul Road Ramp Congestion -->
+<article class="bg-white border-l-4 border-l-warning border border-sand-200 rounded-r-lg p-3 shadow-sm flex flex-col justify-between gap-2.5">
+<div class="flex items-start justify-between gap-2">
+<div>
+<div class="flex items-center gap-1.5">
+<span class="px-1.5 py-0.5 text-[9px] font-bold uppercase bg-warning text-white rounded">Medium</span>
+<h4 class="text-xs font-bold text-charcoal">Haul Road Ramp B Congestion</h4>
+</div>
+<p class="text-[11px] text-charcoal-muted mt-1">Water cart maintenance cycle overlapping with 4 haulers (+6.2 min delay)</p>
+</div>
+<span class="font-mono text-[10px] font-bold text-warning bg-warning/10 px-1.5 py-0.5 rounded shrink-0">RAMP-B</span>
+</div>
+<div class="flex items-center justify-between pt-1 border-t border-sand-100">
+<span class="text-[10px] text-charcoal-muted font-mono">Detected 24m ago</span>
+<button class="px-2.5 py-1 text-[11px] font-semibold bg-sand-200 hover:bg-sand-300 active:bg-sand-300 text-charcoal rounded transition shadow-sm flex items-center gap-1" type="button">
+<span>Reroute</span>
+<svg class="w-3 h-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</article>
+<!-- Risk Card 3: Critical Gyratory Crusher Hopper Starvation -->
+<article class="bg-white border-l-4 border-l-critical border border-sand-200 rounded-r-lg p-3 shadow-sm flex flex-col justify-between gap-2.5">
+<div class="flex items-start justify-between gap-2">
+<div>
+<div class="flex items-center gap-1.5">
+<span class="px-1.5 py-0.5 text-[9px] font-bold uppercase bg-critical text-white rounded">Critical</span>
+<h4 class="text-xs font-bold text-charcoal">Gyratory Crusher 1 Hopper Starvation</h4>
+</div>
+<p class="text-[11px] text-charcoal-muted mt-1">Cavity fill level 31.2% (Nominal &gt;65%). Predicted bottleneck in 18 min.</p>
+</div>
+<span class="font-mono text-[10px] font-bold text-critical bg-critical/10 px-1.5 py-0.5 rounded shrink-0">CRUSH-01</span>
+</div>
+<div class="flex items-center justify-between pt-1 border-t border-sand-100">
+<span class="text-[10px] text-charcoal-muted font-mono">Detected 4m ago</span>
+<button class="px-2.5 py-1 text-[11px] font-semibold bg-copper hover:bg-copper-light active:bg-copper-dark text-white rounded transition shadow-sm flex items-center gap-1" type="button">
+<span>Response Plan</span>
+<svg class="w-3 h-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</article>
+</div>
+<!-- Section 5: Mobile Prediction Ledger -->
+<!-- Shortened 3-row list with confidence pills & Execute quick buttons -->
+<div class="pt-2" data-purpose="prediction-ledger">
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-xs font-bold uppercase tracking-wider text-charcoal">Crucible AI Autonomous Ledger</h3>
+<span class="text-[10px] text-copper font-medium">Auto-dispatch Ready</span>
+</div>
+<div class="bg-white border border-sand-200 rounded-lg divide-y divide-sand-100 shadow-sm overflow-hidden text-xs">
+<!-- Row 1 -->
+<div class="p-2.5 flex items-center justify-between gap-2 hover:bg-sand-50/50">
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-bold text-charcoal text-[11px] truncate">Reassign CAT 797F (#08) to Pit South</span>
+<span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-emerald-100 text-emerald-800 shrink-0">94% Conf</span>
+</div>
+<div class="text-[10px] text-charcoal-muted mt-0.5 font-mono truncate">
+                  Neutralizes Crusher 1 starvation • +4.2kt gain
+                </div>
+</div>
+<button class="px-2.5 py-1 bg-charcoal text-white hover:bg-charcoal-deep active:scale-95 text-[10px] font-bold rounded uppercase tracking-wider transition shrink-0" type="button">
+                Execute
+              </button>
+</div>
+<!-- Row 2 -->
+<div class="p-2.5 flex items-center justify-between gap-2 hover:bg-sand-50/50">
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-bold text-charcoal text-[11px] truncate">Throttle Sag Mill 2 by -8% feed rate</span>
+<span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-emerald-100 text-emerald-800 shrink-0">89% Conf</span>
+</div>
+<div class="text-[10px] text-charcoal-muted mt-0.5 font-mono truncate">
+                  Reduces mill overload probability from 71% to 12%
+                </div>
+</div>
+<button class="px-2.5 py-1 bg-charcoal text-white hover:bg-charcoal-deep active:scale-95 text-[10px] font-bold rounded uppercase tracking-wider transition shrink-0" type="button">
+                Execute
+              </button>
+</div>
+<!-- Row 3 -->
+<div class="p-2.5 flex items-center justify-between gap-2 hover:bg-sand-50/50">
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-bold text-charcoal text-[11px] truncate">Switch Blending Stockpile B (High Cu Grade)</span>
+<span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-amber-100 text-amber-800 shrink-0">82% Conf</span>
+</div>
+<div class="text-[10px] text-charcoal-muted mt-0.5 font-mono truncate">
+                  Protects target 0.78% Cu flotation recovery
+                </div>
+</div>
+<button class="px-2.5 py-1 bg-charcoal text-white hover:bg-charcoal-deep active:scale-95 text-[10px] font-bold rounded uppercase tracking-wider transition shrink-0" type="button">
+                Execute
+              </button>
+</div>
+</div>
+</div>
+</section>
+<!-- END: ProductionSection -->
+</main>
+<!-- BEGIN: MobileBottomNavigation -->
+<!-- iOS Friendly Sticky Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[420px] bg-sand-50/95 backdrop-blur-md border-t border-sand-200 z-30 px-4 py-1.5 flex justify-between items-center text-[10px] font-medium text-charcoal-muted" data-purpose="mobile-bottom-nav">
+<a class="flex flex-col items-center py-1 text-charcoal-muted hover:text-charcoal transition" href="#command">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="mt-0.5">Overview</span>
+</a>
+<a class="flex flex-col items-center py-1 text-copper font-bold transition" href="#production">
+<div class="relative">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="w-1.5 h-1.5 rounded-full bg-copper absolute -top-0.5 -right-0.5"></span>
+</div>
+<span class="mt-0.5">Production</span>
+</a>
+<a class="flex flex-col items-center py-1 text-charcoal-muted hover:text-charcoal transition" href="#fleet">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.25V5.25A2.25 2.25 0 0012 3H6a2.25 2.25 0 00-2.25 2.25v9.75" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="mt-0.5">Fleet</span>
+</a>
+<a class="flex flex-col items-center py-1 text-charcoal-muted hover:text-charcoal transition relative" href="#alerts">
+<div class="relative">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="w-2 h-2 rounded-full bg-critical absolute -top-0.5 -right-1 ring-1 ring-white"></span>
+</div>
+<span class="mt-0.5">Alerts</span>
+</a>
+</nav>
+<!-- END: MobileBottomNavigation -->
+</div>
+<!-- Interactive JavaScript for Mobile Drawer Toggle -->
+<script data-purpose="drawer-interactivity">
+    document.addEventListener('DOMContentLoaded', () => {
+      const drawer = document.getElementById('mobile-drawer');
+      const backdrop = document.getElementById('mobile-drawer-backdrop');
+      const openBtn = document.getElementById('drawer-toggle-btn');
+      const closeBtn = document.getElementById('drawer-close-btn');
+
+      const openDrawer = () => {
+        drawer.classList.remove('-translate-x-full');
+        drawer.setAttribute('aria-hidden', 'false');
+        backdrop.classList.remove('pointer-events-none', 'opacity-0');
+        backdrop.classList.add('opacity-100');
+        document.body.classList.add('overflow-hidden');
+      };
+
+      const closeDrawer = () => {
+        drawer.classList.add('-translate-x-full');
+        drawer.setAttribute('aria-hidden', 'true');
+        backdrop.classList.add('pointer-events-none', 'opacity-0');
+        backdrop.classList.remove('opacity-100');
+        document.body.classList.remove('overflow-hidden');
+      };
+
+      if (openBtn) openBtn.addEventListener('click', openDrawer);
+      if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+      if (backdrop) backdrop.addEventListener('click', closeDrawer);
+    });
+  </script>
+</body></html>
