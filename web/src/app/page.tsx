@@ -34,7 +34,7 @@ export default function LandingPage() {
     <div className="bg-[#14110f] text-[#fff8f4] font-sans overflow-x-hidden selection:bg-[#9e5a2a] selection:text-white min-h-screen">
       
       {/* ── 1. Main Header ──────────────────────────────────────────────── */}
-      <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md bg-[#14110f]/85">
+      <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           {/* Brand Logo */}
           <Link aria-label="Crucible AI Home" className="flex items-center gap-3 group" href="/">
@@ -101,15 +101,15 @@ export default function LandingPage() {
                 'https://lh3.googleusercontent.com/aida-public/AB6AXuBPLpanTyQQEYJ_fOzzP0zCb2HNKlcUnHgorlKtbymOwA_5H7oSJsx_SetKQmBjhlz-ULSVsqOGOZIAIpFgkxCEmcsHrX7jqDsLn05IyaIL_tvm_3uQYSWJM-uAhIlxTgKEbGfPfaOMI0p24vT2PVJm3uWg4mo3wAyo9EIzuZ7dcgYUuj4EfJVxbxpBTxNtyTwxc0m8aa5l1_2MMC4vpoX7QimKPYnJkuKjfSDsfTEIFRN2tPamoXcenj6PkcES-BxUZg';
             }}
           />
-          {/* Atmospheric Gradients */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_45%_45%,rgba(20,17,15,0.45)_0%,rgba(20,17,15,0.88)_60%,#14110f_100%)]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#14110f] via-[#14110f]/60 to-transparent" />
+          {/* Dark scrim for text legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-black/20 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/50 pointer-events-none" />
         </div>
 
         {/* Main Hero Text Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 pt-16 lg:pt-24 w-full flex-grow flex flex-col justify-center">
           {/* Eyebrow Pill Badge */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#2c2520]/65 backdrop-blur-md border border-[#d3996d]/25 w-fit mb-8 shadow-lg">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#2c2520]/75 backdrop-blur-md border border-[#d3996d]/30 w-fit mb-8 shadow-lg">
             <span className="w-4 h-4 rounded-full flex items-center justify-center text-[#d3996d]">
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="10" />
@@ -118,18 +118,18 @@ export default function LandingPage() {
               </svg>
             </span>
             <span className="text-xs font-medium text-stone-200 tracking-wide">
-              AI-powered mineral exploration across Africa & Western Australia
+              AI-powered mineral exploration across India
             </span>
           </div>
 
           {/* Hero Heading */}
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.3rem] font-extrabold text-white tracking-tight leading-[1.08] max-w-4xl font-['Space_Grotesk']">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.3rem] font-extrabold text-white tracking-tight leading-[1.08] max-w-4xl font-['Space_Grotesk'] drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]">
             Discover high-value <span className="text-[#d3996d] block sm:inline">mineral targets</span>
           </h1>
 
           {/* Description Subheading */}
-          <p className="mt-7 text-base md:text-lg lg:text-xl text-stone-300/90 font-normal leading-relaxed max-w-2xl font-sans">
-            <strong className="text-white font-semibold">Crucible AI</strong> is an AI-powered mineral prospectivity mapping & operational telemetry platform. We transform hyperspectral satellite imagery, geophysical records, and machine learning into ranked exploration targets for gold, copper, lithium, and battery metals — delivered in hours, not months.
+          <p className="mt-7 text-base md:text-lg lg:text-xl text-stone-200 font-normal leading-relaxed max-w-2xl font-sans drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)]">
+            <strong className="text-white font-semibold">Crucible AI</strong> is an AI-powered mineral prospectivity mapping & operational telemetry platform for India. We transform hyperspectral satellite imagery, geophysical records, and machine learning into ranked exploration targets for gold, copper, lithium, and battery metals — delivered in hours, not months.
           </p>
 
           {/* Primary CTAs */}
@@ -153,27 +153,27 @@ export default function LandingPage() {
         </div>
 
         {/* Bottom Telemetry & Stats Ribbon */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-16 pb-4">
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-6 sm:gap-8 pt-8 border-t border-white/10">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-16 pb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-6 sm:gap-8 pt-8 border-t border-white/20">
             <div>
               <div className="text-3xl sm:text-4xl font-extrabold text-white font-['Space_Grotesk'] tracking-tight">20m</div>
-              <p className="text-xs sm:text-sm text-stone-400 mt-1 font-normal">Native spatial resolution</p>
+              <p className="text-xs sm:text-sm text-stone-400 mt-1 font-medium">Native spatial resolution</p>
             </div>
             <div>
               <div className="text-3xl sm:text-4xl font-extrabold text-white font-['Space_Grotesk'] tracking-tight">285</div>
-              <p className="text-xs sm:text-sm text-stone-400 mt-1 font-normal">Spectral bands analyzed</p>
+              <p className="text-xs sm:text-sm text-stone-400 mt-1 font-medium">Spectral bands analyzed</p>
             </div>
             <div>
               <div className="text-3xl sm:text-4xl font-extrabold text-white font-['Space_Grotesk'] tracking-tight">up to 7</div>
-              <p className="text-xs sm:text-sm text-stone-400 mt-1 font-normal">Deposit models per run</p>
+              <p className="text-xs sm:text-sm text-stone-400 mt-1 font-medium">Deposit models per run</p>
             </div>
             <div>
               <div className="text-3xl sm:text-4xl font-extrabold text-white font-['Space_Grotesk'] tracking-tight">6+</div>
-              <p className="text-xs sm:text-sm text-stone-400 mt-1 font-normal">Global satellite data sources</p>
+              <p className="text-xs sm:text-sm text-stone-400 mt-1 font-medium">Global satellite data sources</p>
             </div>
             <div className="hidden lg:block">
               <div className="text-3xl sm:text-4xl font-extrabold text-white font-['Space_Grotesk'] tracking-tight">99.2%</div>
-              <p className="text-xs sm:text-sm text-stone-400 mt-1 font-normal">Telemetry model fidelity</p>
+              <p className="text-xs sm:text-sm text-stone-400 mt-1 font-medium">Telemetry model fidelity</p>
             </div>
           </div>
         </div>
@@ -364,14 +364,14 @@ export default function LandingPage() {
       <section className="py-16 bg-[#1a1613] border-y border-[#2c2520]/50" id="proof">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <p className="text-xs uppercase tracking-widest text-stone-400 font-semibold mb-8 font-['Space_Grotesk']">
-            Trusted by leading exploration teams and Tier-1 mining operators across Africa and Australia
+            Trusted by leading exploration teams and Tier-1 mining operators across India
           </p>
           <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-14 opacity-75 grayscale hover:grayscale-0 transition-all duration-300">
             <span className="font-['Space_Grotesk'] font-extrabold text-xl sm:text-2xl tracking-tight text-stone-300">
               GEO<span className="text-[#9e5a2a]">SPECTRA</span>
             </span>
             <span className="font-['Space_Grotesk'] font-bold text-xl sm:text-2xl tracking-widest text-stone-300">
-              PAN-AFRICA MINING
+              BHARAT MINING
             </span>
             <span className="font-['Space_Grotesk'] font-black text-xl sm:text-2xl tracking-tighter text-stone-300">
               TERRA<span className="text-[#d3996d]">MIN</span> LABS
