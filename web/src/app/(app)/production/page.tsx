@@ -339,22 +339,22 @@ export default function ProductionPage() {
           </div>
           
           {/* Legend & Metric Telemetry Micro-Pills */}
-          <div className="flex flex-wrap items-center justify-between gap-space-sm py-space-sm bg-surface-container/60 rounded px-space-sm my-space-sm">
+          <div className="flex flex-wrap items-center justify-between gap-space-sm py-space-sm bg-surface-container/60 rounded px-space-sm my-space-sm border border-earth-border/60">
             <div className="flex items-center gap-space-md">
               <div className="flex items-center gap-space-xs">
-                <span className="w-3 h-3 rounded bg-earth-espresso"></span>
-                <span className="font-label-sm text-label-sm text-earth-charcoal">Actual Yield (Solid)</span>
+                <span className="w-3.5 h-3.5 rounded-sm bg-earth-espresso border border-earth-charcoal"></span>
+                <span className="font-label-sm text-label-sm text-earth-charcoal font-medium">Actual Yield (Solid)</span>
               </div>
               <div className="flex items-center gap-space-xs">
-                <span className="w-3 h-3 rounded bg-copper-accent opacity-80" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.4) 2px, rgba(255,255,255,0.4) 4px)' }}></span>
-                <span className="font-label-sm text-label-sm text-earth-charcoal">AI Projected Yield (Hatched)</span>
+                <span className="w-3.5 h-3.5 rounded-sm bg-copper-accent/20 border border-dashed border-copper-accent" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(180,106,54,0.5) 2px, rgba(180,106,54,0.5) 4px)' }}></span>
+                <span className="font-label-sm text-label-sm text-earth-charcoal font-medium">AI Projected Yield (Hatched)</span>
               </div>
               <div className="flex items-center gap-space-xs">
-                <div className="w-3 h-0.5 bg-telemetry-crimson"></div>
-                <span className="font-label-sm text-label-sm text-telemetry-crimson">Nominal Quota Threshold</span>
+                <div className="w-4 h-0 border-b-2 border-dashed border-telemetry-crimson"></div>
+                <span className="font-label-sm text-label-sm text-telemetry-crimson font-medium">Nominal Quota Threshold</span>
               </div>
             </div>
-            <span className="font-label-sm text-label-sm text-copper-accent flex items-center gap-1">
+            <span className="font-label-sm text-label-sm text-copper-accent flex items-center gap-1 font-semibold">
               <span className="material-symbols-outlined text-[14px]">touch_app</span>
               Click hatched bar to brainstorm mitigations
             </span>
@@ -368,6 +368,16 @@ export default function ProductionPage() {
                 ))}
               </div>
 
+              {/* Nominal Quota Threshold line across the chart */}
+              <div
+                className="absolute left-0 right-0 border-b-2 border-dashed border-telemetry-crimson/80 pointer-events-none z-10 flex justify-end pr-2"
+                style={{ bottom: 'calc(3.5rem + (100% - 3.5rem) * 0.68)' }}
+              >
+                <span className="font-mono text-[10px] font-bold text-telemetry-crimson bg-surface-parchment px-1.5 py-0.5 rounded border border-telemetry-crimson/40 -translate-y-1/2 shadow-xs">
+                  Quota: 155,000t
+                </span>
+              </div>
+
               <div className="absolute top-0 left-0 right-0 bottom-14 flex items-end gap-[3px]">
               {isLoading ? (
                 /* ── Skeleton shimmer bars ── */
@@ -375,11 +385,11 @@ export default function ProductionPage() {
                   {SKELETON_HEIGHTS.map((h, i) => (
                     <div
                       key={i}
-                      className="flex-1 min-w-0 rounded-t-sm relative overflow-hidden"
+                      className="flex-1 min-w-0 rounded-t-sm relative overflow-hidden border border-earth-border/80"
                       style={{ height: `${h}%` }}
                     >
                       {/* Base dark fill */}
-                      <div className="absolute inset-0 bg-surface-container/30 rounded-t-sm" />
+                      <div className="absolute inset-0 bg-surface-container/60 rounded-t-sm" />
                       {/* Shimmer sweep */}
                       <div
                         className="absolute inset-0 rounded-t-sm"
@@ -420,10 +430,10 @@ export default function ProductionPage() {
                           onMouseLeave={() => setHoveredBarIndex(null)}
                           onTouchStart={() => setHoveredBarIndex(index)}
                           onTouchEnd={() => setHoveredBarIndex(null)}
-                          className="flex-1 min-w-0 bg-copper-accent/85 rounded-t-sm relative group border-t border-copper-accent transition-all hover:scale-y-105"
+                          className="flex-1 min-w-0 bg-copper-accent rounded-t-sm relative group border-2 border-primary-container shadow-xs transition-all hover:scale-y-105"
                           style={{ height: `${bar.heightPercent}%` }}
                         >
-                          <div className="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-[10px] font-bold text-copper-accent whitespace-nowrap">
+                          <div className="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-[10px] font-bold text-copper-accent whitespace-nowrap bg-surface-parchment px-1.5 py-0.5 rounded border border-copper-accent/40 shadow-xs z-10">
                             Peak Shift
                           </div>
                         </div>
@@ -438,14 +448,14 @@ export default function ProductionPage() {
                           onMouseLeave={() => setHoveredBarIndex(null)}
                           onTouchStart={() => setHoveredBarIndex(index)}
                           onTouchEnd={() => setHoveredBarIndex(null)}
-                          className="flex-1 min-w-0 bg-surface-container-low rounded-t-sm relative group border-t border-dashed border-copper-accent/60 transition-all hover:bg-surface-container cursor-pointer"
+                          className="flex-1 min-w-0 bg-copper-accent/15 rounded-t-sm relative group border-2 border-dashed border-copper-accent transition-all hover:bg-copper-accent/25 cursor-pointer shadow-xs"
                           style={{ height: `${bar.heightPercent}%` }}
                         >
                           <div
-                            className="absolute inset-0"
+                            className="absolute inset-0 rounded-t-sm"
                             style={{
                               backgroundImage:
-                                'repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(210,105,30,0.12) 4px, rgba(210,105,30,0.12) 8px)',
+                                'repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(180,106,54,0.32) 5px, rgba(180,106,54,0.32) 10px)',
                             }}
                           ></div>
                         </div>
@@ -458,10 +468,10 @@ export default function ProductionPage() {
                         onMouseLeave={() => setHoveredBarIndex(null)}
                         onTouchStart={() => setHoveredBarIndex(index)}
                         onTouchEnd={() => setHoveredBarIndex(null)}
-                        className="flex-1 min-w-0 bg-surface-container-low rounded-t-sm relative group transition-all hover:bg-earth-charcoal/10"
+                        className="flex-1 min-w-0 bg-earth-espresso/85 rounded-t-sm relative group border-2 border-earth-charcoal transition-all hover:bg-earth-espresso shadow-xs"
                         style={{ height: `${bar.heightPercent}%` }}
                       >
-                        <div className="absolute inset-0 bg-earth-charcoal/5 group-hover:bg-earth-charcoal/20 transition-colors"></div>
+                        <div className="absolute inset-0 bg-earth-charcoal/10 group-hover:bg-transparent transition-colors rounded-t-sm"></div>
                       </div>
                     );
                   })}

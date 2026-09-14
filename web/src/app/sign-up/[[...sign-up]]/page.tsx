@@ -7,6 +7,7 @@
  */
 import React, { useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { SignUp, useAuth } from '@clerk/nextjs';
 
@@ -27,10 +28,12 @@ export default function SignUpPage() {
       <section className="relative w-full lg:w-[55%] min-h-[580px] lg:min-h-screen flex flex-col justify-between p-8 sm:p-12 lg:p-16 overflow-hidden bg-[#130C07]">
         {/* Background Quarry Image */}
         <div className="absolute inset-0 z-0">
-          <img
+          <Image
             alt="Geological engineers inspecting mining site"
-            className="w-full h-full object-cover object-center opacity-45 transform scale-105 filter saturate-75 contrast-125"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAn2HSaKT4cQn0Exs-fYoDkpxcAL2OYu_pcr6mr9zxQ_jt1WiDH9fpSHExE3SIxTEnZZ1v2ryxli7WLCBJElMDglmK-mAUrc-lW4Q3fsoEGifFdsIZWqWFXQq_154kVrCMlHB9sWCs6L8zoKGUeCz9aROADgKhvZkpBgdfZ4liGh_r6yb2ajnzgfFy27MJAhqIaoYMZZTe87kFHBosqGQqBWuzeJYrwir3uWhr1BkjTge8mqP_9tD-V"
+            fill
+            priority
+            className="object-cover object-center opacity-55 transform scale-105 filter saturate-85 contrast-125"
+            src="/images/signup-hero.webp"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/30" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-transparent to-black/40" />
@@ -39,14 +42,16 @@ export default function SignUpPage() {
         {/* Top Header / Brand Logo */}
         <header className="relative z-10">
           <div className="flex items-center space-x-3.5 tracking-wider">
-            <svg aria-label="Crucible AI Prism Logo" className="w-9 h-9 text-white" fill="none" viewBox="0 0 36 36">
-              <path d="M18 2L32 12V24L18 34L4 24V12L18 2Z" stroke="currentColor" strokeLinejoin="round" strokeWidth="2.5" />
-              <path d="M18 2V34" stroke="currentColor" strokeLinecap="round" strokeWidth="2" />
-              <path d="M4 12L32 24" stroke="currentColor" strokeLinecap="round" strokeWidth="1.8" />
-              <path d="M32 12L4 24" stroke="currentColor" strokeLinecap="round" strokeWidth="1.8" />
-              <path d="M18 8L27 15V21L18 28L9 21V15L18 8Z" fill="currentColor" fillOpacity="0.25" />
-            </svg>
-            <span className="text-2xl font-black tracking-[0.25em] text-white uppercase font-sans">CRUCIBLE AI</span>
+            <Image
+              src="/icon.svg"
+              alt="Crucible AI Logo"
+              width={36}
+              height={36}
+              className="w-9 h-9 rounded-lg object-contain shadow-lg shadow-[#ea580c]/25"
+            />
+            <span className="text-2xl font-black tracking-[0.25em] text-white uppercase font-sans">
+              CRUCIBLE <span className="text-[#E09F67]">AI</span>
+            </span>
           </div>
         </header>
 
